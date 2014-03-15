@@ -30,8 +30,9 @@ CREATE TABLE IF NOT EXISTS docentes (  # Usuarios del sistema
 	nom_doc VARCHAR(50) NOT NULL,
 	dni_doc INT NOT NULL UNIQUE,
 	email_doc VARCHAR(60),
-	activo BOOLEAN DEFAULT FALSE,
-	admin BOOLEAN DEFAULT FALSE,
+	telefono VARCHAR(20),
+	activo BOOLEAN NOT NULL DEFAULT FALSE,
+	admin INT NOT NULL DEFAULT -1,
 
 	PRIMARY KEY(id_doc)
 ) ENGINE=InnoDB;
@@ -54,15 +55,26 @@ CREATE TABLE IF NOT EXISTS catedras (
 	FOREIGN KEY (id_carr) REFERENCES carreras (id_carr)
 ) ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS alumnos_catedras (
+	id_alu_cat INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	id_alu INT UNSIGNED NOT NULL,
+	id_cat INT UNSIGNED NOT NULL,
+	estado_alu_cat INT NOT NULL DEFAULT -1,
+
+	PRIMARY KEY (id_alu_cat),
+	FOREIGN KEY (id_alu) REFERENCES alumnos(id_alu),
+	FOREIGN KEY (id_cat) REFERENCES catedras(id_cat)
+) ENGINE=InnoDB; 
+
 CREATE TABLE IF NOT EXISTS guias (
 	id_guia INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	id_cat INT UNSIGNED NOT NULL,  ### TODO
+	id_cat INT UNSIGNED NOT NULL,  
 	id_nroguia INT UNSIGNED NOT NULL,
 	tit_guia VARCHAR(100) NOT NULL,
 	subtit_guia VARCHAR(160),
 
 	PRIMARY KEY(id_guia),
-	FOREIGN KEY (id_cat) REFERENCES catedras (id_cat) # TODO
+	FOREIGN KEY (id_cat) REFERENCES catedras (id_cat) 
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS descripciones (
@@ -165,6 +177,6 @@ CREATE TABLE IF NOT EXISTS items_examenes (
 #---------------------------------------------------------
 # Creacion usuario dcs_lab. Password:
 # 
-CREATE USER dcs_lab IDENTIFIED BY 'dcic2014..';
+#CREATE USER dcs_lab IDENTIFIED BY 'dcic2014..';
 
-GRANT ALL PRIVILEGES ON dcs_examenes.* TO dcs_lab IDENTIFIED BY 'dcic2014..';
+#GRANT ALL PRIVILEGES ON dcs_examenes.* TO dcs_lab IDENTIFIED BY 'dcic2014..';
