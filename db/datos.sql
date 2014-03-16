@@ -1,11 +1,11 @@
 USE dcs_examenes;
 
 #alumnos
-INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_lu) VALUES(100233,'Gómez','Fulano',37896524);
-INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_lu) VALUES(110568,'González','Natalia',39852147);
-INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_lu) VALUES(102137,'Prince','Martin',36893521);
-INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_lu) VALUES(87546,'Jones','Jimbo',33843567);
-INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_lu) VALUES(93256,'Muntz','Nelson',35987654);
+INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(100233,'Gómez','Fulano',37896524);
+INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(110568,'González','Natalia',39852147);
+INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(102137,'Prince','Martin',36893521);
+INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(87546,'Jones','Jimbo',33843567);
+INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(93256,'Muntz','Nelson',35987654);
 
 #docentes
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc, admin) 
@@ -250,29 +250,31 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia,subtit_guia)
 INSERT INTO examenes (id_guia,lu_alu,leg_doc,calificacion,obs_exam) 
 		VALUES(2,102137,10325,0,'Esta es una observación general del examen');
 
-	INSERT INTO items_examenes(id_item,id_exam,estado_item,obs_item) VALUES (38,1,0,'Esto es una observación');
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (39,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (40,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (41,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (42,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (43,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (44,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (45,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (46,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (47,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (48,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (49,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (50,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (51,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (52,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (53,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (54,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (55,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,obs_item) VALUES (56,1,'Bla bla bla'); #solo texto
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (57,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,obs_item) VALUES (58,1,'Bla bla bla'); #solo texto
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (59,1,0);
-	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (60,1,1);
-	INSERT INTO items_examenes(id_item,id_exam,obs_item) VALUES (61,1,'Bla bla bla'); #solo texto
+	INSERT INTO items_examenes(id_item,id_exam,estado_item,obs_item) VALUES (38,2,0,'Esto es una observación');
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (39,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (40,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (41,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (42,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (43,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (44,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (45,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (46,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (47,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (48,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (49,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (50,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (51,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (52,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (53,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (54,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (55,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,obs_item) VALUES (56,2,'Bla bla bla'); #solo texto
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (57,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,obs_item) VALUES (58,2,'Bla bla bla'); #solo texto
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (59,2,0);
+	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES (60,2,1);
+	INSERT INTO items_examenes(id_item,id_exam,obs_item) VALUES (61,2,'Bla bla bla'); #solo texto
 
 
+#Consulta de los examanes
+SELECT * FROM guias NATURAL LEFT JOIN items_guias NATURAL LEFT JOIN items NATURAL LEFT JOIN examenes NATURAL LEFT JOIN items_examenes;
