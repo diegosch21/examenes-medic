@@ -4,8 +4,8 @@ USE dcs_examenes;
 INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(100233,'Gómez','Fulano',37896524);
 INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(110568,'González','Natalia',39852147);
 INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(102137,'Prince','Martin',36893521);
-INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(87546,'Jones','Jimbo',33843567);
 INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(93256,'Muntz','Nelson',35987654);
+INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES(87546,'Jones','Jimbo',33843567);
 
 #docentes
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc, admin) 
