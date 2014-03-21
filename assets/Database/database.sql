@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS docentes (  # Usuarios del sistema
 	email_doc VARCHAR(60),
 	tel_doc VARCHAR(20),
 	activo BOOLEAN NOT NULL DEFAULT FALSE,
-	admin INT NOT NULL DEFAULT 0,
+	privilegio INT NOT NULL DEFAULT 0,
 
 	PRIMARY KEY(leg_doc)
 ) ENGINE=InnoDB;
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS alumnos_catedras (
 #	id_alu_cat INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	lu_alu INT UNSIGNED NOT NULL,
 	cod_cat INT UNSIGNED NOT NULL,
-	estado_alu_cat INT NOT NULL DEFAULT -1,
+	estado_alu_cat INT NOT NULL DEFAULT 0,
 
 	PRIMARY KEY (lu_alu,cod_cat),
 	FOREIGN KEY (lu_alu) REFERENCES alumnos(lu_alu),
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS docentes_catedras (
 #	id_doc_cat INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	leg_doc INT UNSIGNED NOT NULL,
 	cod_cat INT UNSIGNED NOT NULL,
-	permiso_doc INT NOT NULL DEFAULT -1,
+	permiso_doc INT NOT NULL DEFAULT 0,
 
 	PRIMARY KEY (leg_doc,cod_cat),
 	FOREIGN KEY (leg_doc) REFERENCES docentes(leg_doc),

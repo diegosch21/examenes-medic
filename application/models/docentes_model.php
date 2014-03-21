@@ -12,7 +12,7 @@
 		 */
 		public function getCredenciales($legajo, $password)
 		{
-			$query_string = "SELECT leg_doc, apellido_doc, nom_doc, activo FROM docentes WHERE leg_doc = {$legajo} AND pass = MD5('{$password}')";
+			$query_string = "SELECT leg_doc, apellido_doc, nom_doc, activo, privilegio FROM docentes WHERE leg_doc = {$legajo} AND pass = MD5('{$password}')";
 
 			$query = $this->db->query($query_string);
 	

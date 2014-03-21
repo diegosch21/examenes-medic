@@ -37,5 +37,21 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
+/*
+|
+|	Constantes definidas para la aplicación
+|
+*/
+
+define('PRIVILEGIO_NULO',-1);
+define('PRIVILEGIO_DOCENTE',0); //Docente: solo puede tomar examenes. Y crear guías si tiene permiso en catedra
+define('PRIVILEGIO_ADMIN', 2);  //Es admin (acceso a todos los ABM), pero no puede nombrar nuevos admin, ni borrar/modificar examenes
+define('PRIVILEGIO_SUPERADMIN',3); //Admin, que puede nombrar nuevos admin, y borrar/modificar examenes
+
+define('PERMISO_NULO',-1); //Permiso en cátedra: no puede tomar examen
+define('PERMISO_BASICO',0); //Permiso en cátedra: puede tomar examen y asociar alumno
+define('PERMISO_TOTAL', 1); //Permiso en cátedra: puede tomar examen, cargar y modificar guias, asociar y dar de baja alumnos
+
+
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

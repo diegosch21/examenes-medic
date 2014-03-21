@@ -50,6 +50,7 @@ class Usuario
 	/*
 	 * Verifica que el usuario se encuentre logueado (se encuentra en la sesión).
 	 * Retorna la información del usuario guardada en la sesión.
+	 *	Si la sesión expiró, retorna nulo.
 	 */
 	public function logueado()
     {
@@ -60,7 +61,7 @@ class Usuario
      * Obtiene el campo especificado por $campo de la información
      * correspondiente al usuario guadado en la sesión.
      */
-	public function getInformacionUsuario($campo)
+	public function getInfoSesionUsuario($campo)
 	{
 
 		$data_usuario = logueado();
@@ -69,12 +70,39 @@ class Usuario
 	}
 
 	/*
+     * Setea el campo especificado por $campo de la información
+     * correspondiente al usuario guadado en la sesión.
+     */
+	public function setInfoSesionUsuario($campo,$valor)
+	{
+
+		$data_usuario = logueado();
+		if($data_usuario) {
+			$data_usuario[$campo] = $valor;
+			$this->CI->session->set_userdata('usuario',$data_usuario);
+		}
+
+	}
+
+	/*
 	 * Verifica que el usuario se activo.
 	 * Retorna true si el usuario se encuentra activo, false en caso contrario.
 	 */
 	public function activo()
 	{
-		return $this->getInformacionUsuario('activo'); 
+		return $this->getInfoSesionUsuario('activo'); 
+	}
+
+	/*
+	 *  Verifica que el usuario tenga acceso:
+	 *	Retorna true si está logueado, activo, y su privilegio es mayor o igual al requerido (por default, 0)
+	 */
+
+	public function accesoPermitido($privilegio = PRIVILEGIO_DOCENTE)
+	{
+		return  $this->logueado() && 
+				$this->activo() &&
+				$this->getInfoSesionUsuario('privilegio') >= $privilegio;
 	}
 }
 
