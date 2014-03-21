@@ -26,12 +26,13 @@ class Usuario
 	 * Loguea al usuario y setea su información básica en la sesión (id, nombre, apellido).
 	 * Retorna true si el login se realizó con éxito, false en caso contrario.
 	 */
-	public function login($id_usuario)
+	public function login($legajo, $password)
 	{
-		$data_usuario = registrado();
-		if($data_usuario) 
+		$docente = $this->CI->docentes_model->getCredenciales($legajo, $password);
+
+		if($docente) 
 		{
-			$this->CI->session->set_userdata('usuario', $data_usuario);
+			$this->CI->session->set_userdata('usuario', $docente);
 			return true;
 		}
 		
@@ -47,15 +48,6 @@ class Usuario
 	}	
 
 	/*
-	 * Verifica que el usuario se encuentre registrado en la BD.
-	 * Retorna los datos del usuario si este se encuentra en la BD.
-	 */
-	public function registrado()
-	{
-		return $this->CI->docentes_model->getInformacionBasica($this->profile('id'));
-	}
-
-	/*
 	 * Verifica que el usuario se encuentre logueado (se encuentra en la sesión).
 	 * Retorna la información del usuario guardada en la sesión.
 	 */
@@ -66,19 +58,27 @@ class Usuario
     
     /*
      * Obtiene el campo especificado por $campo de la información
-     * correspondiente al usuario guadada en la sesión.
-     * Retorna false si el usuario no esta logueado.
+     * correspondiente al usuario guadado en la sesión.
      */
 	public function getInformacionUsuario($campo)
 	{
 
 		$data_usuario = logueado();
 
-		if($data_usuario)
-		{
-			return $data_usuario[$campo];
-		}
-		
-		return false;
+		return $data_usuario[$campo];
+	}
+
+	/*
+	 * Verifica que el usuario se activo.
+	 * Retorna true si el usuario se encuentra activo, false en caso contrario.
+	 */
+	public function activo()
+	{
+		return $this->getInformacionUsuario('activo'); 
 	}
 }
+
+/* Fin del archivo file Usuario.php */
+/* Location: ./application/libraries/Usuario.php */
+
+?>

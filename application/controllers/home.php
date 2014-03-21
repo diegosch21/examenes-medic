@@ -11,7 +11,7 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Home extends CI_Controller {
 
 	public function __construct()
     {
@@ -29,46 +29,27 @@ class Login extends CI_Controller {
     { 
     	$data['title'] = "Exámenes - Departamento de Ciencias de la Salud";
 
-    	if($this->user->logueado())
-    	{    		
-    		if($this->user->activo())  // Usuario con cuenta activa. (cambió la contraseña por defecto).
-    		{	   		
-    			redirect('home');    			
-    		}
-    		else // El usuario debe activar su cuenta.
-    		{
-    			redirect('home/activar');  
-    		}    		
-    	}
-    	else
+    	if(!$this->user->logueado())
     	{      				              						              
 			$this->load->view('template/header', $data); 			
 		    $this->load->view('content/index');
 		    $this->load->view('template/footer'); 	  		
     	}
-    	
+    	else
+    	{    		
+    		if($this->user->activo())
+    		{	   		
+    			redirect('home');    			
+    		}
+    		else 
+    		{
+    			redirect('home/activar');  
+    		}    		
+    	}
     }
-
-    /*
-     * Loguea al usuario
-     */
-	public function login()
-	{	 
-		$this->user->login();
-		$this->index();
-	}
-
-	/*
-     * Desloguea al usuario
-     */
-	public function logout()
-	{
-		$this->user->logout();  
-		$this->index();
-	}
 }    
 
-/* End of file login.php */
-/* Location: ./application/controllers/login.php */
+/* End of file home.php */
+/* Location: ./application/controllers/home.php */
 
 ?>
