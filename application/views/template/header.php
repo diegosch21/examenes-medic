@@ -34,17 +34,65 @@
 	 			
 	</head>
 	<body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-12 banner">
-					columan 12
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-10 col-sm-offset-1">
-					columan 12
-				</div>
-			</div>
+
+		<header class="container-fluid">
+			<div class="row banner">
+				<div class="col-xs-12 col-sm-10 col-sm-offset-1 header-banner-image">					
+					<div class="banner header-logo">
+						<div class="header-banner logo logo-uns"></div>
+					</div>
+					<div class="banner header-logo">
+						<div class="header-banner logo logo-dcs"></div>
+					</div>
+					<div class="header-banner header-banner-shadow">
+						<div class="header-texto">
+							<div class="header-texto-linea1">
+								<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
+								<span class="header-texto-linea1-dpto">DEPARTAMENTO DE CIENCIAS DE LA SALUD</span>
+							</div>
+							<div class="header-texto-linea2">
+								<span>LABORATORIO DE COMPETENCIAS PROFESIONALES</span>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>	
+		</header>	
+			
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">Juan Zapata</a>
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div id="navbar-collapse-1" class="collapse navbar-collapse">
+							<ul class="nav navbar-nav navbar-right">
+								<li class="active">
+									<a href="#"><span class="glyphicon glyphicon-file"></span> Mis Exámenes</a>
+								</li>
+								<li>
+									<a href="#"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
+								</li>
+								<li>
+									<a href="#"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
+								</li>						
+							</ul>
+						</div><!-- /.navbar-collapse -->
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</nav>
+
 			<div class="row outer-content"><!-- col content-->
 				<div class="col-xs-12 col-sm-10 col-sm-offset-1 inner-content">	<!-- col content-->				
 				
