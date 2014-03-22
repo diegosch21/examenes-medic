@@ -24,12 +24,12 @@ class Usuario
 
 	/**
 	 * Loguea al usuario y setea su información básica en la sesión (id, nombre, apellido).
-	 * Retorna true si el login se realizó con éxito, false en caso contrario.
+	 * Retorna TRUE si el login se realizó con éxito, FALSE en caso contrario.
 	 *
 	 * @access	public
 	 * @param	string $legajo
 	 * @param	string $password
-	 * @return	bool - true si el login se realizó con éxito, false en caso contrario
+	 * @return	bool - TRUE si el login se realizó con éxito, FALSE en caso contrario
 	 */
 	public function login($legajo, $password)
 	{
@@ -38,10 +38,10 @@ class Usuario
 		if($data_usuario) 
 		{
 			$this->CI->session->set_userdata('usuario', $data_usuario);
-			return true;
+			return TRUE;
 		}
 		
-		return false;
+		return FALSE;
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Usuario
 	 *	Si la sesión expiró, retorna nulo.
 	 *
 	 * @access	public
-	 * @return 	array | null
+	 * @return 	array | NULL
 	 */
 	public function logueado()
     {
@@ -72,7 +72,7 @@ class Usuario
 	 *
 	 * @access	public
 	 * @param	string $campo
-	 * @return 	array | null
+	 * @return 	array | NULL
  	 */
 	public function get_info_sesion_usuario($campo)
 	{
@@ -94,6 +94,7 @@ class Usuario
 	{
 
 		$data_usuario = logueado();
+		
 		if($data_usuario) {
 			$data_usuario[$campo] = $valor;
 			$this->CI->session->set_userdata('usuario',$data_usuario);
@@ -103,7 +104,7 @@ class Usuario
 
 	/**
 	 * Verifica que el usuario haya sido activado.
-	 * Retorna true si el usuario se encuentra activo, false en caso contrario.
+	 * Retorna TRUE si el usuario se encuentra activo, FALSE en caso contrario.
 	 *
 	 * @access	public
 	 * @return	bool
@@ -117,7 +118,7 @@ class Usuario
 	 * Verifica que el usuario tenga permiso de acceso.
 	 *
 	 * @access	public
-	 * @return	bool - true si está logueado, activo, y su privilegio es mayor o igual al requerido (por default, 0)
+	 * @return	bool - TRUE si está logueado, activo, y su privilegio es mayor o igual al requerido (por default, 0)
 	 */
 	public function acceso_permitido($privilegio = PRIVILEGIO_DOCENTE)
 	{
