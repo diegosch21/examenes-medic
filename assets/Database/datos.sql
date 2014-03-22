@@ -9,11 +9,11 @@ INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES
 	(93256,'Muntz','Nelson',35987654);
 
 #docentes
-INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc, admin) 
-		VALUES(123,MD5('admin'),'Administrador','Super',11111111,'admin@laboratorios.dcs.uns.edu.ar',1);
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc, privilegio) 
+		VALUES(123,MD5('admin'),'Administrador','Super',11111111,'admin@laboratorios.dcs.uns.edu.ar',3);
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc,tel_doc) 
 		VALUES(5201,MD5('hola'),'Zapata','Juan',10568956,'johnzapata@uns.edu.ar','4568746');
-INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc,tel_doc,admin) 
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc,tel_doc,privilegio) 
 		VALUES(10325,MD5('123456'),'Skinner','Seymour',9125654,'skinner@springfield.com','(011)156-589632',2); #2º nivel de admin
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc) 
 		VALUES(7865,MD5('7865'),'Pérez','Marcela',20568987); 	
