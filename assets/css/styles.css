@@ -1,0 +1,31 @@
+.container-fluid {
+	min-width: 300px;
+}
+
+.banner {
+
+	background: rgb(16,38,64); /* Old browsers */
+	background: -moz-linear-gradient(left, rgba(16,38,64,1) 0%, rgba(58,123,201,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(16,38,64,1)), color-stop(100%,rgba(58,123,201,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(16,38,64,1) 0%,rgba(58,123,201,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(16,38,64,1) 0%,rgba(58,123,201,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, rgba(16,38,64,1) 0%,rgba(58,123,201,1) 100%); /* IE10+ */
+	background: linear-gradient(to right, rgba(16,38,64,1) 0%,rgba(58,123,201,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#102640', endColorstr='#3a7bc9',GradientType=1 ); /* IE6-9 */
+
+	height: 80px;
+	border: 1px solid rgb(74, 126, 187);
+}
+
+.outer-content {
+	background-color: rgb(217, 217, 217);
+}
+
+.inner-content {
+	background-color: rgb(255, 255, 255);
+}
+
+.form-login {
+	width: 250px;
+	margin: 0px auto;
+}

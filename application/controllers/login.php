@@ -26,24 +26,24 @@ class Login extends CI_Controller {
      * que debe loguearse, o se encuentra logueado.
      */
     public function index()
-    { 
-    	$data['title'] = "Exámenes - Departamento de Ciencias de la Salud";
-
-    	if($this->user->logueado())
-    	{    		
-    		if($this->user->activo())  // Usuario con cuenta activa. (cambió la contraseña por defecto).
+    {  
+    	if($this->usuario->logueado())
+    	{   	
+    		if($this->usuario->activo())  // Usuario con cuenta activa. (cambió la contraseña por defecto).
     		{	   		
     			redirect('home');    			
     		}
     		else // El usuario debe activar su cuenta.
     		{
     			redirect('home/activar');  
-    		}    		
+    		}  
     	}
     	else
-    	{      				              						              
+    	{     
+    		$data['title'] = "Exámenes - Departamento de Ciencias de la Salud";
+
 			$this->load->view('template/header', $data); 			
-		    $this->load->view('content/index');
+		    $this->load->view('content/login/index');
 		    $this->load->view('template/footer'); 	  		
     	}
     	
@@ -68,7 +68,7 @@ class Login extends CI_Controller {
 	}
 }    
 
-/* End of file login.php */
-/* Location: ./application/controllers/login.php */
+/* Fin del archivo login.php */
+/* Ubicación: ./application/controllers/login.php */
 
 ?>

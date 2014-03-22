@@ -79,6 +79,6 @@ class Usuario
 }
 
 /* Fin del archivo file Usuario.php */
-/* Location: ./application/libraries/Usuario.php */
+/* Ubicación: ./application/libraries/Usuario.php */
 
 ?>
