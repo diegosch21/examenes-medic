@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="es" >
+	<!--
+	* ========================================================================================
+	* Autores: FERNANDO ANDRES PRIETO - DIEGO MARTIN SCHWINDT
+	*
+	* Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
+	*
+	* Fecha: Marzo, 2014.
+	* ========================================================================================
+-->
 	<head>
 		   	<meta charset="utf-8">
 		    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +22,7 @@
 			<link type="text/css" href="<?php echo base_url('assets/css/bootstrap-select.css'); ?>" rel="stylesheet" media="screen"/>		
 			<link type="text/css" href="<?php echo base_url('assets/css/styles.css'); ?>" rel="stylesheet" media="screen"/>		
 	 
-		    <script type="text/javascript"src="<?php echo base_url('assets/js/jquery/jquery-1.11.0.min.js') ?>"></script>
+		    <script type="text/javascript"src="<?php echo base_url('assets/js/jquery-1.11.0.min.js') ?>"></script>
 			
 			<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,9 +31,9 @@
 		      <script type="text/javascript"  src="<?php echo base_url('assets/js/respond.min.js'); ?>"></script>
 		    <![endif]-->
 			
-	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap/bootstrap.js') ?>"></script>	
-	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap/bootstrap-select.js') ?>"></script>
-	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap/bootstrap-select-ES.js') ?>"></script>
+	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap.js') ?>"></script>	
+	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select.js') ?>"></script>
+	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select-ES.js') ?>"></script>
 	 		
 	 			
 	</head>

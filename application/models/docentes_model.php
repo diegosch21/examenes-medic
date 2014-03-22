@@ -1,5 +1,15 @@
 <?php
 
+/**
+	* ========================================================================================
+	* Autores: FERNANDO ANDRES PRIETO - DIEGO MARTIN SCHWINDT
+	*
+	* Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
+	*
+	* Fecha: Marzo, 2014.
+	* ========================================================================================
+*/
+
 	class Docentes_model extends CI_Model 
 	{
 		public function __construct()

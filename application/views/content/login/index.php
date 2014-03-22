@@ -1,3 +1,13 @@
+<!--
+	* ========================================================================================
+	* Autores: FERNANDO ANDRES PRIETO - DIEGO MARTIN SCHWINDT
+	*
+	* Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
+	*
+	* Fecha: Marzo, 2014.
+	* ========================================================================================
+-->
+
 <div class="form-login">
 
 	<form class="form-signin" role="form">
