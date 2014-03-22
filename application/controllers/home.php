@@ -1,12 +1,12 @@
 <?php 
+
 /**
-	* ========================================================================================
-	* Autores: FERNANDO ANDRES PRIETO - DIEGO MARTIN SCHWINDT
-	*
-	* Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
-	*
-	* Fecha: Marzo, 2014.
-	* ========================================================================================
+ * Home
+ *
+ *@package      controllers
+ *@author       Fernando Andrés Prieto
+ *@author       Diego Martín Schwindt
+ *@copyright    Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
 */
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
@@ -51,5 +51,3 @@ class Home extends CI_Controller {
 
 /* Fin del archivo home.php */
 /* Ubicación: ./application/controllers/home.php */
-
-?>

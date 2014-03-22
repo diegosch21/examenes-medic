@@ -1,12 +1,12 @@
-<?php 
+<?php
+
 /**
-	* ========================================================================================
-	* Autores: FERNANDO ANDRES PRIETO - DIEGO MARTIN SCHWINDT
-	*
-	* Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
-	*
-	* Fecha: Marzo, 2014.
-	* ========================================================================================
+ * Login
+ *
+ *@package      controllers
+ *@author       Fernando Andrés Prieto
+ *@author       Diego Martín Schwindt
+ *@copyright    Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
 */
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
@@ -20,10 +20,11 @@ class Login extends CI_Controller {
    		$this->load->model('docentes_model');
     }
 
-
-	/*
-     * Carga la vista apropiada dependiendo de si es un usuario 
-     * que debe loguearse, o se encuentra logueado.
+    /**
+     * Carga la vista apropiada dependiendo si es un usuario 
+     * se encuentra logueado o debe loguearse.
+     *
+     * @access  public
      */
     public function index()
     {  
@@ -49,8 +50,10 @@ class Login extends CI_Controller {
     	
     }
 
-    /*
+    /**
      * Loguea al usuario
+     *
+     * @access  public
      */
 	public function login()
 	{	 
@@ -58,8 +61,10 @@ class Login extends CI_Controller {
 		$this->index();
 	}
 
-	/*
+	/**
      * Desloguea al usuario
+     *
+     * @access  public
      */
 	public function logout()
 	{
@@ -70,5 +75,3 @@ class Login extends CI_Controller {
 
 /* Fin del archivo login.php */
 /* Ubicación: ./application/controllers/login.php */
-
-?>
