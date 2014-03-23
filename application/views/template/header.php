@@ -35,16 +35,12 @@
 	</head>
 	<body>
 
-		<header class="container-fluid">
+		<header id="header-principal" class="container-fluid">
 			<div class="row banner">
 				<div class="col-xs-12 col-sm-10 col-sm-offset-1 header-banner-image">					
-					<div class="banner header-logo">
-						<div class="header-banner logo logo-uns"></div>
-					</div>
-					<div class="banner header-logo">
-						<div class="header-banner logo logo-dcs"></div>
-					</div>
-					<div class="header-banner header-banner-shadow">
+					<div class="header-logo logo-uns"></div>
+					<div class="header-logo logo-dcs"></div>
+					<div class="header-banner-texto">
 						<div class="header-texto">
 							<div class="header-texto-linea1">
 								<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>

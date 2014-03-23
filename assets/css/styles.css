@@ -10,10 +10,7 @@
 	min-width: 300px;
 }
 
-.navbar {
-	margin-bottom: 0px;
-	box-shadow: 0px 3px 10px 0px #848484;
-}
+/* HEADER - BANNER */
 
 .banner {
 	background-color: rgb(25, 47, 85);
@@ -24,49 +21,47 @@
 }
 
 .header-banner-image {
-	background: url(../img/header1.jpg) no-repeat top right;
-	/*position: absolute;*/
+
+	background: rgb(25,47,85); /* Old browsers */
+    background: -moz-linear-gradient(left, rgba(25,47,85,1) 0%, rgba(25,47,85,0.98) 50%, rgba(25,47,85,0) 100%), 
+    url(../img/header1.jpg) no-repeat top right; /* FF3.6+ */
+
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(25,47,85,1)), color-stop(50%,rgba(25,47,85,0.98)), color-stop(100%,rgba(25,47,85,0))), 
+	url(../img/header1.jpg) no-repeat top right; /* Chrome,Safari4+ */
+
+	background:  -webkit-linear-gradient(left, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%), 
+	url(../img/header1.jpg) no-repeat top right; /* Chrome10+,Safari5.1+ */
+
+	background:  -o-linear-gradient(left, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%), 
+	url(../img/header1.jpg) no-repeat top right; /* Opera 11.10+ */
+
+	background:  -ms-linear-gradient(left, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%), 
+	url(../img/header1.jpg) no-repeat top right; /* IE10+ */
+
+	background: linear-gradient(to right, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%), 
+	url(../img/header1.jpg) no-repeat top right; /* W3C */
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192f55', endColorstr='#192f55',GradientType=1 ); /* IE6-9 */
 }
 
 .header-logo {
-	padding-right: 0px;
-	text-align: left;	
-	float: left;
-}
-
-.logo {
 	background-size: contain !Important;
 	width: 80px;
 	height: 80px;
 	float:left;
 }
 
-.logo-uns {
-	background: url(../img/logo_uns.png) no-repeat top left;
-}
-
-.logo-dcs {
-	background: url(../img/logo_dcs.png) no-repeat top left;
-}
-
-.header-banner-shadow {
-	background: rgb(25,47,85); /* Old browsers */
-	background: -moz-linear-gradient(left, rgba(25,47,85,1) 0%, rgba(25,47,85,0.98) 50%, rgba(25,47,85,0) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(25,47,85,1)), color-stop(50%,rgba(25,47,85,0.98)), color-stop(100%,rgba(25,47,85,0))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(left, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(left, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(left, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%); /* IE10+ */
-	background: linear-gradient(to right, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%); /* W3C */
-	linear-gradient(to right, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192f55', endColorstr='#192f55',GradientType=1 ); /* IE6-9 */
-
+.header-banner-texto {
+	position: relative;
+	min-height: 80px;
+	width: 73%;
+	float: left;
 }
 
 .header-texto {
 	position: absolute;
-	top: 25%; 
-	left: 180px; 
-	height: 40px;
+	top: 20.5px; 
+	height: 39px;
 }
 
 .header-texto-linea1 {
@@ -88,7 +83,87 @@
 	font-style: italic;
 }
 
+@media (max-width: 813px){
+	.header-texto-linea1 {
+		font-size: 10px;
+	}
 
+	.header-texto-linea2 {
+		font-size: 14px;
+	}
+
+	.header-texto {
+		height: 35px;
+		top: 22.5px;
+	}
+}
+
+@media (max-width: 767px){
+	.header-texto-linea1 {
+		font-size: 12px;
+	}
+
+	.header-texto-linea2 {
+		font-size: 16px;
+	}
+
+	.header-texto {
+		height: 39px;
+		top: 20.5px;
+	}
+}
+
+@media (max-width: 680px){
+	.logo-uns {
+		display: none;
+	}
+
+	.logo-dcs {
+		display: none;
+	}
+
+	.header-banner-texto {
+		width: 100%;
+	}
+}
+
+@media (max-width: 508px) {
+	.header-texto-linea1 {
+		font-size: 10px;
+	}
+
+	.header-texto-linea2 {
+		font-size: 14px;
+	}
+
+	.header-texto {
+		height: 35px;
+		top: 22.5px;
+	}
+}
+
+@media (max-width: 444px) {
+	#header-principal {
+		display:none;
+	}
+}
+
+/* NAVBAR */
+
+.navbar {
+	margin-bottom: 0px;
+	box-shadow: 0px 3px 10px 0px #848484;
+}
+
+/* LOGO */
+
+.logo-uns {
+	background: url(../img/logo_uns.png) no-repeat top left;
+}
+
+.logo-dcs {
+	background: url(../img/logo_dcs.png) no-repeat top left;
+}
 
 .outer-content {
 	background-color: rgb(217, 217, 217);
