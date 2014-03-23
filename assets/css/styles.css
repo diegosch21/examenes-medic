@@ -6,9 +6,10 @@
 	COPYRIGHT	Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
 */
 
+/*
 .container-fluid {
 	min-width: 300px;
-}
+}*/
 
 /* HEADER - BANNER */
 
@@ -16,11 +17,13 @@
 	background-color: rgb(25, 47, 85);
 }
 
-.header-banner {
-	min-height: 80px;
+.header {
+	min-height: 100px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-.header-banner-image {
+.header-image {
 
 	background: rgb(25,47,85); /* Old browsers */
     background: -moz-linear-gradient(left, rgba(25,47,85,1) 0%, rgba(25,47,85,0.98) 50%, rgba(25,47,85,0) 100%), 
@@ -41,38 +44,25 @@
 	background: linear-gradient(to right, rgba(25,47,85,1) 0%,rgba(25,47,85,0.98) 50%,rgba(25,47,85,0) 100%), 
 	url(../img/header1.jpg) no-repeat top right; /* W3C */
 
+	background-size: contain;
+
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#192f55', endColorstr='#192f55',GradientType=1 ); /* IE6-9 */
 }
 
 .header-logo {
 	background-size: contain !Important;
-	width: 80px;
-	height: 80px;
+	width: 90px;
+	height: 90px;
 	float:left;
 }
 
-.header-banner-texto {
-	position: relative;
-	min-height: 80px;
-	width: 73%;
-	float: left;
-}
-
 .header-texto {
-	position: absolute;
-	top: 20.5px; 
-	height: 39px;
+	margin-top: 19.5px;
 }
 
 .header-texto-linea1 {
 	color: rgb(149,179,215);
-	font-size: 12px;
-}
-
-.header-texto-linea2 {
-	color: white;
-	font-size: 16px;
-	font-weight: bold;
+	font-size: 14px;
 }
 
 .header-texto-linea1-uns {	
@@ -83,37 +73,78 @@
 	font-style: italic;
 }
 
-@media (max-width: 813px) {
+.header-texto-linea2 {
+	color: white;
+	font-size: 24px;
+}
+
+@media (max-width: 1003px) {
+
+	.header-texto {
+		margin-top: 22px;
+	}
+
 	.header-texto-linea1 {
-		font-size: 10px;
+		font-size: 13px;
 	}
 
 	.header-texto-linea2 {
-		font-size: 14px;
+		font-size: 20px;
 	}
 
-	.header-texto {
-		height: 35px;
-		top: 22.5px;
+	.header-image {
+		background-size: cover;
 	}
 }
 
-@media (max-width: 767px){
+@media (max-width: 886px) {
+
+	.header-texto {
+		margin-top: 25.5px;
+	}
+
 	.header-texto-linea1 {
 		font-size: 12px;
 	}
 
 	.header-texto-linea2 {
 		font-size: 16px;
-	}
+	}	
+}
+
+@media (max-width: 823px) {
 
 	.header-texto {
-		height: 39px;
-		top: 20.5px;
+		margin-top: 29px;
+	}
+
+	.header-texto-linea1 {
+		font-size: 10px;
 	}
 }
 
-@media (max-width: 680px){
+@media (max-width: 767px) {
+
+	.header-texto {
+		margin-top: 25.5px;
+	}
+
+	.header-texto-linea1 {
+		font-size: 12px;
+	}
+
+	.header-texto-linea2 {
+		font-size: 19px;
+	}
+
+}
+
+@media (max-width: 726px) {
+
+	.header-texto {
+		margin-top: 24px;
+	}
+
 	.logo-uns {
 		display: none;
 	}
@@ -121,31 +152,71 @@
 	.logo-dcs {
 		display: none;
 	}
-
-	.header-banner-texto {
-		width: 100%;
-	}
 }
 
-@media (max-width: 508px) {
+@media (max-width: 545px) {
+
+	.header-texto {
+		margin-top: 28px;
+	}
+
 	.header-texto-linea1 {
 		font-size: 10px;
 	}
 
 	.header-texto-linea2 {
-		font-size: 14px;
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 545px) {
+
+	.header-texto-linea1 {
+		font-size: 10px;
 	}
 
+	.header-texto-linea2 {
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 452px) {
+
 	.header-texto {
-		height: 35px;
-		top: 22.5px;
+		margin-top: 15.5px;
 	}
 }
 
 @media (max-width: 444px) {
-	#header-principal {
-		display:none;
+
+	.header-texto {
+		margin-top: 8.5px;
 	}
+}
+
+@media (max-width: 309px) {
+
+	.header-texto {
+		margin-top: 0px;
+	}
+}
+
+
+.footer {
+	min-height: 100px;
+	padding: 20px 0px;
+}
+
+.footer-texto-linea {
+	color: rgb(149,179,215);
+	font-size: 14px;
+	font-style: italic;
+}
+
+.footer-texto-linea > a,
+.footer-texto-linea > a:hover {
+	color: #F8F8F8;
+	font-size: 14px;
 }
 
 /* NAVBAR */
@@ -193,6 +264,7 @@
 	border: 1px solid #000000;
 	border-top: 0px;
 	border-bottom: 0px;
+	padding: 20px 0px;
 }
 
 .form-login {

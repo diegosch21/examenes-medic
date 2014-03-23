@@ -37,20 +37,20 @@
 
 		<header id="header-principal" class="container-fluid">
 			<div class="row banner">
-				<div class="col-xs-12 col-sm-10 col-sm-offset-1 header-banner-image">					
+				<div class="col-xs-12 col-sm-10 col-sm-offset-1 header header-image">					
 					<div class="header-logo logo-uns"></div>
 					<div class="header-logo logo-dcs"></div>
-					<div class="header-banner-texto">
-						<div class="header-texto">
-							<div class="header-texto-linea1">
-								<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
-								<span class="header-texto-linea1-dpto">DEPARTAMENTO DE CIENCIAS DE LA SALUD</span>
-							</div>
-							<div class="header-texto-linea2">
-								<span>LABORATORIO DE COMPETENCIAS PROFESIONALES</span>
-							</div>
+					
+					<div class="header-texto">
+						<div class="header-texto-linea1">
+							<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
+							<span class="header-texto-linea1-dpto">DEPARTAMENTO DE CIENCIAS DE LA SALUD</span>
+						</div>
+						<div class="header-texto-linea2">
+							<span>LABORATORIO DE COMPETENCIAS PROFESIONALES</span>
 						</div>
 					</div>
+					
 				</div>				
 			</div>			
 		</header>

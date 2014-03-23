@@ -6,11 +6,43 @@
 
 				</div> <!-- col content-->
 			</div><!-- row content-->
-			<div class="row outer-content">
-				<div class="col-xs-12 banner">
-					columan 12
-				</div>
-			</div>
-		</div>
+		</div><!-- .container-fluid -->
+		<footer class="container-fluid">
+			<div class="row banner footer">			
+				<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+					<div class="row">			
+						<div class="col-xs-12 footer-texto-linea">		
+							<span>Copyright © 2014 - Departamento de Ciencias de la Salud</span>
+						</div>
+					</div>
+					<div class="row">			
+						<div class="col-xs-12 footer-texto-linea">		
+							<span>Universidad Nacional del Sur</span>
+						</div>
+					</div>
+					<div class="row">			
+						<div class="col-xs-12 footer-texto-linea">		
+							<span>Sitio Desarrollado por el </span>
+							<a href="http://cs.uns.edu.ar">Departamento de Ciencias e Ingeniería de la Computación</a>
+						</div>
+					</div>					
+				</div>	
+			</div>		
+		</footer>
 	</body>
 </html>
+<!--
+<div class="footer-banner-texto">
+						<div class="footer-texto">
+							<div class="footer-texto-linea">
+								<span>Copyright © 2014 - Departamento de Ciencias de la Salud</span>
+							</div>
+							<div class="footer-texto-linea">
+								<span>Universidad Nacional del Sur</span>
+							</div>
+							<div class="footer-texto-linea">
+								<span>Sitio Desarrollado por el </span>
+								<a href="http://cs.uns.edu.ar">Departamento de Ciencias e Ingeniería de la Computación</a>
+							</div>
+						</div>
+					</div> -->
