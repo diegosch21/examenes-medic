@@ -52,11 +52,11 @@
 						</div>
 					</div>
 				</div>				
-			</div>	
-		</header>	
-			
-		<nav class="navbar navbar-default navbar-static-top" role="navigation">
-			<div class="container-fluid">
+			</div>			
+		</header>
+
+		<nav class="navbar navbar-collapse navbar-default navbar-static-top" role="navigation">
+			<div class="container">
 				<div class="row">
 					<div class="col-xs-12 col-sm-10 col-sm-offset-1">
 						<!-- Brand and toggle get grouped for better mobile display -->
@@ -85,10 +85,11 @@
 							</ul>
 						</div><!-- /.navbar-collapse -->
 					</div><!-- /.col -->
-				</div><!-- /.row -->
+				</div><!-- /.row --> 
 			</div><!-- /.container-fluid -->
 		</nav>
 
+		<div class="container-fluid">
 			<div class="row outer-content"><!-- col content-->
 				<div class="col-xs-12 col-sm-10 col-sm-offset-1 inner-content">	<!-- col content-->				
 				

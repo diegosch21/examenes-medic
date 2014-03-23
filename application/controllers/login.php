@@ -44,8 +44,8 @@ class Login extends CI_Controller {
     		$data['title'] = "Exámenes - Departamento de Ciencias de la Salud";
 
 			$this->load->view('template/header', $data); 			
+            
 		    $this->load->view('content/login/index');
-             $this->load->view('content/login/index'); 
 		    $this->load->view('template/footer'); 	  		
     	}
     	
