@@ -30,67 +30,94 @@
 	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap.js'); ?>"></script>	
 	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select.js'); ?>"></script>
 	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select-ES.js'); ?>"></script>
-	 		
+	 		<script type="text/javascript">
+	 			$(document).ready(function(){	 				
+	 				calcular_altura_main_content();
+	 			});
+
+	 			$(window).resize(function() {
+	 				calcular_altura_main_content();
+	 			});
+
+	 			function calcular_altura_main_content(){
+
+					var wrapper = $('.wrapper').css('height').split("px");
+	 				wrapper = wrapper[0];
+
+					var header = $('#header-image').css('height').split("px");
+	 				header = header[0];
+
+	 				var navbar = $('#navbar').css('height').split("px");
+	 				navbar = navbar[0];
+
+	 				var footer = $('footer').css('height').split("px");
+	 				footer = footer[0];
+
+					$('#div-main-content').css('min-height', wrapper - header - navbar - footer);
+	 			}
+	 		</script>
 	 			
 	</head>
 	<body>
+		<div class="wrapper">	
 
-		<header id="header-principal" class="container-fluid">
-			<div class="row banner">
-				<div class="col-xs-12 col-sm-10 col-sm-offset-1 header header-image">					
-					<div class="header-logo logo-uns"></div>
-					<div class="header-logo logo-dcs"></div>
-					
-					<div class="header-texto">
-						<div class="header-texto-linea1">
-							<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
-							<span class="header-texto-linea1-dpto">DEPARTAMENTO DE CIENCIAS DE LA SALUD</span>
+			<header id="header-principal" class="container-fluid">
+				<div class="row header-footer-color">
+					<div id="header-image" class="col-xs-12 col-sm-10 col-sm-offset-1 header header-image">					
+						<div class="header-logo logo-uns"></div>
+						<div class="header-logo logo-dcs"></div>
+						
+						<div class="header-texto">
+							<div class="header-texto-linea1">
+								<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
+								<span class="header-texto-linea1-dpto">DEPARTAMENTO DE CIENCIAS DE LA SALUD</span>
+							</div>
+							<div class="header-texto-linea2">
+								<span>LABORATORIO DE COMPETENCIAS PROFESIONALES</span>
+							</div>
 						</div>
-						<div class="header-texto-linea2">
-							<span>LABORATORIO DE COMPETENCIAS PROFESIONALES</span>
-						</div>
-					</div>
-					
-				</div>				
-			</div>			
-		</header>
+						
+					</div>				
+				</div>			
+			</header>
 
-		<nav class="navbar navbar-collapse navbar-default navbar-static-top" role="navigation">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-sm-10 col-sm-offset-1">
-						<!-- Brand and toggle get grouped for better mobile display -->
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="#">Juan Zapata</a>
-						</div>
-
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div id="navbar-collapse-1" class="collapse navbar-collapse">
-							<ul class="nav navbar-nav navbar-right">
-								<li class="active">
-									<a href="#"><span class="glyphicon glyphicon-file"></span> Mis Exámenes</a>
-								</li>
-								<li>
-									<a href="#"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
-								</li>
-								<li>
-									<a href="#"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
-								</li>						
-							</ul>
-						</div><!-- /.navbar-collapse -->
-					</div><!-- /.col -->
-				</div><!-- /.row --> 
-			</div><!-- /.container-fluid -->
-		</nav>
-
-		<div class="container-fluid">
-			<div class="row outer-content"><!-- col content-->
-				<div class="col-xs-12 col-sm-10 col-sm-offset-1 inner-content">	<!-- col content-->				
-				
 			
+
+			<nav id="navbar" class="navbar navbar-collapse navbar-default navbar-static-top" role="navigation">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-10 col-sm-offset-1">
+							<!-- Brand and toggle get grouped for better mobile display -->
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<a class="navbar-brand" href="#">Juan Zapata</a>
+							</div>
+
+							<!-- Collect the nav links, forms, and other content for toggling -->
+							<div id="navbar-collapse-1" class="collapse navbar-collapse">
+								<ul class="nav navbar-nav navbar-right">
+									<li class="active">
+										<a href="#"><span class="glyphicon glyphicon-file"></span> Mis Exámenes</a>
+									</li>
+									<li>
+										<a href="#"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
+									</li>
+									<li>
+										<a href="#"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
+									</li>						
+								</ul>
+							</div><!-- /.navbar-collapse -->
+						</div><!-- /.col -->
+					</div><!-- /.row --> 
+				</div><!-- /.container-fluid -->
+			</nav>
+			
+			<div class="container-fluid">
+				<div class="row outer-content"><!-- col content-->
+					<div id="div-main-content" class="col-xs-12 col-sm-10 col-sm-offset-1 inner-content">				
+				
