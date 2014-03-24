@@ -56,8 +56,8 @@
 				</div>			
 			</header>
 			
-			<nav id="navbar" class="navbar navbar-collapse navbar-default navbar-static-top" role="navigation">
-				<div class="container">
+			<nav id="navbar" class="navbar navbar-default navbar-static-top" role="navigation">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="col-xs-12 col-sm-10 col-sm-offset-1">
 							<!-- Brand and toggle get grouped for better mobile display -->
