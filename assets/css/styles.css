@@ -160,11 +160,6 @@ footer {
 	padding: 20px;
 }
 
-.form-login {
-	width: 250px;
-	margin: 0px auto;
-}
-
 /* MEDIA QUERIES */
 
 @media (max-width: 1003px) {
