@@ -38,26 +38,24 @@ class Home extends CI_Controller {
      */
     public function index()
     { 
-        $data['title'] = "Exámenes - Departamento de Ciencias de la Salud";  
-        $data['activo'] =  TRUE;     
+        $data['title'] = "Exámenes - Departamento de Ciencias de la Salud";          
         $data['navbar']['nombre'] = $this->usuario->get_info_sesion_usuario('nom_doc'); 
         $data['navbar']['apellido'] = $this->usuario->get_info_sesion_usuario('apellido_doc');  
+  
+        if($this->usuario->activo()) {
+            $data['activo'] =  TRUE;
 
-        $this->load->view('template/header', $data); 
-        $this->load->view('content/home/index');
-        $this->load->view('template/footer');   
-    }
+            $this->load->view('template/header', $data); 
+            $this->load->view('content/home/index');
+        }
+        else {
+            $data['activo'] =  FALSE; 
 
-    public function activar()
-    {
-        $data['title'] = "Exámenes - Departamento de Ciencias de la Salud";  
-        $data['activo'] =  FALSE;     
-        $data['navbar']['nombre'] = $this->usuario->get_info_sesion_usuario('nom_doc'); 
-        $data['navbar']['apellido'] = $this->usuario->get_info_sesion_usuario('apellido_doc');  
+            $this->load->view('template/header', $data); 
+            $this->load->view('content/home/activar');
+        }
 
-        $this->load->view('template/header', $data); 
-        $this->load->view('content/home/activar');
-        $this->load->view('template/footer');   
+        $this->load->view('template/footer');  
     }
 }    
 

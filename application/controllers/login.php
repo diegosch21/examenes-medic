@@ -30,14 +30,7 @@ class Login extends CI_Controller {
     {  
     	if($this->usuario->logueado())
     	{   	
-    		if($this->usuario->activo())  // Usuario con cuenta activa. (cambió la contraseña por defecto).
-    		{	   		
-    			redirect('home');    			
-    		}
-    		else // El usuario debe activar su cuenta.
-    		{
-    			redirect('home/activar');  
-    		}  
+    		redirect('home');   
     	}
     	else
     	{     
