@@ -1,8 +1,3 @@
-<!--
-	AUTOR		Fernando Andrés Prieto
-	AUTOR		Diego Martín Schwindt
-	COPYRIGHT	Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
--->
 					</div> <!-- col content-->
 				</div><!-- row content-->
 			</div><!-- .container-fluid -->	
@@ -33,3 +28,9 @@
 		</div><!-- #wrapper -->		
 	</body>
 </html>
+
+<!--
+	AUTOR		Fernando Andrés Prieto
+	AUTOR		Diego Martín Schwindt
+	COPYRIGHT	Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
+-->

@@ -13,8 +13,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Usuario
 {
-	private $CI;
-	
+	private $CI;	
 	
 	function __construct()
 	{            
@@ -34,9 +33,9 @@ class Usuario
 	public function login($legajo, $password)
 	{
 		$data_usuario = $this->CI->docentes_model->get_credenciales($legajo, $password);
-
-		if($data_usuario) 
-		{
+		if(count($data_usuario) > 0) {
+			
+			$data_usuario =  $data_usuario[0];
 			$this->CI->session->set_userdata('usuario', $data_usuario);
 			return TRUE;
 		}
@@ -64,6 +63,7 @@ class Usuario
 	public function logueado()
     {
     	return $this->CI->session->userdata('usuario');	
+
     }
     
     /**
@@ -77,7 +77,7 @@ class Usuario
 	public function get_info_sesion_usuario($campo)
 	{
 
-		$data_usuario = logueado();
+		$data_usuario = $this->logueado();
 
 		return $data_usuario[$campo];
 	}
@@ -90,16 +90,15 @@ class Usuario
 	 * @param	string $campo
 	 * @param	string $valor
 	 */
-	public function setInfoSesionUsuario($campo, $valor)
+	public function set_info_sesion_usuario($campo, $valor)
 	{
+		$data_usuario = $this->logueado();
 
-		$data_usuario = logueado();
-		
 		if($data_usuario) {
+
 			$data_usuario[$campo] = $valor;
 			$this->CI->session->set_userdata('usuario',$data_usuario);
 		}
-
 	}
 
 	/**

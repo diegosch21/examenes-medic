@@ -21,7 +21,7 @@ class Login extends CI_Controller {
     }
 
     /**
-     * Carga la vista apropiada dependiendo si es un usuario 
+     * Carga la vista apropiada dependiendo si el usuario 
      * se encuentra logueado o debe loguearse.
      *
      * @access  public
@@ -41,7 +41,7 @@ class Login extends CI_Controller {
     	}
     	else
     	{     
-    		$data['title'] = "Exámenes - Departamento de Ciencias de la Salud";
+    		$data['title'] = "Departamento de Ciencias de la Salud";
 
 			$this->load->view('template/header', $data);
 		    $this->load->view('content/login/index');
@@ -55,10 +55,13 @@ class Login extends CI_Controller {
      *
      * @access  public
      */
-	public function login()
+	public function loguear_usuario()
 	{	 
-		$this->user->login();
-		$this->index();
+        $legajo = $this->input->post('legajo');
+        $password = $this->input->post('password');
+
+        $this->usuario->login($legajo, $password);
+        $this->index();                    
 	}
 
 	/**
@@ -66,11 +69,12 @@ class Login extends CI_Controller {
      *
      * @access  public
      */
-	public function logout()
+	public function desloguear_usuario()
 	{
-		$this->user->logout();  
+		$this->usuario->logout();  
 		$this->index();
 	}
+
 }    
 
 /* Fin del archivo login.php */

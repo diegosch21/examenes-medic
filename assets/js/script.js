@@ -15,8 +15,12 @@ function calcular_altura_main_content() {
 	var header = $('#header-image').css('height').split("px");
 		header = header[0];
 
-	var navbar = $('#navbar').css('height').split("px");
-	navbar = navbar[0];
+	var navbar = 0;
+
+	if($('#navbar')[0]) { //si existe el elemento
+		navbar = $('#navbar').css('height').split("px");
+		navbar = navbar[0];
+	}
 
 	var footer = $('footer').css('height').split("px");
 	footer = footer[0];
