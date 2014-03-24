@@ -42,18 +42,24 @@
 						<div class="header-logo logo-uns"></div>
 						<div class="header-logo logo-dcs"></div>
 						
-						<div class="header-texto">
-							<div class="header-texto-linea1">
-								<span class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
+						<div id="header-texto" class="header-texto">
+							<div id="header-texto-linea1" class="header-texto-linea1">
+								<span id="header-texto-linea1-uns" class="header-texto-linea1-uns">UNIVERSIDAD NACIONAL DEL SUR -</span>
 								<span class="header-texto-linea1-dpto">DEPARTAMENTO DE CIENCIAS DE LA SALUD</span>
 							</div>
-							<div class="header-texto-linea2">
+							<div id="header-texto-linea2" class="header-texto-linea2">
 								<span>LABORATORIO DE COMPETENCIAS PROFESIONALES</span>
 							</div>
 						</div>
 						
-					</div>				
-				</div>			
+					</div>
+					<?php
+						if(! isset($navbar))							
+						{
+							echo '<div id="header-sombra" class="header-sombra"></div>';
+						}
+					?>				
+				</div>		
 			</header>			
 			
 			<?php 
@@ -61,10 +67,6 @@
 				{
 					$this->view('template/navbar', $navbar);
 				} 
-				else 
-				{
-					echo '<div class="header-sombra"></div>';
-				}
 			?>
 			
 			<div class="container-fluid">

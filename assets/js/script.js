@@ -5,13 +5,52 @@
 */
 
 $(document).ready(function(){	 				
-	calcular_altura_main_content();
+	calculos_visualizacion();
 
 	$(window).resize(function() {
-		calcular_altura_main_content();
+		calculos_visualizacion();
 	});
 
 });
+
+function calculos_visualizacion() {
+	centrar_contenido_header_footer();
+	calcular_altura_main_content();
+}
+
+
+function centrar_contenido_header_footer() {
+
+	$('#header-texto').css('margin-top', 0);
+
+	var header_texto = $('#header-texto').css('height').split("px");
+		header_texto = header_texto[0];
+
+	var header_image = $('#header-image').css('height').split("px");
+		header_image = header_image[0];
+
+	var header_image_padding_top = $('#header-image').css('padding-top').split("px");
+		header_image_padding_top = header_image_padding_top[0];
+
+	var header_image_padding_bottom = $('#header-image').css('padding-bottom').split("px");
+		header_image_padding_bottom = header_image_padding_bottom[0];
+
+	var margin_top = (header_image - header_image_padding_top - header_image_padding_bottom - header_texto) / 2;
+
+	if(margin_top < 0) {
+		margin_top = 0;
+	}
+
+	$('#header-texto').css('margin-top', margin_top);
+
+	if($('#header-sombra').length > 0) { //si se esta mostrando la sombra del header
+
+		var header_principal = $('#header-principal').css('height').split("px");
+		header_principal = header_principal[0];
+
+		$('#header-sombra').css('top', header_principal+'px');
+	}
+}
 
 function calcular_altura_main_content() {
 
@@ -33,9 +72,11 @@ function calcular_altura_main_content() {
 
 	var margin_top = wrapper - header - navbar - footer;
 
-	if(margin_top > 0) {
-		$('#div-main-content').css('min-height', wrapper - header - navbar - footer);
+	if(margin_top < 0) {
+		margin_top = 0;		
 	}
+
+	$('#div-main-content').css('min-height', margin_top);
 }
 
 function centrar_contenido(contenido) {
