@@ -80,9 +80,7 @@
 					</div>				
 				</div>			
 			</header>
-
 			
-
 			<nav id="navbar" class="navbar navbar-collapse navbar-default navbar-static-top" role="navigation">
 				<div class="container">
 					<div class="row">
