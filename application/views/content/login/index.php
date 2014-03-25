@@ -18,6 +18,9 @@
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
 
+		<?php if (function_exists('validation_errors')) echo validation_errors(); ?>  <!-- aplicar estilo, divs, etc -->
+		<?php if (isset($error_login)) echo $error_login; ?>	 <!-- aplicar estilo, divs, etc -->
+
 	</form>
 
 </div>

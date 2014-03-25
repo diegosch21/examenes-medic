@@ -33,6 +33,7 @@ class Usuario
 	public function login($legajo, $password)
 	{
 		$data_usuario = $this->CI->docentes_model->get_credenciales($legajo, $password);
+		
 		if(count($data_usuario) > 0) {
 			
 			$data_usuario =  $data_usuario[0];
@@ -117,6 +118,7 @@ class Usuario
 	 * Verifica que el usuario tenga permiso de acceso.
 	 *
 	 * @access	public
+	 * @param 	int $privilegio nivel de privilegio requerido
 	 * @return	bool - TRUE si está logueado, activo, y su privilegio es mayor o igual al requerido (por default, 0)
 	 */
 	public function acceso_permitido($privilegio = PRIVILEGIO_DOCENTE)
@@ -125,6 +127,35 @@ class Usuario
 				$this->activo() &&
 				$this->get_info_sesion_usuario('privilegio') >= $privilegio;
 	}
+
+
+	/**
+	 *  Setea en la sesión la actividad actual
+	 *
+	 * @access public
+	 * @param string $actual actividad actual del usuario
+	 */
+	public function set_actividad_actual($actual)
+	{
+		if($actual==NULL)
+			$this->CI->session->unset_userdata('actividad_actual');
+		else
+			$this->CI->session->set_userdata('actividad_actual', $actual);
+
+	}
+
+	/**
+	 * Obtiene la actividad actual del usuario, guardad en la sesión
+     *
+	 * @access	public
+	 * @return 	string | FALSE
+ 	 */
+	public function get_actividad_actual()
+	{
+		return $this->CI->session->userdata('actividad_actual');	
+	}
+
+
 }
 
 /* Fin del archivo file Usuario.php */

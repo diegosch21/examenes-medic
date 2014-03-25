@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Login
+ * Controlador Login
  *
  *@package      controllers
  *@author       Fernando Andrés Prieto
@@ -13,11 +13,13 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-	public function __construct()
+    private $view_data;
+	
+    public function __construct()
     {
         parent::__construct();
     
-   		$this->load->model('docentes_model');
+
     }
 
     /**
@@ -25,6 +27,7 @@ class Login extends CI_Controller {
      * se encuentra logueado o debe loguearse.
      *
      * @access  public
+     * 
      */
     public function index()
     {  
@@ -34,10 +37,10 @@ class Login extends CI_Controller {
     	}
     	else
     	{     
-    		$data['title'] = "Departamento de Ciencias de la Salud";
+    		$this->view_data['title'] = "Departamento de Ciencias de la Salud";
 
-			$this->load->view('template/header', $data);
-		    $this->load->view('content/login/index');
+            $this->load->view('template/header', $this->view_data);
+		    $this->load->view('content/login/index', $this->view_data);  //muestra errores si los hubo
 		    $this->load->view('template/footer'); 	  		
     	}
     	
@@ -50,11 +53,30 @@ class Login extends CI_Controller {
      */
 	public function loguear_usuario()
 	{	 
-        $legajo = $this->input->post('legajo');
-        $password = $this->input->post('password');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('legajo', 'Legajo', 'required|numeric');
+        $this->form_validation->set_rules('password', 'Password', 'required');
 
-        $this->usuario->login($legajo, $password);
-        $this->index();                    
+        if ($this->form_validation->run())  //solo intenta loguear si cumple la validacion
+        {
+            
+            $legajo = $this->input->post('legajo',TRUE); //2º param: filtro XSS
+            $password = $this->input->post('password',TRUE);
+
+            if($this->usuario->login($legajo, $password))
+            { 
+                redirect('home'); 
+
+            }
+            else
+            {
+                $this->view_data['error_login'] = 'Legajo o contraseña incorrectos';
+                $this->index();
+            }
+
+        } 
+        else
+            $this->index();    //muestra los errores de validación si hay                
 	}
 
 	/**
@@ -65,7 +87,7 @@ class Login extends CI_Controller {
 	public function desloguear_usuario()
 	{
 		$this->usuario->logout();  
-		$this->index();
+		redirect('login');
 	}
 
 }    
