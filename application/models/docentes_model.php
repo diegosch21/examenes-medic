@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Modelo docente
+ * Modelo docentes
  *
  *@package      models
  *@author       Fernando Andrés Prieto
@@ -11,9 +11,11 @@
 
 class Docentes_model extends CI_Model {
 
+	private $docente_actual;
+	
 	public function __construct()
 	{
-		$this->load->database();
+		$this->docente_actual = $this->usuario->logueado();
 	}
 
 	/**
@@ -22,16 +24,19 @@ class Docentes_model extends CI_Model {
 	 * @access	public
 	 * @param	string $legajo
 	 * @param	string $password
-	 * @return	array - Legajo, apellido, nombre, activo, privilegio del docente | NULL si legajo y/o password no son validos
+	 * @return	array - datos del docente | NULL si legajo y/o password no son validos
 	 */
 	public function get_credenciales($legajo, $password)
 	{
-		$query_string = "SELECT leg_doc, apellido_doc, nom_doc, activo, privilegio FROM docentes WHERE leg_doc = {$legajo} AND pass = MD5('{$password}')";
+		$query_string = "SELECT leg_doc,apellido_doc,nom_doc,dni_doc,email_doc,tel_doc,activo,privilegio FROM docentes WHERE leg_doc = ? AND pass = MD5(?)";
 
-		$query = $this->db->query($query_string);
+		$query = $this->db->query($query_string,array($legajo,$password));
 
-		return $query->result_array();
+		return $query->row_array();
 	}
+
+
+	
 	
 }
 

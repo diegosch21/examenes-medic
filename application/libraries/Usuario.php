@@ -18,7 +18,7 @@ class Usuario
 	function __construct()
 	{            
         $this->CI =& get_instance();
-        $this->CI->load->model('docentes_model');
+        //modelo docentes cargado en el autoload
 	}
 
 	/**
@@ -34,9 +34,8 @@ class Usuario
 	{
 		$data_usuario = $this->CI->docentes_model->get_credenciales($legajo, $password);
 		
-		if(count($data_usuario) > 0) {
+		if($data_usuario) {
 			
-			$data_usuario =  $data_usuario[0];
 			$this->CI->session->set_userdata('usuario', $data_usuario);
 			return TRUE;
 		}
