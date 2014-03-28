@@ -70,7 +70,7 @@ class Login extends CI_Controller {
             }
             else
             {
-                $this->view_data['error_login'] = 'Legajo o contraseña incorrectos';
+                $this->view_data['error_login'] = 'Legajo o contraseña incorrectos'; //discriminar error 
                 $this->index();
             }
 
