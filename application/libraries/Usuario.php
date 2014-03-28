@@ -33,7 +33,7 @@ class Usuario
 	public function login($legajo, $password)
 	{
 		$data_usuario = $this->CI->docentes_model->get_credenciales($legajo, $password);
-		
+
 		if($data_usuario) {
 			
 			$this->CI->session->set_userdata('usuario', $data_usuario);

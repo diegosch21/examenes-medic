@@ -66,7 +66,6 @@ class Login extends CI_Controller {
             if($this->usuario->login($legajo, $password))
             { 
                 redirect('home'); 
-
             }
             else
             {
