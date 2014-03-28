@@ -30,7 +30,7 @@ class Guias_model extends CI_Model {
 	public function get_guias_catedra($cod_catedra)
 	{
 		$query_string = "SELECT DISTINCT id_guia,nro_guia,tit_guia,subtit_guia FROM guias
-				WHERE cod_cat = ?";
+				WHERE cod_cat = ? ORDER BY nro_guia ASC";
 		$query = $this->db->query($query_string,array($cod_catedra));
 	
 		return $query->result_array();

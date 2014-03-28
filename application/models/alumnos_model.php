@@ -31,7 +31,7 @@ class Alumnos_model extends CI_Model {
 	{
 		$query_string = "SELECT DISTINCT lu_alu,apellido_alu,nom_alu,dni_alu
 				FROM alumnos NATURAL JOIN alumnos_catedras NATURAL JOIN catedras
-				WHERE cod_cat = ?";
+				WHERE cod_cat = ? ORDER BY lu_alu ASC";
 		$query = $this->db->query($query_string,array($cod_catedra));
 	
 		return $query->result_array();

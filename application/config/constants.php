@@ -55,8 +55,5 @@ define('PERMISO_TOTAL', 1); //Permiso en cátedra: puede tomar examen, cargar y 
 define('NO_SELECTED', -1);
 
 
-define('NO_SELECTED', -1); 
-
-
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
