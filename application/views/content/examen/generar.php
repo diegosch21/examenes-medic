@@ -9,7 +9,7 @@
 
 <div id="div-content">
 
-	<form action="<?php site_url('examen/evaluar');?>">
+	<form action="<?php echo site_url('examen/generar');?>" method="post">
 
 		<?php
 

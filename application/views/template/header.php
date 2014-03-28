@@ -33,7 +33,7 @@
 	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 	 			
 	</head>
-	<body>
+	<body data-site-url="<?php echo site_url(); ?>">
 		<div class="wrapper">	
 
 			<header id="header-principal" class="container-fluid">
