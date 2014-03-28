@@ -74,13 +74,13 @@
 			if(!isset($guias)) // si no existen guías
 			{
 				echo 	'<select id="select-guia" name="guia" data-live-search="true" disabled>
-							<option value="'.NO_SELECTED.'">Seleccione una Cátedra</option>
+							<option value="'.NO_SELECTED.'">Seleccione una Guía</option>
 						 </select>';
 			}
 			else
 			{ 
 				echo '<select id="select-guia" name="guia" data-live-search="true">
-							<option value="'.NO_SELECTED.'">Seleccione una Cátedra</option>';
+							<option value="'.NO_SELECTED.'">Seleccione una Guía</option>';
 
 				foreach ($guias['list'] as $indice => $guia): 
 					if($indice == $guias['selected'])
