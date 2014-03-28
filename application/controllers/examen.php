@@ -259,12 +259,12 @@ class Examen extends CI_Controller {
         {
             $catedras = $this->_catedras($cod_carr); 
             if(count($catedras)>0)
-                $this->util->json_response(array(TRUE,STATUS_OK,$catedras));    
+                $this->util->json_response(TRUE,STATUS_OK,$catedras);    
             else
-                $this->util->json_response(array(FALSE,STATUS_INVALID_PARAM,"")); 
+                $this->util->json_response(FALSE,STATUS_INVALID_PARAM,""); 
         }
         else
-            $this->util->json_response(array(FALSE,STATUS_EMPTY_POST,""));
+            $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
 
     }
 
