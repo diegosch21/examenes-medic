@@ -59,5 +59,5 @@ class Catedras_model extends CI_Model {
 	
 }
 
-/* Fin del archivo file catedras_model.php */
+/* Fin del archivo catedras_model.php */
 /* Location: ./application/models/catedras_model.php */

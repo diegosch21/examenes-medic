@@ -42,5 +42,5 @@ class Alumnos_model extends CI_Model {
 	
 }
 
-/* Fin del archivo file alumnos_model.php */
+/* Fin del archivo alumnos_model.php */
 /* Location: ./application/models/alumnos_model.php */

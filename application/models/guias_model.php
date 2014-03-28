@@ -41,5 +41,5 @@ class Guias_model extends CI_Model {
 	
 }
 
-/* Fin del archivo file guias_model.php */
+/* Fin del archivo guias_model.php */
 /* Location: ./application/models/guias_model.php */

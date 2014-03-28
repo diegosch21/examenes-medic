@@ -40,5 +40,5 @@ class Docentes_model extends CI_Model {
 	
 }
 
-/* Fin del archivo file docentes_model.php */
+/* Fin del archivo docentes_model.php */
 /* Location: ./application/models/docentes_model.php */

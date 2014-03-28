@@ -31,6 +31,7 @@ class Examen extends CI_Controller {
             $this->privilegio = $this->usuario->get_info_sesion_usuario('privilegio'); 
 
             $this->load->model(array('carreras_model','catedras_model','guias_model', 'alumnos_model'));
+
                 
         }
         else if($this->usuario->logueado()) //no tiene privilegio, pero esta logueado
@@ -60,74 +61,128 @@ class Examen extends CI_Controller {
     }
 
     /**
-     * Redirecciona al controlador correspondiente a la actividad actual del usuario
-     *
-     * @param array $selects Arreglo con las opciones seleccionadas por defecto (ej: $selects['carrera'] = codigo)
+     * Controlador de la pagina de seleccion de catedra-guia-alumno
+     *  
+     * En POST se pueden mandar selecciones default: carrera (codigo), catedra (codigo), guia (id), alumno (lu)
+     * 
+     * @param $selects array - Arreglo con las opciones seleccionadas por defecto (ej: $selects['carrera'] = codigo)
      * @access  public
      */
     public function generar($selects = NULL)
     { 
         $this->view_data['title'] = "Generar Examen - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
-
+        
+        //FECHA ACTUAL
+        $this->view_data['fecha'] = date('d/m/Y');
         
         //LISTA CARRERAS
         $carreras = $this->_carreras();
-
         //DEBUG
         echo 'Carreras del docente:<br/>';
         foreach ($carreras as $fila)
-        {
             var_dump($fila); echo '<br/>';
-        }
 
-
-        //Carrera seleccionada
-        if(isset($carreras[0]))
-            $carrera = $carreras[0];     //elegir de la select
-        if(isset($carrera) && $carrera)
+        if(count($carreras)>0)  //si no hay carreras no manda datos a la view
         {
-            
-            //LISTA CATEDRAS DE LA CARRERA
-            $catedras = $this->_catedras($carrera['cod_carr']);   
+            $this->view_data['carreras']['list'] = $carreras;  //en la view: $carreras['list'][indice]['cod_carr'].
+            $index_carrera = 0; //Por defecto, primer carrera
 
-            //DEBUG
-            echo 'Catedras del docente de '.$carrera['nom_carr'].':<br/>';
-            foreach ($catedras as $fila) 
+            //Busco en post si hay carrera seleccionada por default, y actualiza el index seleccionado de la lista
+            $cod_carr_default = $this->input->post('carrera') ;
+            if($cod_carr_default)
             {
-                var_dump($fila); echo '<br/>';
+                $index_carrera = $this->util->buscar_indice($carreras,'cod_carr',$cod_carr_default);
+                //Si el codigo es erroneo, queda no_selected
             }
-        }
+                
+            $this->view_data['carreras']['selected'] = $index_carrera;
 
-        //CATEDRA SELECCIONADA
-        if(isset($catedras[0]))
-            $catedra = $catedras[0];     //elegir de la select
-        if(isset($catedra) && $catedra)
-        {
-            //LISTA GUIAS DE LA CATEDRA
-            $guias = $this->_guias($catedra['cod_cat']);
-
-            //DEBUG
-            echo 'Guias de la catedra '.$catedra['nom_cat'].':<br/>';
-            foreach ($guias as $fila) 
+            //Si no hay carrera seleccionada, las demas listas están vacías.
+            if($index_carrera >= 0 && isset($carreras[$index_carrera]))
             {
-                var_dump($fila); echo '<br/>';
-            }
+                $carrera = $carreras[$index_carrera];   //Carrera seleccionada
 
-            //LISTA ALUMNOS DE LA CATEDRA
-            $alumnos = $this->_alumnos($catedra['cod_cat']);
+                //LISTA CATEDRAS DE LA CARRERA
+                $catedras = $this->_catedras($carrera['cod_carr']); 
+                //DEBUG
+                echo 'Catedras del docente de '.$carrera['nom_carr'].':<br/>';
+                foreach ($catedras as $fila)
+                    var_dump($fila); echo '<br/>';
+                
+        
+                if(count($catedras)>0)  //si no hay catedras no manda datos a la view
+                {
+                    $this->view_data['catedras']['list'] = $catedras;  //en la view: $catedras['list'][indice]['cod_cat'].
+                    $index_catedra = 0; //Por defecto, primera catedra
 
-            //DEBUG
-            echo 'alumnos de la catedra '.$catedra['nom_cat'].':<br/>';
-            foreach ($alumnos as $fila) 
-            {
-                var_dump($fila); echo '<br/>';
-            }
-        }
+                    //Busco en post si hay catedra seleccionada por default, y actualiza el index seleccionado de la lista
+                    $cod_cat_default = $this->input->post('catedra') ;
+                    if($cod_cat_default)
+                    {
+                        $index_catedra = $this->util->buscar_indice($catedras,'cod_cat',$cod_cat_default);
+                    }
+                    
+                    $this->view_data['catedras']['selected'] = $index_catedra;
 
+                    //Si no hay catedra seleccionada, las demas listas están vacías.
+                    if($index_catedra >= 0 && isset($catedras[$index_carrera]))
+                    {
+                        $catedra= $catedras[$index_catedra];   //Catedra seleccionada
+
+                        //LISTA GUIAS DE LA CATEDRA
+                        $guias = $this->_guias($catedra['cod_cat']);
+                        
+                        //DEBUG
+                        echo 'Guias de la catedra '.$catedra['nom_cat'].':<br/>';
+                        foreach ($guias as $fila) 
+                           var_dump($fila); echo '<br/>';
+                        
+                    
+                        if(count($guias)>0)  //si no hay guias no manda datos a la view
+                        {
+                            $this->view_data['guias']['list'] = $guias;  //en la view: $guias['list'][indice]['id_guia'].
+                            $index_guia = NO_SELECTED; //Por defecto, no seleccionada
+
+                            //Busco en post si hay guia seleccionada por default, y actualiza el index seleccionado de la lista
+                            $id_guia_default = $this->input->post('guia') ;
+                            if($id_guia_default) 
+                            {
+                                $index_guia = $this->util->buscar_indice($guias,'id_guia',$id_guia_default);
+                            }
+                            $this->view_data['guias']['selected'] = $index_guia;
+
+                        } //hay guias
+
+                        //LISTA ALUMNOS DE LA CATEDRA
+                        $alumnos = $this->_alumnos($catedra['cod_cat']);
+                        //DEBUG
+                        echo 'alumnos de la catedra '.$catedra['nom_cat'].':<br/>';
+                        foreach ($alumnos as $fila) 
+                            var_dump($fila); echo '<br/>';
+                        
+                      
+                        if(count($alumnos)>0)  //si no hay guias no manda datos a la view
+                        {
+                            $this->view_data['alumnos']['list'] = $alumnos;  //en la view: $alumnos['list'][indice]['lu_alu'].
+                            $index_alumno = NO_SELECTED; //Por defecto, no seleccionado
+
+                            //Busco en post si hay guia seleccionada por default, y actualiza el index seleccionado de la lista
+                            $lu_alu_default = $this->input->post('alumno') ;
+                            if($lu_alu_default) 
+                            {
+                                $index_alumno = $this->util->buscar_indice($alumnos,'lu_alu',$lu_alu_default);
+                            }
+                            $this->view_data['alumnos']['selected'] = $index_alumno;
+
+                        } //hay alumnos
+
+                    } //hay catedra seleccionada
+                }//hay catedras
+            }// hay carrera seleccionada
+        }//hay carreras
         
         $this->load->view('content/examen/generar', $this->view_data);
-        
 
         $this->load->view('template/footer');  
     }

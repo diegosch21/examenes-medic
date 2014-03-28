@@ -58,5 +58,5 @@ class Carreras_model extends CI_Model {
 	
 }
 
-/* Fin del archivo file carreras_model.php */
+/* Fin del archivo carreras_model.php */
 /* Location: ./application/models/carreras_model.php */

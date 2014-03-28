@@ -52,6 +52,8 @@ define('PERMISO_NULO',-1); //Permiso en cátedra: no puede tomar examen
 define('PERMISO_BASICO',0); //Permiso en cátedra: puede tomar examen y asociar alumno
 define('PERMISO_TOTAL', 1); //Permiso en cátedra: puede tomar examen, cargar y modificar guias, asociar y dar de baja alumnos
 
+define('NO_SELECTED', -1); 
+
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

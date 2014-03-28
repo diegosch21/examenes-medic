@@ -157,5 +157,5 @@ class Usuario
 
 }
 
-/* Fin del archivo file Usuario.php */
+/* Fin del archivo Usuario.php */
 /* Ubicación: ./application/libraries/Usuario.php */
