@@ -54,6 +54,11 @@ define('PERMISO_TOTAL', 1); //Permiso en cátedra: puede tomar examen, cargar y 
 
 define('NO_SELECTED', -1);
 
+define('STATUS_OK', 100);
+define('STATUS_EMPTY_POST', 101);
+define('STATUS_INVALID_PARAM', 102);
+
+
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
