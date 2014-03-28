@@ -193,7 +193,8 @@ class Examen extends CI_Controller {
      * @access  private
      * @return  array  - lista de carreras del usuario
      */
-    function _carreras() {
+    function _carreras() 
+    {
         if($this->privilegio>=PRIVILEGIO_ADMIN)  //si es admin muestra todas las carreras
             $carreras = $this->carreras_model->get_carreras();
         else
@@ -209,8 +210,8 @@ class Examen extends CI_Controller {
      * @access  private
      * @return  array  - lista de catedras del usuario y la carrera
      */
-    function _catedras($cod_carr) {
-        
+    function _catedras($cod_carr) 
+    {
         if($this->privilegio>=PRIVILEGIO_ADMIN)  //si es admin muestra todas las catedras de la carrera
                 $catedras = $this->catedras_model->get_catedras_carrera($cod_carr);
             else
@@ -226,8 +227,8 @@ class Examen extends CI_Controller {
      * @access  private
      * @return  array  - lista de guias de la catedra elegida
      */
-    function _guias($cod_cat) {
-        
+    function _guias($cod_cat) 
+    {
         return $this->guias_model->get_guias_catedra($cod_cat);
 
     }
@@ -239,9 +240,43 @@ class Examen extends CI_Controller {
      * @access  private
      * @return  array  - lista de alumnos de la catedra elegida
      */
-    function _alumnos($cod_cat) {
-        
+    function _alumnos($cod_cat) 
+    {
         return $this->alumnos_model->get_alumnos_catedra($cod_cat);
+
+    }
+
+    /**
+     * Controlador de la lista de catedras (accedido mediante AJAX). Retorna JSON
+     *  
+     * En POST se envia parametro: carrera (codigo)
+     * 
+     * @access  public
+     */
+    public function get_catedras() {
+        $cod_carr = $this->input->post('carrera') ;
+        if($cod_carr)
+        {
+            $catedras = $this->_catedras($cod_carr); 
+            if(count($catedras)>0)
+                $this->util->json_response(array(TRUE,STATUS_OK,$catedras));    
+            else
+                $this->util->json_response(array(FALSE,STATUS_INVALID_PARAM,"")); 
+        }
+        else
+            $this->util->json_response(array(FALSE,STATUS_EMPTY_POST,""));
+
+    }
+
+       /**
+     * Controlador de la lista de guias y alumnos (accedido mediante AJAX). Retorna JSON
+     *  
+     * En POST se envia parametro: catedra (codigo)
+     * 
+     * @access  public
+     */
+    public function get_guias_alumnos() {
+
 
     }
 
