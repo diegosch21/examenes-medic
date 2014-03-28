@@ -49,7 +49,7 @@ class Carreras_model extends CI_Model {
 		$query_string = "SELECT DISTINCT cod_carr,nom_carr
 			FROM carreras NATURAL JOIN catedras NATURAL JOIN docentes_catedras NATURAL JOIN docentes
 			WHERE leg_doc = ?";
-		$query = $this->db->query($query_string,array($legajo));
+		$query = $this->db->query($query_string,array("000000"));
 			
 		return $query->result_array();
 
