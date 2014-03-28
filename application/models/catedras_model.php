@@ -30,7 +30,7 @@ class Catedras_model extends CI_Model {
 	public function get_catedras_carrera($cod_carrera)
 	{
 		$query_string = "SELECT DISTINCT cod_cat,nom_cat FROM catedras
-				WHERE cod_carr = ?";
+				WHERE cod_carr = ? ORDER BY cod_cat ASC";
 		$query = $this->db->query($query_string,array($cod_carrera));
 	
 		return $query->result_array();
@@ -50,7 +50,7 @@ class Catedras_model extends CI_Model {
 	{
 		$query_string = "SELECT DISTINCT cod_cat,nom_cat
 				FROM catedras NATURAL JOIN docentes_catedras NATURAL JOIN docentes
-				WHERE leg_doc = ? AND cod_carr = ?";
+				WHERE leg_doc = ? AND cod_carr = ? ORDER BY cod_cat ASC";
 		$query = $this->db->query($query_string,array($legajo,$cod_carrera));
 			
 		return $query->result_array();
