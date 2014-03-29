@@ -29,7 +29,7 @@ console.log("aca");
 					url: $('body').data('site-url')+"/examen/get_catedras", // the file to call
 
 					success: function(json) { 			    
-console.log(json);
+						console.log(json);
 						var catedras = $.parseJSON(json);	
 
 						if(catedras.ok == false) {

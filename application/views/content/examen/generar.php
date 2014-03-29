@@ -39,7 +39,7 @@
 
 				endforeach; 
 
-				echo '<select>';
+				echo '</select>';
 			}
 
 			/* SELECT DE CATEDRAS */
@@ -66,7 +66,7 @@
 					}
 
 				endforeach; 
-				echo '<select>';
+				echo '</select>';
 			}
 
 			/* SELECT DE GUIAS */
@@ -93,7 +93,7 @@
 					}
 
 				endforeach; 
-				echo '<select>';
+				echo '</select>';
 			}
 
 			/* SELECT DE ALUMNOS */
@@ -120,7 +120,7 @@
 					}
 
 				endforeach; 
-				echo '<select>';
+				echo '</select>';
 			}
 		?>
 

@@ -268,7 +268,7 @@ class Examen extends CI_Controller {
 
     }
 
-       /**
+    /**
      * Controlador de la lista de guias y alumnos (accedido mediante AJAX). Retorna JSON
      *  
      * En POST se envia parametro: catedra (codigo)
@@ -276,6 +276,17 @@ class Examen extends CI_Controller {
      * @access  public
      */
     public function get_guias_alumnos() {
+        $cod_cat = $this->input->post('catedra') ;
+        if($cod_cat)
+        {
+            $guias = $this->_guias($cod_cat); 
+            $alumnos = $this->_alumnos($cod_cat); 
+            
+            $this->util->json_response(TRUE,STATUS_OK,array('guias' => $guias,'alumnos' => $alumnos);    
+            
+        }
+        else
+            $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
 
 
     }
