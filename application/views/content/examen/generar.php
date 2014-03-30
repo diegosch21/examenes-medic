@@ -12,6 +12,8 @@
 	<form action="<?php echo site_url('examen/evaluar');?>" method="post">
 
 		<?php
+			/* FECHA */
+			<p>Campo fecha. Name=fecha</p>
 
 			/* SELECT DE CARRERAS */
 

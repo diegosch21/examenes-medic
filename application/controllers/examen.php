@@ -290,7 +290,8 @@ class Examen extends CI_Controller {
     /**
      * Controlador de la pagina de muestra de la guia para evaluar
      *  
-     * En POST se reciben las opciones seleccionadas: carrera (codigo), catedra (codigo), guia (id), alumno (lu)
+     * En POST se reciben las opciones seleccionadas:
+     * carrera (codigo), catedra (codigo), guia (id), alumno (lu), fecha (timestamp)
      * 
      * @param $seleccion array - Arreglo con las opciones seleccionadas (ej: $seleccion['carrera'] = codigo)
      * @access  public
