@@ -13,7 +13,7 @@
 
 		<?php
 			/* FECHA */
-			<p>Campo fecha. Name=fecha</p>
+			echo '((Campo Fecha. Name=fecha:))<input type="date" name="fecha"/>';
 
 			/* SELECT DE CARRERAS */
 
