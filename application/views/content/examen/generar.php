@@ -9,7 +9,7 @@
 
 <div id="div-content">
 
-	<form action="<?php echo site_url('examen/generar');?>" method="post">
+	<form action="<?php echo site_url('examen/evaluar');?>" method="post">
 
 		<?php
 
@@ -124,7 +124,7 @@
 			}
 		?>
 
-		<a id="btn-cancelar" href="" class="btn btn-default">Cancelar</a>
-		<input id="btn-submit" class="btn btn-primary" type="submit" value="Continuar">	
+		<a id="btn-cancelar" href="<?php echo site_url('home');?>" class="btn btn-default">Cancelar</a>
+		<input id="btn-submit" name="boton" class="btn btn-primary" type="submit" value="Continuar"/>	
 	</form>
 </div>

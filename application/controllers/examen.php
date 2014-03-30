@@ -1,7 +1,8 @@
 <?php 
 
 /**
- * Controlador Examen
+ * Controlador Examen. Encargado de la generación de un examen (armado de listas de catedras, guias y alumnos),
+ * evaluación, y almacenamiento en la BD
  *
  *@package      controllers
  *@author       Fernando Andrés Prieto
@@ -79,9 +80,9 @@ class Examen extends CI_Controller {
         //LISTA CARRERAS
         $carreras = $this->_carreras();
         //DEBUG
-        echo 'Carreras del docente:<br/>';
-        foreach ($carreras as $fila)
-            var_dump($fila); echo '<br/>';
+        //echo 'Carreras del docente:<br/>';
+        //foreach ($carreras as $fila)
+        //    var_dump($fila); echo '<br/>';
 
         if(count($carreras)>0)  //si no hay carreras no manda datos a la view
         {
@@ -106,9 +107,9 @@ class Examen extends CI_Controller {
                 //LISTA CATEDRAS DE LA CARRERA
                 $catedras = $this->_catedras($carrera['cod_carr']); 
                 //DEBUG
-                echo 'Catedras del docente de '.$carrera['nom_carr'].':<br/>';
-                foreach ($catedras as $fila)
-                    var_dump($fila); echo '<br/>';
+                //echo 'Catedras del docente de '.$carrera['nom_carr'].':<br/>';
+                //foreach ($catedras as $fila)
+                //    var_dump($fila); echo '<br/>';
                 
         
                 if(count($catedras)>0)  //si no hay catedras no manda datos a la view
@@ -134,9 +135,9 @@ class Examen extends CI_Controller {
                         $guias = $this->_guias($catedra['cod_cat']);
                         
                         //DEBUG
-                        echo 'Guias de la catedra '.$catedra['nom_cat'].':<br/>';
-                        foreach ($guias as $fila) 
-                           var_dump($fila); echo '<br/>';
+                        //echo 'Guias de la catedra '.$catedra['nom_cat'].':<br/>';
+                        //foreach ($guias as $fila) 
+                        //   var_dump($fila); echo '<br/>';
                         
                     
                         if(count($guias)>0)  //si no hay guias no manda datos a la view
@@ -157,9 +158,9 @@ class Examen extends CI_Controller {
                         //LISTA ALUMNOS DE LA CATEDRA
                         $alumnos = $this->_alumnos($catedra['cod_cat']);
                         //DEBUG
-                        echo 'alumnos de la catedra '.$catedra['nom_cat'].':<br/>';
-                        foreach ($alumnos as $fila) 
-                            var_dump($fila); echo '<br/>';
+                        //echo 'alumnos de la catedra '.$catedra['nom_cat'].':<br/>';
+                        //foreach ($alumnos as $fila) 
+                        //    var_dump($fila); echo '<br/>';
                         
                       
                         if(count($alumnos)>0)  //si no hay guias no manda datos a la view
@@ -200,7 +201,6 @@ class Examen extends CI_Controller {
         else
             $carreras = $this->carreras_model->get_carreras_docente($this->legajo);
         return $carreras;
-
     }
 
     /**
@@ -217,7 +217,6 @@ class Examen extends CI_Controller {
             else
                 $catedras = $this->catedras_model->get_catedras_docente_carrera($this->legajo,$cod_carr);
         return $catedras;
-
     }
 
     /**
@@ -230,7 +229,6 @@ class Examen extends CI_Controller {
     function _guias($cod_cat) 
     {
         return $this->guias_model->get_guias_catedra($cod_cat);
-
     }
 
     /**
@@ -243,7 +241,6 @@ class Examen extends CI_Controller {
     function _alumnos($cod_cat) 
     {
         return $this->alumnos_model->get_alumnos_catedra($cod_cat);
-
     }
 
     /**
@@ -253,7 +250,8 @@ class Examen extends CI_Controller {
      * 
      * @access  public
      */
-    public function get_catedras() {
+    public function get_catedras()
+    {
         $cod_carr = $this->input->post('carrera') ;
         if($cod_carr)
         {
@@ -265,7 +263,6 @@ class Examen extends CI_Controller {
         }
         else
             $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
-
     }
 
     /**
@@ -275,21 +272,39 @@ class Examen extends CI_Controller {
      * 
      * @access  public
      */
-    public function get_guias_alumnos() {
+    public function get_guias_alumnos()
+    {
         $cod_cat = $this->input->post('catedra') ;
         if($cod_cat)
         {
             $guias = $this->_guias($cod_cat); 
             $alumnos = $this->_alumnos($cod_cat); 
             
-            $this->util->json_response(TRUE,STATUS_OK,array('guias' => $guias,'alumnos' => $alumnos);    
+            $this->util->json_response(TRUE,STATUS_OK,array('guias' => $guias,'alumnos' => $alumnos));    
             
         }
         else
             $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
-
-
     }
+
+    /**
+     * Controlador de la pagina de muestra de la guia para evaluar
+     *  
+     * En POST se reciben las opciones seleccionadas: carrera (codigo), catedra (codigo), guia (id), alumno (lu)
+     * 
+     * @param $seleccion array - Arreglo con las opciones seleccionadas (ej: $seleccion['carrera'] = codigo)
+     * @access  public
+     */
+    public function evaluar($seleccion = NULL)
+    {
+        $this->view_data['title'] = "Evaluar Guía - Departamento de Ciencias de la Salud";          
+        $this->load->view('template/header', $this->view_data);
+
+        $this->load->view('content/examen/evaluar', $this->view_data);
+
+        $this->load->view('template/footer'); 
+    }
+
 
 }    
 

@@ -14,32 +14,61 @@ $('document').ready(function() {
 	});
 
 	
+	//Actualizar select catedras al seleccionar carrera
+	$('#select-carrera').change(function(event) {
 
+		event.preventDefault();
+		if($(this).val() != NO_SELECTED) {
 
-
-$('#select-carrera').change(function(event) {
-console.log("aca");
-	event.preventDefault();
-
-	if($(this).val() != NO_SELECTED) {
-
-		$.ajax({ 
-					data: {carrera: $(this).val()}, // get the form data
-					type: "post", // GET or POST
-					url: $('body').data('site-url')+"/examen/get_catedras", // the file to call
+			$.ajax({ 
+					data: {carrera: $(this).val()}, // dato enviado en el post: codigo carrera
+					type: "post", // 
+					url: $('body').data('site-url')+"/examen/get_catedras", // controlador
 
 					success: function(json) { 			    
 						console.log(json);
 						var catedras = $.parseJSON(json);	
 
-						if(catedras.ok == false) {
-							alert("Invalid select value en carreras");
+						if(catedras.ok) {
+							console.log(catedras);
+							//TODO actualizar select catedras
 						}
 						else {
-							console.log(catedras);
-
+							alert("Invalid select value en carreras");
 						}
 					}
-		});
-	}
-});});
+			});
+		}
+	});
+	//Actualizar select guias y alumnos al seleccionar catedra
+	$('#select-catedra').change(function(event) {
+
+		event.preventDefault();
+		if($(this).val() != NO_SELECTED) {
+
+			$.ajax({ 
+					data: {catedra: $(this).val()}, // dato enviado en el post: codigo catedra
+					type: "post", 
+					url: $('body').data('site-url')+"/examen/get_guias_alumnos", // controlador
+
+					success: function(json) { 			    
+						console.log(json);
+						var guias_alumnos = $.parseJSON(json);	
+
+						if(guias_alumnos.ok) {
+							var guias = guias_alumnos.data.guias;
+							console.log(guias);
+							//TODO actualizar select guias
+							var alumnos = guias_alumnos.data.alumnos;
+							console.log(alumnos);
+							//TODO actualizar select alumnos
+
+						}
+						else {
+							alert("Invalid select value en catedras");
+						}
+					}
+			});
+		}
+	});
+});
