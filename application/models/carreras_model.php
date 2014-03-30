@@ -19,6 +19,43 @@ class Carreras_model extends CI_Model {
 
 
 	/**
+	 *	Retorna la carrera con codigoo indicado
+	 *
+	 * @access	public
+	 * @return	array carrera (codigo y nombre)
+	 *
+	 */
+
+	public function get_carrera($cod_carr)
+	{
+		$query_string = "SELECT cod_carr,nom_carr FROM carreras WHERE cod_carr = ?";
+		$query = $this->db->query($query_string,array($cod_carr));
+		
+		return $query->row_array();
+	}
+
+	/**
+	 *	Retorna la carrera con codigoo indicado, verificando que el docente esta asociado
+	 *
+	 * @access	public
+	 * @param 	$legajo int legajo del docente
+	 * @param 	$cod_carr int codigo de la carrera
+	 * @return	array - carreras asociada al docente (codigo y nombre)
+	 *
+	 */
+
+	public function get_carrera_docente($cod_carr,$legajo)
+	{
+		$query_string = "SELECT DISTINCT cod_carr,nom_carr
+			FROM carreras NATURAL JOIN catedras NATURAL JOIN docentes_catedras NATURAL JOIN docentes
+			WHERE leg_doc = ? AND cod_carr = ?";
+		$query = $this->db->query($query_string,array($legajo,$cod_carr));
+			
+		return $query->row_array();
+	}
+
+
+	/**
 	 *	Retorna todas las carreras
 	 *
 	 * @access	public
@@ -32,7 +69,6 @@ class Carreras_model extends CI_Model {
 		$query = $this->db->query($query_string);
 		
 		return $query->result_array();
-
 	}
 
 	/**
@@ -52,7 +88,6 @@ class Carreras_model extends CI_Model {
 		$query = $this->db->query($query_string,array($legajo));
 			
 		return $query->result_array();
-
 	}
 
 	

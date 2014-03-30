@@ -220,9 +220,9 @@ class Examen extends CI_Controller {
     function _catedras($cod_carr) 
     {
         if($this->privilegio>=PRIVILEGIO_ADMIN)  //si es admin muestra todas las catedras de la carrera
-                $catedras = $this->catedras_model->get_catedras_carrera($cod_carr);
-            else
-                $catedras = $this->catedras_model->get_catedras_docente_carrera($this->legajo,$cod_carr);
+            $catedras = $this->catedras_model->get_catedras_carrera($cod_carr);
+        else
+            $catedras = $this->catedras_model->get_catedras_docente_carrera($this->legajo,$cod_carr);
         return $catedras;
     }
 
@@ -311,13 +311,100 @@ class Examen extends CI_Controller {
             redirect('examen/generar');
         }
 
+        //FECHA
+        $fecha = $this->input->post('fecha');
+        if(!$fecha) // || !validar(fecha)
+        {
+            $this->session->set_flashdata('error', 'Fecha inválida');
+            redirect('examen/generar');
+        }
+        $this->view_data['fecha'] = $fecha;
+
+        //CARRERA
+        $cod_carr = $this->input->post('carrera');
+        if(!$cod_carr || $cod_carr==NO_SELECTED)
+        {
+            $this->session->set_flashdata('error', 'Carrera inválida');
+            redirect('examen/generar');
+        }
+        if($this->privilegio>=PRIVILEGIO_ADMIN)  
+            $carrera = $this->carreras_model->get_carrera($cod_carr);
+        else
+            $carrera = $this->carreras_model->get_carrera_docente($cod_carr,$this->legajo);
+        if(!$carrera)
+        {
+            $this->session->set_flashdata('error', 'Carrera inválida');
+            redirect('examen/generar');
+        }
+        else
+        {
+            $this->view_data['carrera'] = $carrera;
+        }
+
+        //CATEDRA
+        $cod_cat = $this->input->post('catedra');
+        if(!$cod_cat || $cod_cat==NO_SELECTED)
+        {
+            $this->session->set_flashdata('error', 'Cátedra inválida');
+            redirect('examen/generar');
+        }
+        if($this->privilegio>=PRIVILEGIO_ADMIN)  
+            $catedra = $this->catedras_model->get_catedra_carrera($cod_cat,$cod_carr);
+        else
+            $catedra = $this->catedras_model->get_catedra_docente_carrera($cod_cat,$this->legajo,$cod_carr);
+        if(!$catedra)
+        {
+            $this->session->set_flashdata('error', 'Cátedra inválida');
+            redirect('examen/generar');
+        }
+        else
+        {
+            $this->view_data['catedra'] = $catedra;
+        }
+
+        //GUIA
+        $id_guia = $this->input->post('guia');
+        if(!$id_guia || $id_guia==NO_SELECTED)
+        {
+            $this->session->set_flashdata('error', 'Guía inválida');
+            redirect('examen/generar');
+        }
+        $guia = $this->guias_model->get_guia_catedra($id_guia,$cod_cat);
+        if(!$guia)
+        {
+            $this->session->set_flashdata('error', 'Guía inválida');
+            redirect('examen/generar');
+        }
+        else
+        {
+            $this->view_data['guia'] = $guia;
+        }
+
+        //ALUMNO
+        $lu_alu = $this->input->post('alumno');
+        if(!$lu_alu || $lu_alu==NO_SELECTED)
+        {
+            $this->session->set_flashdata('error', 'Alumno inválido');
+            redirect('examen/generar');
+        }
+        $alumno = $this->alumnos_model->get_alumno_catedra($lu_alu,$cod_cat);
+        if(!$alumno)
+        {
+            $this->session->set_flashdata('error', 'Alumno inválido');
+            redirect('examen/generar');
+        }
+        else
+        {
+            $this->view_data['alumno'] = $alumno;
+        }
+
+
+
+
+
         $this->view_data['title'] = "Evaluar Guía - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
 
-        //DEBUG
-        $submit = $this->input->post('boton');
-
-        //$cod_carr = $this->input->post('carrera');
 
         $this->load->view('content/examen/evaluar', $this->view_data);
 

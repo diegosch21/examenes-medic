@@ -17,7 +17,6 @@ class Catedras_model extends CI_Model {
 
 	}
 
-
 	/**
 	 *	Retorna todas las catedras de la carrera indicada 
 	 *
@@ -34,7 +33,25 @@ class Catedras_model extends CI_Model {
 		$query = $this->db->query($query_string,array($cod_carrera));
 	
 		return $query->result_array();
+	}
 
+	/**
+	 *	Retorna la catedra de codigo y  de la carrera indicada 
+	 *
+	 * @access	public
+	 * @param 	$cod_carr int codigo de la carrera
+	 * @param 	$cod_cat int codigo de la catedra
+	 * @return	array - catedra de la carrera (codigo y nombre)
+	 *
+	 */
+
+	public function get_catedra_carrera($cod_cat,$cod_carr)
+	{
+		$query_string = "SELECT DISTINCT cod_cat,nom_cat FROM catedras
+				WHERE cod_carr = ? AND cod_cat = ?";
+		$query = $this->db->query($query_string,array($cod_carr,$cod_cat));
+	
+		return $query->row_array();
 	}
 
 	/**
@@ -54,7 +71,27 @@ class Catedras_model extends CI_Model {
 		$query = $this->db->query($query_string,array($legajo,$cod_carrera));
 			
 		return $query->result_array();
+	}
 
+	/**
+	 *	Retorna la catedra de codigo y  de la carrera indicada, verificando asociación al docente 
+	 *
+	 * @access	public
+	 * @param 	$cod_carr int codigo de la carrera
+	 * @param 	$cod_cat int codigo de la catedra
+	 * @param 	$legajo int legajo del docente
+	 * @return	array - catedra de la carrera (codigo y nombre)
+	 *
+	 */
+
+	public function get_catedra_docente_carrera($cod_cat,$legajo,$cod_carr)
+	{
+		$query_string = "SELECT DISTINCT cod_cat,nom_cat
+				FROM catedras NATURAL JOIN docentes_catedras NATURAL JOIN docentes
+				WHERE leg_doc = ? AND cod_carr = ? AND cod_cat = ?";
+		$query = $this->db->query($query_string,array($legajo,$cod_carr,$cod_cat));
+	
+		return $query->row_array();
 	}
 	
 }
