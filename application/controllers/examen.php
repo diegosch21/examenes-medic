@@ -55,7 +55,7 @@ class Examen extends CI_Controller {
     public function index()
     {
         $actividad_actual = $this->usuario->get_actividad_actual();
-        if($actividad_actual == FALSE || $actividad_actual=='generar_examen' )
+        //if($actividad_actual == FALSE || $actividad_actual=='generar_examen' )
             redirect('examen/generar');
         //else
         //    redirect(....)
@@ -73,6 +73,13 @@ class Examen extends CI_Controller {
     { 
         $this->view_data['title'] = "Generar Examen - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
+
+        $this->usuario->set_actividad_actual('generar_examen');
+
+        //Mensaje de error: flashdata en la sesion
+        $error = $this->session->flashdata('error');
+        if($error)
+            $this->view_data['error'] = $error;
         
         //FECHA ACTUAL
         $this->view_data['fecha'] = date('d/m/Y');
@@ -298,8 +305,19 @@ class Examen extends CI_Controller {
      */
     public function evaluar($seleccion = NULL)
     {
+        if(!$this->input->post()) 
+        {
+            $this->session->set_flashdata('error', 'Acceso inválido a la evaluación de un examen');
+            redirect('examen/generar');
+        }
+
         $this->view_data['title'] = "Evaluar Guía - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
+
+        //DEBUG
+        $submit = $this->input->post('boton');
+
+        //$cod_carr = $this->input->post('carrera');
 
         $this->load->view('content/examen/evaluar', $this->view_data);
 

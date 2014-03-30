@@ -129,4 +129,9 @@
 		<a id="btn-cancelar" href="<?php echo site_url('home');?>" class="btn btn-default">Cancelar</a>
 		<input id="btn-submit" name="boton" class="btn btn-primary" type="submit" value="Continuar"/>	
 	</form>
+
+	<?php 
+		if(isset($error))
+			echo 'Mensaje error: '.$error;
+	?>
 </div>
