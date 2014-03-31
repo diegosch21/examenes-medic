@@ -34,7 +34,25 @@ class Guias_model extends CI_Model {
 		$query = $this->db->query($query_string,array($cod_catedra));
 	
 		return $query->result_array();
+	}
 
+	/**
+	 *	Retorna la guia de la catedra e id indicados
+	 *
+	 * @access	public
+	 * @param 	$cod_cat int codigo de la catedra
+	 * @param 	$id_guia int id de la guia
+	 * @return	array - dato de las guia
+	 *
+	 */
+
+	public function get_guia_catedra($id_guia,$cod_cat)
+	{
+		$query_string = "SELECT DISTINCT id_guia,nro_guia,tit_guia,subtit_guia FROM guias
+				WHERE cod_cat = ? AND id_guia = ?";
+		$query = $this->db->query($query_string,array($cod_cat,$id_guia));
+	
+		return $query->row_array();
 	}
 
 	
