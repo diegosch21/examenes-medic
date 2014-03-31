@@ -19,6 +19,8 @@ INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,activo)
 		VALUES(7865,MD5('7865'),'Pérez','Marcela',20568987,TRUE); 	
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc) 
 		VALUES(1010	,MD5('1010'),'Castaña','Cacho',5654456); 
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,privilegio) 
+		VALUES(2020	,MD5('2020'),'Mensaje','Manda',12356845,-1); 
 
 #carreras
 INSERT INTO carreras(cod_carr,nom_carr) VALUES
@@ -57,80 +59,80 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia)
 		(1,'Requerimientos','Usuario simulado, estetoscopio, esfigmomanómetro, reloj, termómetro digital, torundas de algodón, alcohol en gel, alcohol al 70%, bandeja, hojas de registro, bolígrafo, bolsa  roja, toallas descartables.');		
 
 	INSERT INTO items(nom_item)	VALUES('Se lava las manos al inicio del procedimiento.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,1);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,1,1);
 	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Prepara material:',2);
 		INSERT INTO items(nom_item)	VALUES('Bandeja.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,1,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,2,1,1);
 		INSERT INTO items(nom_item)	VALUES('Torundas de algodón.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,2,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,3,2,1);
 		INSERT INTO items(nom_item)	VALUES('Estetoscopio y esfigmomanómetro.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,3,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,4,3,1);
 		INSERT INTO items(nom_item)	VALUES('Reloj.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,4,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,5,4,1);
 		INSERT INTO items(nom_item)	VALUES('Termómetro digital.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,5,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,6,5,1);
 		INSERT INTO items(nom_item)	VALUES('Alcohol en gel.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,6,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,7,6,1);
 		INSERT INTO items(nom_item)	VALUES('Alcohol al 70%.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,7,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,8,7,1);
 		INSERT INTO items(nom_item)	VALUES('Hojas de registro.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,8,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,9,8,1);
 		INSERT INTO items(nom_item)	VALUES('Bolígrafo.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,9,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,10,9,1);
 		INSERT INTO items(nom_item)	VALUES('Bolsa roja.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,10,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,11,10,1);
 		INSERT INTO items(nom_item)	VALUES('Toallas descartables.');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,11,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,12,11,1);
 	INSERT INTO items(nom_item)	VALUES('Identifica al usuario y se presenta.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,3);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,13,3);
 	INSERT INTO items(nom_item)	VALUES('Explica el procedimiento a realizar.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,4);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,14,4);
 	INSERT INTO items(nom_item)	VALUES('Considera la privacidad del usuario.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,5);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,15,5);
 	INSERT INTO items(nom_item)	VALUES('Tiene en cuenta los factores predisponentes que alteran la presión arterial, pulso, frecuencia  respiratoria,  temperatura y dolor.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,6);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,16,6);
 	INSERT INTO items(nom_item)	VALUES('Presión Arterial: Coloca adecuadamente el manguito.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,7);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,17,7);
 	INSERT INTO items(nom_item)	VALUES('Palpa pulsos para localizar arterias (radial y braquial).');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,8);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,18,8);
 	INSERT INTO items(nom_item)	VALUES('Insufla el manguito de acuerdo al pulso radial percibido y 20 mmHg. por encima de la ausencia del mismo.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,9);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,19,9);
 	INSERT INTO items(nom_item)	VALUES('Coloca la membrana del estetoscopio en el lugar adecuado (arteria braquial).');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,10);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,20,10);
 	INSERT INTO items(nom_item)	VALUES('Abre la válvula del rubinete y desinfla el manguito.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,11);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,21,11);
 	INSERT INTO items(nom_item)	VALUES('Percibe presión arterial sistólica y diastólica.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,12);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,22,12);
 	INSERT INTO items(nom_item)	VALUES('Pulso: Ubica adecuadamente la arteria para tomar pulso radial.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,13);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,23,13);
 	INSERT INTO items(nom_item)	VALUES('Tiene en cuenta las características del pulso (frecuencia, ritmo, amplitud y elasticidad).');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,14);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,24,14);
 	INSERT INTO items(nom_item)	VALUES('Utiliza  el tiempo correcto, 60’’ o 30’’ si es regular.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,15);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,25,15);
 	INSERT INTO items(nom_item)	VALUES('Temperatura: Verifica el estado de la axila.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,16);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,26,16);
 	INSERT INTO items(nom_item)	VALUES('Utiliza las toallas descartables si es necesario.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,17);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,27,17);
 	INSERT INTO items(nom_item)	VALUES('Coloca el termómetro en la línea media axilar.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,18);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,28,18);
 	INSERT INTO items(nom_item)	VALUES('Espera el tiempo correcto para la lectura según el termómetro utilizado.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,19);		
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,29,19);		
 	INSERT INTO items(nom_item)	VALUES('Frecuencia Respiratoria: Tiene en cuenta las características de la respiración (frecuencia, profundidad, ritmo y calidad).');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,20);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,30,20);	
 	INSERT INTO items(nom_item)	VALUES('Utiliza  el tiempo correcto (60’’).');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,21);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,31,21);	
 	INSERT INTO items(nom_item)	VALUES('Dolor: Explica el procedimiento.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,22);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,32,22);	
 	INSERT INTO items(nom_item)	VALUES('Solicita que ubique grado de dolor en la escala numérica.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,23);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,33,23);	
 	INSERT INTO items(nom_item)	VALUES('Limpia y ordena  los elementos utilizados.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,24);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,34,24);	
 	INSERT INTO items(nom_item)	VALUES('Informa al usuario los valores obtenidos.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,25);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,35,25);	
 	INSERT INTO items(nom_item)	VALUES('Se lava las manos');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,26);	
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,36,26);	
 	INSERT INTO items(nom_item)	VALUES('Registra el procedimiento.');
-	INSERT INTO items_guias(id_item,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,27);								
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,37,27);								
 
 	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Realizar la técnica completa y su registro.');
 	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,1);
@@ -193,58 +195,58 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia,subtit_guia)
 
 	INSERT INTO secciones(nom_sec,nro_sec) VALUES ('Historia clínica',1); #id: 1
 		INSERT INTO items(nom_item)	VALUES('Investiga comienzo'); #id: 38
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,1,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,1,1,1);
 		INSERT INTO items(nom_item)	VALUES('Investiga evolución');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,2,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,2,2,1);
 		INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Respecto del dolor abdominal:',3); #id: 2
 			INSERT INTO items(nom_item)	VALUES('Localización');
-			INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,1,2,1);
+			INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,3,1,2,1);
 			INSERT INTO items(nom_item)	VALUES('Irradiación');
-			INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,2,2,1);
+			INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,4,2,2,1);
 			INSERT INTO items(nom_item)	VALUES('Calma con las comidas');
-			INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,3,2,1);
+			INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,5,3,2,1);
 			INSERT INTO items(nom_item)	VALUES('Horarios');
-			INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,4,2,1);
+			INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,6,4,2,1);
 			INSERT INTO items(nom_item)	VALUES('Duración');
-			INSERT INTO items_guias(id_item,id_guia,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,5,2,1);
+			INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem,id_sec) VALUES (LAST_INSERT_ID(),2,7,5,2,1);
 		INSERT INTO items(nom_item)	VALUES('Investiga nauseas');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,4,1);	
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,8,4,1);	
 		INSERT INTO items(nom_item)	VALUES('Investiga vomito');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,5,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,9,5,1);
 		INSERT INTO items(nom_item)	VALUES('Investiga sobre la dieta (debe preguntar sobre tipo de alimentos y cantidad');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,6,1);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,10,6,1);
 	INSERT INTO secciones(nom_sec,nro_sec) VALUES ('Examen físico',2); #id: 2
 		INSERT INTO items(nom_item)	VALUES('Anuncia que realiza inspección y observa el abdomen por instante (no se penaliza si no observa la contracción muscular o la inspiración profunda');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,1,2);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,11,1,2);
 		INSERT INTO items(nom_item)	VALUES('Realiza palpación superficial (debe comenzar por el lugar opuesto al dolor');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,2,2);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,12,2,2);
 		INSERT INTO items(nom_item)	VALUES('Realiza maniobra de descomprensión abdominal');  #id: 50
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,3,2);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,13,3,2);
 		INSERT INTO items(nom_item)	VALUES('Realiza al menos una de las siguientes maniobras (búsqueda del signo de psoas, del obturador, Rovsing) ');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,4,2);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,14,4,2);
 		INSERT INTO items(nom_item)	VALUES('Realiza auscultación del abdomen');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,5,2);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,15,5,2);
 	INSERT INTO secciones(nom_sec,nro_sec) VALUES ('Pedido de exámenes complementarios. Debe incluir todos',3); #id: 3
 		INSERT INTO items(nom_item)	VALUES('Ecografía');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,1,3);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,16,1,3);
 		INSERT INTO items(nom_item)	VALUES('Recuento leucocitario o hemograma');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,2,3);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,17,2,3);
 		INSERT INTO items(nom_item)	VALUES('Sedimento urinario');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,3,3);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,18,3,3);
 		INSERT INTO items(nom_item,solo_texto)	VALUES('Examenes solicitados',TRUE);    #id: 56
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,4,3);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,19,4,3);
 	INSERT INTO secciones(nom_sec,nro_sec) VALUES ('Diagnóstico principal',4); #id: 4
 		INSERT INTO items(nom_item)	VALUES('DEBE DECIR Abdomen agudo quirúrgico o Apendicitis aguda o abdomen agudo inflamatorio');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,1,4);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,20,1,4);
 		INSERT INTO items(nom_item,solo_texto)	VALUES('¿Qué diagnóstico considera como más probable?',TRUE);  #id: 58
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,2,4);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,21,2,4);
 	INSERT INTO secciones(nom_sec,nro_sec) VALUES ('¿Qué recomendación realiza?',5); #id: 5
 		INSERT INTO items(nom_item)	VALUES('Internación en observación');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,1,5);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,22,1,5);
 		INSERT INTO items(nom_item)	VALUES('Consulta con cirujano de guardia');
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,2,5);
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,23,2,5);
 		INSERT INTO items(nom_item,solo_texto)	VALUES('¿Qué decisión tomaría con el paciente?',TRUE); #id: 61
-		INSERT INTO items_guias(id_item,id_guia,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,3,5);	
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,24,3,5);	
 	
 
 	#No hay itemsestudiante

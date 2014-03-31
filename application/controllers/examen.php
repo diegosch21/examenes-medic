@@ -398,9 +398,14 @@ class Examen extends CI_Controller {
             $this->view_data['alumno'] = $alumno;
         }
 
+        //ARREGLO DE ITEMS DE LA GUIA (AGRUPADOS POR SECCION Y GROUP_ITEM)
+        $lista_items = $this->guias_model->get_items($id_guia);
+        $this->view_data['lista_items'] = $lista_items;
 
-
-
+        $items = array();
+        foreach ($lista_items as $item) {
+            
+        }
 
         $this->view_data['title'] = "Evaluar Guía - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
