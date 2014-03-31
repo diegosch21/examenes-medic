@@ -15,8 +15,11 @@
 		
 
 		    <link type="text/css" href="<?php echo base_url('assets/css/bootstrap.css'); ?>" rel="stylesheet" />
-			<link type="text/css" href="<?php echo base_url('assets/css/bootstrap-select.css'); ?>" rel="stylesheet" media="screen"/>		
+		<!--	<link type="text/css" href="<?php echo base_url('assets/css/bootstrap-select.css'); ?>" rel="stylesheet" media="screen"/>	-->
+			<link type="text/css" href="<?php echo base_url('assets/css/select2.css'); ?>" rel="stylesheet" media="screen"/>
+			<link type="text/css" href="<?php echo base_url('assets/css/select2-bootstrap.css'); ?>" rel="stylesheet" media="screen"/>	
 			<link type="text/css" href="<?php echo base_url('assets/css/styles.css'); ?>" rel="stylesheet" media="screen"/>		
+
 	 
 		    <script type="text/javascript"src="<?php echo base_url('assets/js/jquery-1.11.0.min.js'); ?>"></script>
 			
@@ -28,8 +31,11 @@
 		    <![endif]-->
 			
 	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap.js'); ?>"></script>	
-	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select.js'); ?>"></script>
-	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select-ES.js'); ?>"></script>
+	 		<!--<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select.js'); ?>"></script> -->
+	 		<!--<script type="text/javascript"  src="<?php echo base_url('assets/js/bootstrap-select-ES.js'); ?>"></script> -->
+
+	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/select2.js'); ?>"></script>
+	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/select2_locale_es.js'); ?>"></script>
 	 		<script type="text/javascript"  src="<?php echo base_url('assets/js/script.js'); ?>"></script>
 	 			
 	</head>

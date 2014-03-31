@@ -9,7 +9,7 @@
 
 <div id="div-form">
 
-	<form id="form" class="form-login" role="form" method="post" action="<?php echo site_url('login/loguear_usuario');?>">
+	<form id="form" class="form form-login" role="form" method="post" action="<?php echo site_url('login/loguear_usuario');?>">
 
 		<h2 class="form-login-heading">Iniciar Sesión</h2>
 

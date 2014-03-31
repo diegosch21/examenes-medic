@@ -7,26 +7,35 @@
 <script type="text/javascript"  src="<?php echo base_url('assets/js/examen/generar.js'); ?>"></script>
 <link type="text/css" href="<?php echo base_url('assets/css/examen/generar.css'); ?>" rel="stylesheet" media="screen"/>
 
-<div id="div-content">
+<div id="div-form">
 
-	<form action="<?php echo site_url('examen/evaluar');?>" method="post">
+	<form class="form form-horizontal form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
+
+		<h2 class="form-login-heading">Generar Examen</h2>
+
+		<div class="form-group form-group-generar">
+			<label for="fecha" class="col-xs-12 control-label">Fecha</label>
+			<div class="col-xs-12">
+				<input id="fecha" class="form-control" type="date" name="fecha"/>
+			</div>
+		</div>
+
+		<div class="form-group form-group-generar">
+			<label for="fecha" class="col-xs-12 control-label">Carrera</label>
+			<div class="col-xs-12 ">
 
 		<?php
-			/* FECHA */
-			echo '((Campo Fecha. Name=fecha:))<input type="date" name="fecha"/>';
 
 			/* SELECT DE CARRERAS */
 
 			if(!isset($carreras)) // si no existen carreras
 			{
-				echo 	'<select id="select-carrera" name="carrera" data-live-search="true" disabled>
-							<option value="'.NO_SELECTED.'">Seleccione una Carrera</option>
+				echo 	'<select id="select-carrera" name="carrera" disabled>
 						 </select>';
 			}
 			else
 			{ 
-				echo '<select id="select-carrera" name="carrera" data-live-search="true">
-							<option value="'.NO_SELECTED.'">Seleccione una Carrera</option>';
+				echo '<select id="select-carrera" name="carrera">';
 
 				foreach ($carreras['list'] as $indice => $carrera): 
 
@@ -39,23 +48,28 @@
 						echo '<option value="'.$carrera['cod_carr'].'">'.$carrera['cod_carr']." - ".$carrera['nom_carr'].'</option>';
 					}
 
-				endforeach; 
+				endforeach;
 
 				echo '</select>';
 			}
+		?>
+			</div>
+		</div>
+		<div class="form-group form-group-generar">
+			<label for="fecha" class="col-xs-12 control-label">Cátedra</label>
+			<div class="col-xs-12">
+		<?php
 
 			/* SELECT DE CATEDRAS */
 
 			if(!isset($catedras)) // si no existen cátedras
 			{
-				echo 	'<select id="select-catedra" name="catedra" data-live-search="true" disabled>
-							<option value="'.NO_SELECTED.'">Seleccione una Cátedra</option>
+				echo 	'<select id="select-catedra" name="catedra" disabled>
 						 </select>';
 			}
 			else
 			{ 
-				echo '<select id="select-catedra" name="catedra" data-live-search="true">
-							<option value="'.NO_SELECTED.'">Seleccione una Cátedra</option>';
+				echo '<select id="select-catedra" name="catedra" >';
 
 				foreach ($catedras['list'] as $indice => $catedra): 
 					if($indice == $catedras['selected'])
@@ -70,19 +84,24 @@
 				endforeach; 
 				echo '</select>';
 			}
+		?>
+			</div>
+		</div>
+		<div class="form-group form-group-generar">
+			<label for="fecha" class="col-xs-12 control-label">Guía</label>
+			<div class="col-xs-12">
+		<?php
 
 			/* SELECT DE GUIAS */
 
 			if(!isset($guias)) // si no existen guías
 			{
 				echo 	'<select id="select-guia" name="guia" data-live-search="true" disabled>
-							<option value="'.NO_SELECTED.'">Seleccione una Guía</option>
 						 </select>';
 			}
 			else
 			{ 
-				echo '<select id="select-guia" name="guia" data-live-search="true">
-							<option value="'.NO_SELECTED.'">Seleccione una Guía</option>';
+				echo '<select id="select-guia" name="guia" data-live-search="true">';
 
 				foreach ($guias['list'] as $indice => $guia): 
 					if($indice == $guias['selected'])
@@ -98,18 +117,24 @@
 				echo '</select>';
 			}
 
+		?>
+			</div>
+		</div>
+		<div class="form-group form-group-generar">
+			<label for="fecha" class="col-xs-12 control-label">Alumno</label>
+			<div class="col-xs-12">
+		<?php
+
 			/* SELECT DE ALUMNOS */
 
 			if(!isset($alumnos)) // si no existen alumnos
 			{
 				echo 	'<select id="select-alumno" name="alumno" data-live-search="true" disabled>
-							<option value="'.NO_SELECTED.'">Seleccione un Alumno</option>
 						 </select>';
 			}
 			else
 			{ 
-				echo '<select id="select-alumno" name="alumno" data-live-search="true">
-							<option value="'.NO_SELECTED.'">Seleccione una Alumno</option>';
+				echo '<select id="select-alumno" name="alumno" data-live-search="true">';
 
 				foreach ($alumnos['list'] as $indice => $alumno): 
 					if($indice == $alumnos['selected'])
@@ -125,9 +150,16 @@
 				echo '</select>';
 			}
 		?>
+			</div>
+		</div>
 
-		<a id="btn-cancelar" href="<?php echo site_url('home');?>" class="btn btn-default">Cancelar</a>
-		<input id="btn-submit" name="boton" class="btn btn-primary" type="submit" value="Continuar"/>	
+		<div class="form-group">
+			<div class="col-xs-12 div-buttons">
+				<a id="btn-cancelar" href="<?php echo site_url('home');?>" class="btn btn-default">Cancelar</a>
+				<button id="btn-submit" name="boton" class="btn btn-primary" type="submit">Continuar</button>
+			</div>
+		</div>
+			
 	</form>
 
 	<?php 

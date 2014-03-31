@@ -99,3 +99,13 @@ function centrar_contenido(contenido) {
 function es_integer(valor) {
     return (valor == parseInt(valor));
 }
+
+function es_mobile_device() {
+
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
