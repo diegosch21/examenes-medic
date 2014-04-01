@@ -74,6 +74,46 @@ class Guias_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	/**
+	 *	Retorna las descripciones de la guia
+	 *
+	 * @access	public
+	 * @param 	$id_guia int id de la guia
+	 * @return	array de descripciones - desc: nom_desc,contenido_desc
+	 *
+	 */
+
+	public function get_descripciones($id_guia)
+	{
+		$query_string = "SELECT nom_desc,contenido_desc
+			FROM descripciones
+			WHERE id_guia = ?";
+		$query = $this->db->query($query_string,array($id_guia));
+	
+		return $query->result_array();
+	}
+
+	/**
+	 *	Retorna las lista de itemes del estudiante
+	 *
+	 * @access	public
+	 * @param 	$id_guia int id de la guia
+	 * @return	array de items_estudiante - item_estudiante: nro_item,nom_itemest
+	 *
+	 */
+
+	public function get_itemsestudiante($id_guia)
+	{
+		$query_string = "SELECT nro_item,nom_itemest
+			FROM itemsestudiante NATURAL JOIN itemsestudiante_guias NATURAL JOIN guias 
+			WHERE id_guia = ?";
+		$query = $this->db->query($query_string,array($id_guia));
+	
+		return $query->result_array();
+	}
+
+
+
 	
 	
 }

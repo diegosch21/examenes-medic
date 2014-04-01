@@ -311,7 +311,8 @@ class Examen extends CI_Controller {
             redirect('examen/generar');
         }
 
-        //FECHA
+        //FECHA pasada por POST
+        //Redirecciona si no es valida
         $fecha = $this->input->post('fecha');
         if(!$fecha) // || !validar(fecha)
         {
@@ -320,7 +321,8 @@ class Examen extends CI_Controller {
         }
         $this->view_data['fecha'] = $fecha;
 
-        //CARRERA
+        //CARRERA (pide los datos al modelo a partir del codigo pasado por POST)
+        //Redirecciona si no es valida
         $cod_carr = $this->input->post('carrera');
         if(!$cod_carr || $cod_carr==NO_SELECTED)
         {
@@ -341,7 +343,8 @@ class Examen extends CI_Controller {
             $this->view_data['carrera'] = $carrera;
         }
 
-        //CATEDRA
+        //CATEDRA (pide los datos al modelo a partir del codigo pasado por POST, verificando que sea de la carrera)
+        //Redirecciona si no es valida
         $cod_cat = $this->input->post('catedra');
         if(!$cod_cat || $cod_cat==NO_SELECTED)
         {
@@ -362,25 +365,8 @@ class Examen extends CI_Controller {
             $this->view_data['catedra'] = $catedra;
         }
 
-        //GUIA
-        $id_guia = $this->input->post('guia');
-        if(!$id_guia || $id_guia==NO_SELECTED)
-        {
-            $this->session->set_flashdata('error', 'Guía inválida');
-            redirect('examen/generar');
-        }
-        $guia = $this->guias_model->get_guia_catedra($id_guia,$cod_cat);
-        if(!$guia)
-        {
-            $this->session->set_flashdata('error', 'Guía inválida');
-            redirect('examen/generar');
-        }
-        else
-        {
-            $this->view_data['guia'] = $guia;
-        }
-
-        //ALUMNO
+        //ALUMNO (pide los datos al modelo a partir del lu pasado por POST, verificando que sea de la catedra)
+        //Redirecciona si no es valida
         $lu_alu = $this->input->post('alumno');
         if(!$lu_alu || $lu_alu==NO_SELECTED)
         {
@@ -398,14 +384,165 @@ class Examen extends CI_Controller {
             $this->view_data['alumno'] = $alumno;
         }
 
-        //ARREGLO DE ITEMS DE LA GUIA (AGRUPADOS POR SECCION Y GROUP_ITEM)
-        $lista_items = $this->guias_model->get_items($id_guia);
-        $this->view_data['lista_items'] = $lista_items;
-
-        $items = array();
-        foreach ($lista_items as $item) {
-            
+        //GUIA (pide los datos al modelo a partir del id pasado por POST, verificando que sea de la catedra)
+        //Redirecciona si no es valida
+        $id_guia = $this->input->post('guia');
+        if(!$id_guia || $id_guia==NO_SELECTED)
+        {
+            $this->session->set_flashdata('error', 'Guía inválida');
+            redirect('examen/generar');
         }
+        $guia = $this->guias_model->get_guia_catedra($id_guia,$cod_cat);
+        if(!$guia)
+        {
+            $this->session->set_flashdata('error', 'Guía inválida');
+            redirect('examen/generar');
+        }
+        else
+        {
+            $this->view_data['guia'] = $guia;
+            //id, nro, titulo, subtitulo. Los items y descripciones se agregan a continuacion
+        }
+
+       
+
+        /* ITEMS DE LA GUIA (ARREGLO, AGRUPADOS POR SECCION Y GROUP_ITEM). 
+         * Pide al modelo, en base al id.
+         * Arma arreglo para pasar a la en la vista en $guia['items'], agrupados en subarreglos así:
+         * $guia( [[datos]], [items] => 
+         *                  ([pos] =>([tipo]=> seccion-grupoitem-item, [nro], [nom],
+         *                              (si tipo es item):[id],[solo_texto],
+         *                              (si tipo es seccion o grupo):[items] => 
+         *                    ([pos] => ([tipo]=>grupoitem-item, [nro], [nom],
+         *                                  (si tipo es item):[id],[solo_texto],
+         *                                  (si tipo es grupo):[items] => 
+         *                      ([pos] => ([tipo]=>item,[nro],[nom],[id],[solo_texto])) )) )) )
+         */
+        $lista_items = $this->guias_model->get_items($id_guia);
+        //$this->view_data['lista_items'] = $lista_items;
+
+        $lista = array();
+        $k = 0;
+        for ($i=0; $i < count($lista_items); $i++)
+        { 
+            $item_completo = $lista_items[$i];
+            if($item_completo['nom_sec'])  // si el item está dentro de una sección
+            {
+                //inserto seccion
+                $nro_seccion = $item_completo['nro_sec'];
+                $lista[$k] = array('tipo' => 'seccion',
+                                    'nro' => $nro_seccion,
+                                    'nom' => $item_completo['nom_sec']);
+                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
+                //lista de items dentro de la seccion. 
+                $j = 0; $items = array(); 
+                $avanzo = true;
+                while ($avanzo)
+                {
+                    if ($item_completo['nom_grupoitem']) //si el item esta dentro de un grupoitem dentro de una seccion
+                    {
+                        //inserto grupoitem dentro de la seccion
+                        $nro_grupo = $item_completo['nro_grupoitem'];
+                        $items[$j] = array('tipo' => 'grupoitem',
+                                    'nro' => $nro_seccion.'.'.$nro_grupo,
+                                    'nom' => $item_completo['nom_grupoitem']);
+                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
+
+                        //lista de items dentro del grupo dentro de la seccion. 
+                        $j2 = 0; $items2 = array(); 
+                        $avanzo2 = true;
+                        while ($avanzo2)
+                        {
+                            $items2[$j2] = array('tipo' => 'item',
+                                            'nro' => $nro_seccion.'.'.$nro_grupo.'.'.$item_completo['nro_item'],
+                                            'nom' => $item_completo['nom_item'],
+                                            'id' => $item_completo['id_item'],
+                                            'solo_texto' => $item_completo['solo_texto']);
+                            $avanzo2 = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_grupoitem'] == $nro_grupo && $lista_items[$i+1]['nro_sec'] == $nro_seccion;
+                            if($avanzo2)
+                            {
+                                $i++;
+                                $item_completo = $lista_items[$i];
+                                $j2++;
+                            }                        
+                        }
+                        $items[$j]['items'] = $items2;
+                        $j++;
+                    }
+                    else //item suelto dentro de la seccion (sin grupo item)
+                    {
+                        $items[$j] = array('tipo' => 'item',
+                                    'nro' => $nro_seccion.'.'.$item_completo['nro_item'],
+                                    'nom' => $item_completo['nom_item'],
+                                    'id' => $item_completo['id_item'],
+                                    'solo_texto' => $item_completo['solo_texto']);         
+                    }
+                    $avanzo = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_sec'] == $nro_seccion;
+                    if($avanzo)
+                    {
+                        $i++;
+                        $item_completo = $lista_items[$i];
+                        $j++;
+                    }     
+
+                            
+                }
+                                
+                $lista[$k]['items'] = $items;
+                $k++;
+            }
+            elseif ($item_completo['nom_grupoitem']) //si el item esta dentro de un grupoitem
+            {
+                //inserto grupoitem
+                $nro_grupo = $item_completo['nro_grupoitem'];
+                $lista[$k] = array('tipo' => 'grupoitem',
+                                    'nro' => $nro_grupo,
+                                    'nom' => $item_completo['nom_grupoitem']);
+                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
+                //lista de items dentro del grupo. 
+                $j = 0; $items = array(); 
+                $avanzo = true;
+                while ($avanzo)
+                {
+                    $items[$j] = array('tipo' => 'item',
+                                    'nro' => $nro_grupo.'.'.$item_completo['nro_item'],
+                                    'nom' => $item_completo['nom_item'],
+                                    'id' => $item_completo['id_item'],
+                                    'solo_texto' => $item_completo['solo_texto']);
+                    $avanzo = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_grupoitem'] == $nro_grupo;
+                    if($avanzo)
+                    {
+                        $i++;
+                        $item_completo = $lista_items[$i];
+                        $j++;
+                    }                        
+                }
+                                
+                $lista[$k]['items'] = $items;
+                $k++;
+            }
+            else //si el ítem está suelto (sin sección ni grupo)
+            {
+                //inserto item directamente
+                $lista[$k] = array('tipo' => 'item',
+                                    'nro' => $item_completo['nro_item'],
+                                    'nom' => $item_completo['nom_item'],
+                                    'id' => $item_completo['id_item'],
+                                    'solo_texto' => $item_completo['solo_texto']);
+                $k++;
+            }
+        }
+        $this->view_data['guia']['items'] = $lista;
+
+        //DESCRIPCION DE LA GUIA (pide al modelo en base al id)
+        //Pasa a la vista en $guia['desc']
+        $descripcion = $this->guias_model->get_descripciones($id_guia);
+        $this->view_data['guia']['desc'] = $descripcion;
+
+        //ITEMS DEL ESTUDIANTE DE LA GUIA (pide al modelo en base al id)
+        //Pasa a la vista en $guia['itemsestudiante']
+        $itemsestudiante = $this->guias_model->get_itemsestudiante($id_guia);
+        $this->view_data['guia']['itemsestudiante'] = $itemsestudiante;
 
         $this->view_data['title'] = "Evaluar Guía - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);

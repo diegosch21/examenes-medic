@@ -216,9 +216,9 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia,subtit_guia)
 		INSERT INTO items(nom_item)	VALUES('Investiga sobre la dieta (debe preguntar sobre tipo de alimentos y cantidad');
 		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,10,6,1);
 	INSERT INTO secciones(nom_sec,nro_sec) VALUES ('Examen físico',2); #id: 2
-		INSERT INTO items(nom_item)	VALUES('Anuncia que realiza inspección y observa el abdomen por instante (no se penaliza si no observa la contracción muscular o la inspiración profunda');
+		INSERT INTO items(nom_item)	VALUES('Anuncia que realiza inspección y observa el abdomen por instante (no se penaliza si no observa la contracción muscular o la inspiración profunda)');
 		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,11,1,2);
-		INSERT INTO items(nom_item)	VALUES('Realiza palpación superficial (debe comenzar por el lugar opuesto al dolor');
+		INSERT INTO items(nom_item)	VALUES('Realiza palpación superficial (debe comenzar por el lugar opuesto al dolor)');
 		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,12,2,2);
 		INSERT INTO items(nom_item)	VALUES('Realiza maniobra de descomprensión abdominal');  #id: 50
 		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_sec) VALUES (LAST_INSERT_ID(),2,13,3,2);

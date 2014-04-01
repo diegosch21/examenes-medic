@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS items (
 
 CREATE TABLE IF NOT EXISTS secciones (
 	id_sec INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	nom_sec VARCHAR(50), # Titulo seccion
+	nom_sec VARCHAR(100), # Titulo seccion
 	nro_sec INT UNSIGNED, 	#pos de la secc en la guia
 
 	PRIMARY KEY(id_sec)
