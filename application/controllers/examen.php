@@ -314,12 +314,12 @@ class Examen extends CI_Controller {
         //FECHA pasada por POST
         //Redirecciona si no es valida
         $fecha = $this->input->post('fecha');
-        if(!$fecha) // || !validar(fecha)
+        if(!$fecha || !$this->util->validar_fecha($fecha))
         {
             $this->session->set_flashdata('error', 'Fecha inválida');
             redirect('examen/generar');
         }
-        $this->view_data['fecha'] = $fecha;
+        $this->view_data['fecha'] = $this->util->YMDtoDMY($fecha);
 
         //CARRERA (pide los datos al modelo a partir del codigo pasado por POST)
         //Redirecciona si no es valida
