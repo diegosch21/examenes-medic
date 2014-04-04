@@ -100,17 +100,15 @@ function ajustar_ancho_selects() {
 		if(select_mas_ancho > ancho_control) {
 			select_mas_ancho = ancho_control;
 		}
+		else {
+			select_mas_ancho = max_ancho_select;
+		}
 	}
 
 	width_select_carreras = select_mas_ancho;
 	width_select_catedras = select_mas_ancho;
 	width_select_guias = 	select_mas_ancho;
 	width_select_alumnos = 	select_mas_ancho;
-/*
-	console.log(width_select_carreras);
-	console.log(width_select_catedras);
-	console.log(width_select_guias);
-	console.log(width_select_alumnos);*/
 
 	$("#select-carrera").api_set_css("width", width_select_carreras);
 	$("#select-catedra").api_set_css("width", width_select_catedras);
