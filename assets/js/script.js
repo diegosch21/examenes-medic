@@ -4,14 +4,23 @@
 	COPYRIGHT	Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
 */
 
+var ERROR_AJAX = "Ha ocurrido un error en el servidor. Por favor intente más tarde.";
+var expresiones_regulares = new Array();
+
 $(document).ready(function(){	 				
 	calculos_visualizacion();
+	inicializar_expresiones_regulares();
 
 	$(window).resize(function() {
 		calculos_visualizacion();
 	});
 
 });
+
+function inicializar_expresiones_regulares()
+{
+	expresiones_regulares['fecha'] = /^(19|20)\d\d[\-\/.](0[1-9]|1[012])[\-\/.](0[1-9]|[12][0-9]|3[01])$/;
+}
 
 function calculos_visualizacion() {
 	centrar_contenido_header_footer();
@@ -127,17 +136,21 @@ function fecha_actual() {
 	return output;
 }
 
-function sete6ar_value_select(id_select, valor) {
-	
-	if(es_dispositivo_movil()) {
-		$("#"+id_select).val(valor);
+function control_expresion_regular(tipo_expresion, valor)
+{
+	if (tipo_expresion == 'fecha') {
+
+		if(expresiones_regulares[tipo_expresion].test(valor.toLowerCase())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	else {
-		$("#"+id_select).select2('val', valor);
+		return false;
 	}
 }
-
-
 
 /*
  *	Estas funciones son solo aplicables a SELECTS. 
@@ -145,7 +158,7 @@ function sete6ar_value_select(id_select, valor) {
  */
 
 (function( $ ){
-   $.fn.setear_value_select = function(valor) {
+   $.fn.api_set_val = function(valor) {
 	
 		if(es_dispositivo_movil()) {
 			this.val(valor);
@@ -155,7 +168,7 @@ function sete6ar_value_select(id_select, valor) {
 		}
 	}; 
 
-	$.fn.habilitar_select = function(habilitar) {
+	$.fn.api_enable = function(habilitar) {
 
 		if(es_dispositivo_movil()) {
 			this.attr('disabled', !habilitar);
@@ -165,4 +178,23 @@ function sete6ar_value_select(id_select, valor) {
 		}
 	}; 
 
+	$.fn.api_get_css = function(propiedad) {
+
+		if(es_dispositivo_movil()) {
+			return this.css(propiedad);
+		}
+		else {
+			return this.select2("container").css(propiedad);
+		}
+	}; 
+
+	$.fn.api_set_css = function(propiedad, valor) {
+
+		if(es_dispositivo_movil()) {
+			this.css(propiedad, valor);
+		}
+		else {
+			this.select2("container").css(propiedad, valor);
+		}
+	};
 })( jQuery );

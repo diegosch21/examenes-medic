@@ -53,3 +53,11 @@ h2 {
 	min-width: 250px;
 	max-width: 600px;
 }
+
+.label-error {
+	text-align: left !Important;
+	color: red !Important;
+	width: 100% !Important;
+	font-weight: normal;
+	font-style: italic;
+}

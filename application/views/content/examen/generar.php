@@ -8,25 +8,26 @@
 <link type="text/css" href="<?php echo base_url('assets/css/examen/generar.css'); ?>" rel="stylesheet" media="screen"/>
 
 <div id="div-form" class="form-container">
-	
+
 	<div class="div-titulo">
 		<label>Generar Examen</label>
 	</div>
 
-	<form class="form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
+	<form id="form-generar" class="form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
 	
 		<div class="form-group-generar">
 			<label for="fecha" class="control-label">Fecha</label>
 			<div>
-				<input id="fecha" class="form-control fecha" type="date" name="fecha"/>
+				<input id="fecha" class="form-control fecha" type="date" name="fecha" value="<?php echo $fecha;?>"/>
 			</div>
+			<label id="error-fecha" class="label-error" rel="errores">Fecha inválida</label>
 		</div>
 
 		<div class="form-group-generar">
 			<div>
 				<label for="select-carrera" class="control-label">Carrera</label>
 			</div>
-			<div class=" ">
+			<div>
 
 		<?php
 
@@ -58,6 +59,7 @@
 			}
 		?>
 			</div>
+			<label id="error-carrera" class="label-error" rel="errores">Carrera inválida</label>
 		</div>
 		<div class="form-group-generar">
 			<div>
@@ -92,9 +94,10 @@
 			}
 		?>
 			</div>
+			<label id="error-catedra" class="label-error" rel="errores">Cátedra inválida</label>
 		</div>
 		<div class="form-group-generar">
-			<div class=" ">
+			<div>
 				<label for="select-guia" class="control-label">Guía</label>
 			</div>
 			<div>
@@ -127,6 +130,7 @@
 
 		?>
 			</div>
+			<label id="error-guia" class="label-error" rel="errores">Guía inválida</label>
 		</div>
 		<div class="form-group-generar">
 			<div>
@@ -161,6 +165,7 @@
 			}
 		?>
 			</div>
+			<label id="error-alumno" class="label-error" rel="errores">Alumno inválido</label>
 		</div>
 
 		<div class="form-group-buttons">
