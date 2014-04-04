@@ -82,7 +82,7 @@ class Examen extends CI_Controller {
             $this->view_data['error'] = $error;
         
         //FECHA ACTUAL
-        $this->view_data['fecha'] = date('d/m/Y');
+        $this->view_data['fecha'] = date('Y-m-d');
         
         //LISTA CARRERAS
         $carreras = $this->_carreras();
