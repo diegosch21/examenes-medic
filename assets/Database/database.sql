@@ -170,6 +170,7 @@ CREATE TABLE IF NOT EXISTS examenes (
 	fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	calificacion INT NOT NULL DEFAULT -1,
 	obs_exam TEXT,
+	porcentaje_exam FLOAT,
 
 	PRIMARY KEY(id_exam),
 	FOREIGN KEY (id_guia) REFERENCES guias (id_guia),

@@ -66,6 +66,32 @@ class Util
         return $indice;
     }
 
+    /**
+     * Convierte una fecha con formato Día/Mes/Año
+     * a una conformato Año-Mes-Día
+     *
+     * @access  public
+     * @param   $var string (date)
+     * @return  string (date)
+     */
+    public function DMYtoYMD($var)
+    {
+        $date = str_replace('/', '-', $var);
+        return date('Y-m-d', strtotime($date));
+    }
+    
+    /**
+     * Convierte una fecha con formato Año-Mes-Día
+     * a una conformato Día/Mes/Año
+     *
+     * @access  public
+     * @param   $var string (date)
+     * @return  string (date)
+     */
+    public function YMDtoDMY($var)
+    {
+        return date('d/m/Y', strtotime($var));
+    }
     
 
 

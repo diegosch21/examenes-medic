@@ -58,6 +58,17 @@ define('STATUS_OK', 100);
 define('STATUS_EMPTY_POST', 101);
 define('STATUS_INVALID_PARAM', 102);
 
+define('ERROR_NO_INSERT',201);
+define('ERROR_REPETIDO',202);
+
+define('CALIF_COMPETENCIA_NO_ADQUIRIDA',0);
+define('CALIF_COMPETENCIA_MED_ADQUIRIDA',1);
+define('CALIF_COMPETENCIA_ADQUIRIDA',2);
+define('CALIF_VACIA',-1);
+
+define('ITEM_NO',0);
+define('ITEM_SI',1);
+define('ITEM_VACIO',-1);
 
 
 /* End of file constants.php */

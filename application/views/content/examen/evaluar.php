@@ -14,12 +14,20 @@
 	function print_item($item) 
 	{
 		$id_item = $item['id'];
-		echo "<input type='hidden' name='item{$id_item}' id='input-item{$id_item}'/>";
+		echo "<input type='hidden' name='item-id[]' id='input-item-{$id_item}' value='{$id_item}'/>";
 		echo "{$item['nro']}. {$item['nom']}";
 		if($item['solo_texto'])
+		{
 			echo " OBS:  (solo texto)<br/>";
+			//input name='item-obs' value= texto
+		}
 		else	
-			echo " SI:   NO:   OBS:  <br/>";
+		{
+			echo " SI: (checkbox)   NO: (checkbox)  OBS:  <br/>";
+			echo "<input type='hidden' name='item-value[]' id='estado	-item-{$id_item}' data-item='{$id_item}' value='-1'/>";
+			//input name='item-value' value= -1,0 o 1
+			//input name='item-obs' value= texto
+		}
 		//poner inputs checkbox, y botoon observacion
 		//via Javascript cambiar los input de los checkbox por hidden, al hacer clic en Calificar
 	}
