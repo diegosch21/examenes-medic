@@ -24,7 +24,7 @@
 		else	
 		{
 			echo " SI: (checkbox)   NO: (checkbox)  OBS:  <br/>";
-			echo "<input type='hidden' name='item-value[]' id='estado	-item-{$id_item}' data-item='{$id_item}' value='-1'/>";
+			echo "<input type='hidden' name='item-estado[]' id='estado-item-{$id_item}' data-item='{$id_item}' value='-1'/>";
 			//input name='item-value' value= -1,0 o 1
 			//input name='item-obs' value= texto
 		}

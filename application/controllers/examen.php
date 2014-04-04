@@ -82,7 +82,7 @@ class Examen extends CI_Controller {
             $this->view_data['error'] = $error;
         
         //FECHA ACTUAL
-        $this->view_data['fecha'] = date('d/m/Y');
+        $this->view_data['fecha'] = date('Y-m-d');
         
         //LISTA CARRERAS
         $carreras = $this->_carreras();
@@ -551,6 +551,22 @@ class Examen extends CI_Controller {
         $this->load->view('content/examen/evaluar', $this->view_data);
 
         $this->load->view('template/footer'); 
+    }
+
+    /**
+     * Controlador de la accion archivar examen
+     *  
+     * En POST se reciben los datos del examen:
+     * id_guia, lu_alu, leg_doc, fecha, calificacion, obs_exam (opcional), porcentaje_exam
+     * Arreglos: item-id[], item-estado[], item-obs[]
+     *
+     * Responde con JSON con el id del examen (o mensaje de error)
+     * 
+     * @access  public
+     */
+    public function archivar()
+    {
+        $this->load->model('examenes_model');
     }
 
 

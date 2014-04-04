@@ -37,7 +37,7 @@ class Examenes_model extends CI_Model {
 	{
 		//Verifico que no exista un examen con misma guia, alumno, legajo y diferencia de fecha menor a 5 minutos
 		$query_string = "SELECT fecha FROM examenes
-				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 5;"
+				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 5";
 		$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha));
 		if($this->db->affected_rows() > 0) 
 		{
@@ -47,14 +47,14 @@ class Examenes_model extends CI_Model {
 		if($obs_exam)
 		{
 			$query_string = "INSERT INTO examenes (id_guia,lu_alu,leg_doc,fecha,calificacion,obs_exam,porcentaje_exam) 
-				 VALUES (?,?,?,?,?,?,?);"
-			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$porcentaje_exam);
+				 VALUES (?,?,?,?,?,?,?)";
+			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$porcentaje_exam));
 		}
 		else 
 		{
 			$query_string = "INSERT INTO examenes (id_guia,lu_alu,leg_doc,fecha,calificacion,porcentaje_exam) 
-				 VALUES (?,?,?,?,?,?,?);"
-			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$porcentaje_exam);
+				 VALUES (?,?,?,?,?,?,?)";
+			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$porcentaje_exam));
 		}
 		
 		if($this->db->affected_rows() == 0)
@@ -70,20 +70,20 @@ class Examenes_model extends CI_Model {
 			if(isset($item['obs']))
 			{
 				$query_string = "INSERT INTO items_examenes(id_item,id_exam,estado_item,obs_item)
-					VALUES (?,?,?,?);"
-				$query = $this->db->query($query_string,array($item['id'],$id_exam,$item['estado'],$item['obs']));
+								VALUES (?,?,?,?)";
+				$this->db->query($query_string,array($item['id'],$id_exam,$item['estado'],$item['obs']));
 			}
 			else 
 			{
 				$query_string = "INSERT INTO items_examenes(id_item,id_exam,estado_item)
-					VALUES (?,?,?);"
-				$query = $this->db->query($query_string,array($item['id'],$id_exam,$item['estado']));
+								VALUES (?,?,?)";
+				$this->db->query($query_string,array($item['id'],$id_exam,$item['estado']));
 			}
 		}
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE)
 		{
-		    $query_string = "DELETE FROM examenes WHERE id_exam = ?;"
+		    $query_string = "DELETE FROM examenes WHERE id_exam = ?";
 			$this->db->query($query_string,array($id_exam));
 		    throw new Exception(ERROR_NO_INSERT);
 		}
