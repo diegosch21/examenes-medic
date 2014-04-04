@@ -7,38 +7,49 @@
 */
 
 body {
-	min-width: 500px !Important;
+	min-width: 350px !Important;
 }
 
-.form-generar {
-	width: 380px; 
+.form-container {
+	margin: 0px auto;
 }
 
 .form-group-generar {
-	width: 400px;
+	max-width: 600px;
+	margin-bottom: 15px;
+	float: left;
 }
-
 .form-group-generar > label {
 	text-align: left !Important;
 	width: 85px;
 }
 
 .form-group-generar > div {
-	width: 280px;
+	width: 100%;
 }
 
 .form-group-generar > div > div {
 	padding-top: 4px;
 }
 
-.div-buttons {
+.fecha {
+	width: 200px;
+}
+
+.form-group-buttons {
 	text-align: center;
+	clear: both;
+	margin: 0px auto;
+	width: 100%;
 }
 
 h2 {
 	margin-bottom: 20px;
+	margin-right: 0px;
+	max-width: 600px;
 }
 
 .select {
-	width: 250px;	
+	min-width: 250px;
+	max-width: 600px;
 }

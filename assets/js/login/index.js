@@ -6,8 +6,23 @@
 
 $('document').ready(function() {
 
-	centrar_contenido('div-form');
+	event_handlers_form();
+	event_handlers_window();
 
+	$(window).resize(); // Disparo el evento para que el contenido quede centado.
+});
+
+/*	EVENT HANDLERS */
+
+function event_handlers_window() {
+
+	$(window).resize(function() {
+		centrar_contenido('div-form');
+	});
+}
+
+function event_handlers_form() {
+	
 	$('#form').submit(function(event) {
 
 		if(!validar()) {
@@ -16,12 +31,7 @@ $('document').ready(function() {
 			alert("PERSONALIZAR MSJ - HAY ERRORES");
 		}
 	});
-
-	$(window).resize(function() {
-		centrar_contenido('div-form');
-	});
-
-});
+}
 
 function validar() {
 

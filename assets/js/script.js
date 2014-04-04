@@ -100,7 +100,8 @@ function es_integer(valor) {
     return (valor == parseInt(valor));
 }
 
-function es_mobile_device() {
+
+function es_dispositivo_movil() {
 
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		return true;
@@ -109,3 +110,59 @@ function es_mobile_device() {
 		return false;
 	}
 }
+
+/*
+ *	Retorna la fecha actual en formato yyyy-mm-dd
+ */
+function fecha_actual() {
+	var d = new Date();
+
+	var month = d.getMonth()+1;
+	var day = d.getDate();
+
+	var output = d.getFullYear() + '-' +
+	    ((''+month).length<2 ? '0' : '') + month + '-' +
+	    ((''+day).length<2 ? '0' : '') + day;
+
+	return output;
+}
+
+function sete6ar_value_select(id_select, valor) {
+	
+	if(es_dispositivo_movil()) {
+		$("#"+id_select).val(valor);
+	}
+	else {
+		$("#"+id_select).select2('val', valor);
+	}
+}
+
+
+
+/*
+ *	Estas funciones son solo aplicables a SELECTS. 
+ *	Deben ser llamadas de la forma $(selector).nombre_function(parametros)
+ */
+
+(function( $ ){
+   $.fn.setear_value_select = function(valor) {
+	
+		if(es_dispositivo_movil()) {
+			this.val(valor);
+		}
+		else {
+			this.select2('val', valor);
+		}
+	}; 
+
+	$.fn.habilitar_select = function(habilitar) {
+
+		if(es_dispositivo_movil()) {
+			this.attr('disabled', !habilitar);
+		}
+		else {
+			this.select2('enable', habilitar);
+		}
+	}; 
+
+})( jQuery );

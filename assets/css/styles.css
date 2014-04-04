@@ -123,7 +123,18 @@ footer {
 	background: url(../img/logo_dcs.png) no-repeat top left;
 }
 
+/* TITULO */ 
 
+.div-titulo {
+	text-align: left;
+}
+
+.div-titulo > label{
+	font-size: 30px;
+	font-weight: 500;
+}
+
+/* CONTENT */
 
 .outer-content {
 
@@ -243,11 +254,6 @@ footer {
 	.header-texto-linea2 {
 		font-size: 16px;
 	}
-}
-
-.form {
-	padding: 15px;
-	margin: 0 auto;
 }
 
 .select-mobile {

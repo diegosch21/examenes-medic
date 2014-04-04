@@ -7,22 +7,26 @@
 <script type="text/javascript"  src="<?php echo base_url('assets/js/examen/generar.js'); ?>"></script>
 <link type="text/css" href="<?php echo base_url('assets/css/examen/generar.css'); ?>" rel="stylesheet" media="screen"/>
 
-<div id="div-form">
+<div id="div-form" class="form-container">
+	
+	<div class="div-titulo">
+		<label>Generar Examen</label>
+	</div>
 
-	<form class="form form-horizontal form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
-
-		<h2 class="form-login-heading">Generar Examen</h2>
-
-		<div class="form-group form-group-generar">
-			<label for="fecha" class="col-xs-12 control-label">Fecha</label>
-			<div class="col-xs-12">
-				<input id="fecha" class="form-control" type="date" name="fecha"/>
+	<form class="form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
+	
+		<div class="form-group-generar">
+			<label for="fecha" class="control-label">Fecha</label>
+			<div>
+				<input id="fecha" class="form-control fecha" type="date" name="fecha"/>
 			</div>
 		</div>
 
-		<div class="form-group form-group-generar">
-			<label for="fecha" class="col-xs-12 control-label">Carrera</label>
-			<div class="col-xs-12 ">
+		<div class="form-group-generar">
+			<div>
+				<label for="select-carrera" class="control-label">Carrera</label>
+			</div>
+			<div class=" ">
 
 		<?php
 
@@ -55,9 +59,11 @@
 		?>
 			</div>
 		</div>
-		<div class="form-group form-group-generar">
-			<label for="fecha" class="col-xs-12 control-label">Cátedra</label>
-			<div class="col-xs-12">
+		<div class="form-group-generar">
+			<div>
+				<label for="select-catedra" class="control-label">Cátedra</label>
+			</div>
+			<div>
 		<?php
 
 			/* SELECT DE CATEDRAS */
@@ -87,9 +93,11 @@
 		?>
 			</div>
 		</div>
-		<div class="form-group form-group-generar">
-			<label for="fecha" class="col-xs-12 control-label">Guía</label>
-			<div class="col-xs-12">
+		<div class="form-group-generar">
+			<div class=" ">
+				<label for="select-guia" class="control-label">Guía</label>
+			</div>
+			<div>
 		<?php
 
 			/* SELECT DE GUIAS */
@@ -120,9 +128,11 @@
 		?>
 			</div>
 		</div>
-		<div class="form-group form-group-generar">
-			<label for="fecha" class="col-xs-12 control-label">Alumno</label>
-			<div class="col-xs-12">
+		<div class="form-group-generar">
+			<div>
+				<label for="select-alumno" class="control-label">Alumno</label>
+			</div>
+		<div>	
 		<?php
 
 			/* SELECT DE ALUMNOS */
@@ -153,13 +163,11 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<div class="col-xs-12 div-buttons">
-				<a id="btn-cancelar" href="<?php echo site_url('home');?>" class="btn btn-default">Cancelar</a>
-				<button id="btn-submit" name="boton" class="btn btn-primary" type="submit">Continuar</button>
-			</div>
+		<div class="form-group-buttons">
+			<a id="btn-cancelar" href="<?php echo site_url('home');?>" class="btn btn-default">Cancelar</a>
+			<button id="btn-submit" name="boton" class="btn btn-primary" type="submit">Continuar</button>
 		</div>
-			
+
 	</form>
 
 	<?php 

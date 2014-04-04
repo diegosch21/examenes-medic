@@ -4,7 +4,8 @@
 	COPYRIGHT	Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
 */
 
-.form-login {
+.form-container {
+	margin: 0px auto;
 	max-width: 250px;
 }
 
