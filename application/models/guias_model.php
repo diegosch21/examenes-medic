@@ -55,6 +55,65 @@ class Guias_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	/**
+	 *	Retorna todos los items de la guia
+	 *
+	 * @access	public
+	 * @param 	$id_guia int id de la guia
+	 * @return	array de items - item: id,pos,nro_seccion,nombre_seccion,nro_grupoitem,nombre_grupoitem,nro_item,nombre_item,solo_texto
+	 *
+	 */
+
+	public function get_items($id_guia)
+	{
+		$query_string = "SELECT id_item,pos_item,nro_sec,nom_sec,nro_grupoitem,nom_grupoitem,nro_item,nom_item,solo_texto 
+			FROM items NATURAL LEFT JOIN items_guias NATURAL LEFT JOIN secciones NATURAL LEFT JOIN grupositems 
+			WHERE id_guia = ? ORDER BY pos_item ASC";
+		$query = $this->db->query($query_string,array($id_guia));
+	
+		return $query->result_array();
+	}
+
+	/**
+	 *	Retorna las descripciones de la guia
+	 *
+	 * @access	public
+	 * @param 	$id_guia int id de la guia
+	 * @return	array de descripciones - desc: nom_desc,contenido_desc
+	 *
+	 */
+
+	public function get_descripciones($id_guia)
+	{
+		$query_string = "SELECT nom_desc,contenido_desc
+			FROM descripciones
+			WHERE id_guia = ?";
+		$query = $this->db->query($query_string,array($id_guia));
+	
+		return $query->result_array();
+	}
+
+	/**
+	 *	Retorna las lista de itemes del estudiante
+	 *
+	 * @access	public
+	 * @param 	$id_guia int id de la guia
+	 * @return	array de items_estudiante - item_estudiante: nro_item,nom_itemest
+	 *
+	 */
+
+	public function get_itemsestudiante($id_guia)
+	{
+		$query_string = "SELECT nro_item,nom_itemest
+			FROM itemsestudiante NATURAL JOIN itemsestudiante_guias NATURAL JOIN guias 
+			WHERE id_guia = ?";
+		$query = $this->db->query($query_string,array($id_guia));
+	
+		return $query->result_array();
+	}
+
+
+
 	
 	
 }

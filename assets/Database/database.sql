@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS items (
 
 CREATE TABLE IF NOT EXISTS secciones (
 	id_sec INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	nom_sec VARCHAR(50), # Titulo seccion
+	nom_sec VARCHAR(100), # Titulo seccion
 	nro_sec INT UNSIGNED, 	#pos de la secc en la guia
 
 	PRIMARY KEY(id_sec)
@@ -129,7 +129,8 @@ CREATE TABLE IF NOT EXISTS items_guias (
 #	id_item_guia INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	id_item INT UNSIGNED NOT NULL,
 	id_guia INT UNSIGNED NOT NULL,
-	nro_item INT UNSIGNED NOT NULL, #pos del item en la guia, seccion o grupoitem
+	pos_item INT UNSIGNED NOT NULL, #pos general del item en la guia (si la guia no tiene secciones ni grupos, pos_item y nro_item son iguales)
+	nro_item INT UNSIGNED NOT NULL, #pos del item en su "contenedor": guia, seccion o grupoitem
 	id_grupoitem INT UNSIGNED,
 	id_sec INT UNSIGNED,
 
