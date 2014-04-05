@@ -10,6 +10,7 @@ $('document').ready(function() {
 	event_handlers_window();
 
 	$(window).resize(); // Disparo el evento para que el contenido quede centado.
+	$('#input-legajo').focus();
 });
 
 /*	EVENT HANDLERS */
@@ -17,6 +18,7 @@ $('document').ready(function() {
 function event_handlers_window() {
 
 	$(window).resize(function() {
+		calculos_visualizacion();
 		centrar_contenido('div-form');
 	});
 }

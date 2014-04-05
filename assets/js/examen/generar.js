@@ -123,6 +123,7 @@ function ajustar_ancho_selects() {
 function event_handlers_window() {
 
 	$(window).resize(function() {
+		calculos_visualizacion();
 		centrar_contenido('div-form');
 		ajustar_ancho_selects();
 		AJUSTE_VISUALIZACION = 0; // para que lo aplique solo una vez, sino siempre se suma

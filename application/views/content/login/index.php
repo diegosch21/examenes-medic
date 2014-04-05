@@ -15,7 +15,7 @@
 
 	<form id="form" class="form-login" role="form" method="post" action="<?php echo site_url('login/loguear_usuario');?>">
 
-		<input id="input-legajo" name="legajo" class="form-control" type="text"  placeholder="Legajo" autofocus=""/>
+		<input id="input-legajo" name="legajo" class="form-control" type="text"  placeholder="Legajo"/>
 		<input id="input-password" name="password" class="form-control" type="password"  placeholder="Contraseña"/>
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>

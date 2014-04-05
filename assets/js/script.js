@@ -8,13 +8,7 @@ var ERROR_AJAX = "Ha ocurrido un error en el servidor. Por favor intente más ta
 var expresiones_regulares = new Array();
 
 $(document).ready(function(){	 				
-	calculos_visualizacion();
 	inicializar_expresiones_regulares();
-
-	$(window).resize(function() {
-		calculos_visualizacion();
-	});
-
 });
 
 function inicializar_expresiones_regulares()
@@ -30,19 +24,15 @@ function calculos_visualizacion() {
 
 function centrar_contenido_header_footer() {
 
-	$('#header-texto').css('margin-top', 0);
+	$('#header-texto').css('margin-top', 0)
 
-	var header_texto = $('#header-texto').css('height').split("px");
-		header_texto = header_texto[0];
+	var header_texto = parseFloat($('#header-texto').css('height').split("px")[0]);
 
-	var header_image = $('#header-image').css('height').split("px");
-		header_image = header_image[0];
+	var header_image = parseFloat($('#header-image').css('height').split("px")[0]);
 
-	var header_image_padding_top = $('#header-image').css('padding-top').split("px");
-		header_image_padding_top = header_image_padding_top[0];
+	var header_image_padding_top = parseFloat($('#header-image').css('padding-top').split("px")[0]);
 
-	var header_image_padding_bottom = $('#header-image').css('padding-bottom').split("px");
-		header_image_padding_bottom = header_image_padding_bottom[0];
+	var header_image_padding_bottom = parseFloat($('#header-image').css('padding-bottom').split("px")[0]);
 
 	var margin_top = (header_image - header_image_padding_top - header_image_padding_bottom - header_texto) / 2;
 
@@ -54,55 +44,54 @@ function centrar_contenido_header_footer() {
 
 	if($('#header-sombra').length > 0) { //si se esta mostrando la sombra del header
 
-		var header_principal = $('#header-principal').css('height').split("px");
-		header_principal = header_principal[0];
-
-		$('#header-sombra').css('top', header_principal+'px');
+		$('#header-sombra').css('top', $('#header-principal').css('height'));
 	}
 }
 
 function calcular_altura_main_content() {
 
-	var wrapper = $('.wrapper').css('height').split("px");
-		wrapper = wrapper[0];
+	var wrapper = parseFloat($('.wrapper').css('height').split("px")[0]);
 
-	var header = $('#header-image').css('height').split("px");
-		header = header[0];
+	var header = parseFloat($('#header-image').css('height').split("px")[0]);
 
 	var navbar = 0;
 
-	if($('#navbar')[0]) { //si existe el elemento
-		navbar = $('#navbar').css('height').split("px");
-		navbar = navbar[0];
+	if($('#navbar')[0]) { //si el elemento existe (en login no existe)
+		parseFloat($('#navbar').css('height').split("px")[0]);
 	}
 
-	var footer = $('footer').css('height').split("px");
-	footer = footer[0];
+	var footer = parseFloat($('footer').css('height').split("px")[0]);
 
-	var margin_top = wrapper - header - navbar - footer;
+	var min_height = wrapper - header - navbar - footer;
 
-	if(margin_top < 0) {
-		margin_top = 0;		
+	if(min_height < 0) {
+		min_height = 0;		
 	}
 
-	$('#div-main-content').css('min-height', margin_top);
+	$('#div-main-content').css('min-height', min_height);
 }
 
 function centrar_contenido(contenido) {
 
-	var contenedor = $('#div-main-content').css('height').split("px");
-	contenedor = contenedor[0];
+	var contenedor = parseFloat($('#div-main-content').css('minHeight').split("px")[0]);
 
-	var contenedor_padding_top =  $('#div-main-content').css('padding-top').split("px");
-	contenedor_padding_top = contenedor_padding_top[0];
+	var contenedor_padding_top =  parseFloat($('#div-main-content').css('padding-top').split("px")[0]);
 
-	var contenedor_padding_bottom =  $('#div-main-content').css('padding-bottom').split("px");
-	contenedor_padding_bottom = contenedor_padding_bottom[0];
+	var contenedor_padding_bottom =  parseFloat($('#div-main-content').css('padding-bottom').split("px")[0]);
 
-	var altura_contenido = $('#'+contenido).css('height').split("px");
-	altura_contenido = altura_contenido[0];
+	var altura_contenido = parseFloat($('#'+contenido).css('height').split("px")[0]);
 
-	$('#'+contenido).css('margin-top', (contenedor - contenedor_padding_top - contenedor_padding_bottom - altura_contenido) / 2);
+	var altura_interior_contenedor = contenedor - contenedor_padding_top - contenedor_padding_bottom;
+
+	if(altura_interior_contenedor > altura_contenido) { // si la altura interna del contenedor es mayor al contenido en el -> centrar
+
+		var margen = (altura_interior_contenedor - altura_contenido) / 2;
+
+		$('#'+contenido).css('marginTop', margen);
+	}
+	else {
+		$('#'+contenido).css('marginTop', 0);
+	}
 }
 
 function es_integer(valor) {
