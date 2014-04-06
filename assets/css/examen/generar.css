@@ -7,11 +7,12 @@
 */
 
 body {
-	min-width: 350px !Important;
+	min-width: 290px !Important;
 }
 
 .form-container {
 	margin: 0px auto;
+	min-width: 250px;
 }
 
 .form-group-generar {

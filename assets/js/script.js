@@ -57,7 +57,7 @@ function calcular_altura_main_content() {
 	var navbar = 0;
 
 	if($('#navbar')[0]) { //si el elemento existe (en login no existe)
-		parseFloat($('#navbar').css('height').split("px")[0]);
+		navbar = parseFloat($('#navbar').css('height').split("px")[0]);
 	}
 
 	var footer = parseFloat($('footer').css('height').split("px")[0]);

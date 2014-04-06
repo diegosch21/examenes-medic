@@ -72,8 +72,7 @@
 
 			if(!isset($catedras)) // si no existen cátedras
 			{
-				echo 	'<select id="select-catedra" name="catedra" disabled>
-						 </select>';
+				echo 	'<select id="select-catedra" name="catedra" disabled></select>';
 			}
 			else
 			{ 
@@ -107,8 +106,7 @@
 
 			if(!isset($guias)) // si no existen guías
 			{
-				echo 	'<select id="select-guia" name="guia" data-live-search="true" disabled>
-						 </select>';
+				echo 	'<select id="select-guia" name="guia" data-live-search="true" disabled></select>';
 			}
 			else
 			{ 

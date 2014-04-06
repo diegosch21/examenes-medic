@@ -8,6 +8,11 @@ var NO_SELECTED = "";
 var AJUSTE_VISUALIZACION = 20; // 20px para que se vea correctamente el item seleccionado
 
 $('document').ready(function() {
+
+	if(es_dispositivo_movil()) {
+		NO_SELECTED = -1;
+		AJUSTE_VISUALIZACION = 0;
+	}
 	
 	inicializar_selects();
 	event_handlers_window();
@@ -15,16 +20,15 @@ $('document').ready(function() {
 
 	$(window).resize(); // Disparo el evento para que el contenido quede centado.
 
-	if(es_dispositivo_movil()) {
-		NO_SELECTED = -1;
-		AJUSTE_VISUALIZACION = 0;
-	}
+	
 });
 
 function inicializar_selects() {
 
+	$('select').addClass('select')
+
 	if(es_dispositivo_movil()) {
-	 	$('select').addClass('select').addClass('select-mobile');
+	 	$('select').addClass('select-mobile');
 
 	 	$('#select-carrera').prepend('<option value="'+NO_SELECTED+'" disabled>Seleccione una Carrera</option>');
 	 	$('#select-catedra').prepend('<option value="'+NO_SELECTED+'" disabled>Seleccione un Cátedra</option>');
@@ -56,26 +60,9 @@ function inicializar_select(id_select, placeholder) {
 }
 
 /*
- *	Establece el ancho de todos los selects al mismo tamaño.
- *	Verifica que el ancho sea no menor a 250px y no mayor a 600px (Condición establecida en generar.css - class .select) 
- *	y que se encuentre dentro del rango MAX(250px, 60% #div-main-content) - MIN(600px, 80% #div-main-content). 
+ *	Establece el ancho de todos los selects en el rango MAX(250px, MIN(600px, 80% #div-main-content))
  */
 function ajustar_ancho_selects() {
-
-	var width_select_carreras = 0;
-	var width_select_catedras = 0;
-	var width_select_guias = 0;
-	var width_select_alumnos = 0;
-
-	var select_mas_ancho = 0;
-
-	width_select_carreras = parseFloat($("#select-carrera").api_get_css("width").split("px")[0]);
-	width_select_catedras = parseFloat($("#select-catedra").api_get_css("width").split("px")[0]);
-	width_select_guias = 	parseFloat($("#select-guia").api_get_css("width").split("px")[0]);
-	width_select_alumnos = 	parseFloat($("#select-alumno").api_get_css("width").split("px")[0]);
-
-	//calculo el width del select más ancho para ponerlos a todos del mismo tamaño
-	select_mas_ancho = Math.max(width_select_carreras, width_select_catedras, width_select_guias, width_select_alumnos) + + AJUSTE_VISUALIZACION;
 
 	var ancho_main_content = new Array();
 
@@ -83,39 +70,14 @@ function ajustar_ancho_selects() {
 	ancho_main_content[1] = parseFloat($("#div-main-content").css("paddingLeft").split("px")[0]) + parseFloat($("#div-main-content").css("paddingRight").split("px")[0]);
 	ancho_main_content[2] = parseFloat($("#div-main-content").css("border-left-width").split("px")[0]) + parseFloat($("#div-main-content").css("border-right-width").split("px")[0]);
 
-	var ancho_main_content_real = ancho_main_content[0] - ancho_main_content[1] - ancho_main_content[2]; //ancho - padding - bordes
-	var max_ancho_select = parseFloat($(".select").css("maxWidth").split("px")[0]);
+	var ancho_control = (ancho_main_content[0] - ancho_main_content[1] - ancho_main_content[2]) * 0.8; // 80% del #div-main-content (ancho interior = ancho total - paddings - bordes)
 
-	var ancho_control = ancho_main_content_real * 0.6;
+	$("#select-carrera").api_set_css("width", ancho_control);
+	$("#select-catedra").api_set_css("width", ancho_control);
+	$("#select-guia").api_set_css("width", ancho_control);
+	$("#select-alumno").api_set_css("width", ancho_control);
 
-	//console.log(ancho_control);
-
-	if(select_mas_ancho < ancho_control && ancho_control < max_ancho_select) {
-		select_mas_ancho = ancho_control;
-	}
-	else {
-
-		ancho_control = ancho_main_content_real * 0.8;
-
-		if(select_mas_ancho > ancho_control) {
-			select_mas_ancho = ancho_control;
-		}
-		else {
-			select_mas_ancho = max_ancho_select;
-		}
-	}
-
-	width_select_carreras = select_mas_ancho;
-	width_select_catedras = select_mas_ancho;
-	width_select_guias = 	select_mas_ancho;
-	width_select_alumnos = 	select_mas_ancho;
-
-	$("#select-carrera").api_set_css("width", width_select_carreras);
-	$("#select-catedra").api_set_css("width", width_select_catedras);
-	$("#select-guia").api_set_css("width", width_select_guias);
-	$("#select-alumno").api_set_css("width", width_select_alumnos);
-
-	$('#div-form').css('maxWidth', select_mas_ancho);
+	$('#div-form').css('maxWidth', $("#select-carrera").api_get_css("width"));
 }
 
 /*	EVENT HANDLERS */
@@ -126,7 +88,6 @@ function event_handlers_window() {
 		calculos_visualizacion();
 		centrar_contenido('div-form');
 		ajustar_ancho_selects();
-		AJUSTE_VISUALIZACION = 0; // para que lo aplique solo una vez, sino siempre se suma
 	});
 }
 
@@ -140,7 +101,9 @@ function event_handlers_selects() {
 		if($(this).val() != NO_SELECTED && $(this).val() != null) {
 
 			$('#select-catedra').api_set_val(NO_SELECTED);
-		//	$('#select-catedra').api_enable(false);
+			$('#select-catedra').api_enable(false);
+			$('#select-guia').api_enable(false);
+			$('#select-alumno').api_enable(false);
 
 			$.ajax({ 
 					data: {carrera: $(this).val()}, // dato enviado en el post: codigo carrera
@@ -176,6 +139,8 @@ function event_handlers_selects() {
 								$('#select-catedra').append('<option value="'+catedra.cod_cat+'">'+catedra.cod_cat+' - '+catedra.nom_cat+'</option>');
 							}
 
+							$('#select-catedra').api_enable(true);				
+
 							$('#select-catedra').api_set_val(catedras.data[0].cod_cat);
 							$('#select-catedra').change();
 						}
@@ -195,6 +160,9 @@ function event_handlers_selects() {
 		event.preventDefault();
 
 		if($(this).val() != NO_SELECTED && $(this).val() != null) {
+
+			$('#select-guia').api_enable(false);
+			$('#select-alumno').api_enable(false);
 
 			$.ajax({ 
 					data: {catedra: $(this).val()}, // dato enviado en el post: codigo catedra
@@ -222,11 +190,11 @@ function event_handlers_selects() {
 
 							if(es_dispositivo_movil()) {
 
-							 	$('#select-guia').append('<option value="'+NO_SELECTED+'" disabled selected="selected">Seleccione una Guía</option>');
-							 	$('#select-alumno').append('<option value="'+NO_SELECTED+'" disabled selected="selected">Seleccione un Alumno</option>');
+							 	$('#select-guia').append('<option value="'+NO_SELECTED+'" disabled>Seleccione una Guía</option>');
+							 	$('#select-alumno').append('<option value="'+NO_SELECTED+'" disabled>Seleccione un Alumno</option>');
 							}
 							else {
-								$('#select-guia, #select-alumno').prepend('<option selected="selected"></option>');
+								$('#select-guia, #select-alumno').prepend('<option></option>');
 							}
 
 							for(var i = 0 ; i < guias.length; i++) {
@@ -241,8 +209,11 @@ function event_handlers_selects() {
 								$('#select-alumno').append('<option value="'+alumno.lu_alu+'">'+alumno.lu_alu+' - '+alumno.apellido_alu+', '+alumno.nom_alu+'</option>');
 							}
 
-							$('#select-guia').api_set_val($('#select-guia > option :first').val());
-							$('#select-alumno').api_set_val($('#select-alumno > option :first').val());
+							$('#select-guia').api_set_val($('#select-guia > option:first').val());
+							$('#select-alumno').api_set_val($('#select-alumno > option:first').val());
+
+							$('#select-guia').api_enable(true);
+							$('#select-alumno').api_enable(true);
 						}
 						else {
 							alert("Invalid select value en catedras");

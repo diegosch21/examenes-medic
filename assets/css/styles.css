@@ -226,7 +226,7 @@ footer {
 		display: none;
 	}
 
-	.header-texto-linea1, .header-texto-linea2{
+	.header-texto-linea1, .header-texto-linea2, .footer-texto-linea{
 		text-align: center;
 	}
 }
