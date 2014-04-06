@@ -173,8 +173,8 @@ function event_handlers_selects() {
 						 alert(ERROR_AJAX);
 					},
 
-					success: function(json) { 			    
-						console.log(json);
+					success: function(json) { 
+
 						var guias_alumnos = $.parseJSON(json);	
 
 						if(guias_alumnos.ok) {
@@ -262,18 +262,10 @@ function validar() {
 		$('#error-alumno').show();
 	}
 
-console.log($('#fecha').val()+"validacion "+control_expresion_regular('fecha', $('#fecha').val()));
-console.log($('#select-carrera').val());
-console.log($('#select-catedra').val());
-console.log($('#select-guia').val());
-console.log($('#select-alumno').val());
-
 	if($('#fecha').val() == '' || !control_expresion_regular('fecha', $('#fecha').val())) {
 		validacion_general = false;
 		$('#error-fecha').show();
 	}
-
-	console.log(validacion_general);
 
 	return validacion_general;
 
