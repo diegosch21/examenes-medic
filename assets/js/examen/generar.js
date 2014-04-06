@@ -5,13 +5,11 @@
 */
 
 var NO_SELECTED = "";
-var AJUSTE_VISUALIZACION = 20; // 20px para que se vea correctamente el item seleccionado
 
 $('document').ready(function() {
 
 	if(es_dispositivo_movil()) {
 		NO_SELECTED = -1;
-		AJUSTE_VISUALIZACION = 0;
 	}
 	
 	inicializar_selects();

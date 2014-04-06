@@ -1,0 +1,44 @@
+.tab-content {
+	padding: 10px;
+}
+
+.tab-pane {
+	margin: 0px auto;
+}
+
+.col-titulo-guia {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.col-subtitulo-guia {
+	font-size: 15px;
+	font-style: italic;
+	text-align: center;
+}
+
+.div-titulo { 
+	font-weight: bold;
+	float: left;
+	width: 145px;
+}
+
+.span-titulo {
+	font-weight: bold;
+	margin-right: 86px;
+}
+
+.span-titulo-catedra {
+	margin-right: 84px;
+}
+
+.span-titulo-fecha {
+	margin-right: 10px;
+}
+
+.barra-division {
+	margin-top: 15px;
+	margin-bottom: 20px;
+	border-top: 2px solid #285E8E;
+}
