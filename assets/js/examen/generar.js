@@ -25,8 +25,6 @@ $('document').ready(function() {
 
 function inicializar_selects() {
 
-	$('select').addClass('select')
-
 	if(es_dispositivo_movil()) {
 	 	$('select').addClass('select-mobile');
 

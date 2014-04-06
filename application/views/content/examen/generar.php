@@ -35,12 +35,12 @@
 
 			if(!isset($carreras)) // si no existen carreras
 			{
-				echo 	'<select id="select-carrera" name="carrera" disabled>
+				echo 	'<select id="select-carrera" name="carrera" class="select" disabled>
 						 </select>';
 			}
 			else
 			{ 
-				echo '<select id="select-carrera" name="carrera">';
+				echo '<select id="select-carrera" name="carrera" class="select">';
 
 				foreach ($carreras['list'] as $indice => $carrera): 
 
@@ -72,11 +72,11 @@
 
 			if(!isset($catedras)) // si no existen cátedras
 			{
-				echo 	'<select id="select-catedra" name="catedra" disabled></select>';
+				echo 	'<select id="select-catedra" name="catedra" class="select" disabled></select>';
 			}
 			else
 			{ 
-				echo '<select id="select-catedra" name="catedra" >';
+				echo '<select id="select-catedra" name="catedra" class="select">';
 
 				foreach ($catedras['list'] as $indice => $catedra): 
 					if($indice == $catedras['selected'])
@@ -106,11 +106,11 @@
 
 			if(!isset($guias)) // si no existen guías
 			{
-				echo 	'<select id="select-guia" name="guia" data-live-search="true" disabled></select>';
+				echo 	'<select id="select-guia" name="guia" data-live-search="true" class="select" disabled></select>';
 			}
 			else
 			{ 
-				echo '<select id="select-guia" name="guia" data-live-search="true">';
+				echo '<select id="select-guia" name="guia" data-live-search="true" class="select">';
 
 				foreach ($guias['list'] as $indice => $guia): 
 					if($indice == $guias['selected'])
@@ -134,19 +134,19 @@
 			<div>
 				<label for="select-alumno" class="control-label">Alumno</label>
 			</div>
-		<div>	
+			<div>	
 		<?php
 
 			/* SELECT DE ALUMNOS */
 
 			if(!isset($alumnos)) // si no existen alumnos
 			{
-				echo 	'<select id="select-alumno" name="alumno" data-live-search="true" disabled>
+				echo 	'<select id="select-alumno" name="alumno" data-live-search="true" class="select" disabled>
 						 </select>';
 			}
 			else
 			{ 
-				echo '<select id="select-alumno" name="alumno" data-live-search="true">';
+				echo '<select id="select-alumno" name="alumno" data-live-search="true" class="select">';
 
 				foreach ($alumnos['list'] as $indice => $alumno): 
 					if($indice == $alumnos['selected'])
