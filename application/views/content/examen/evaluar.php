@@ -39,10 +39,10 @@
 <div id="div-evaluar">
 	
 	<div>
-		<div class="div-titulo">
+		<div class="div-titulo" style="height: 100%;">
 			<span>Carrera:</span>
 		</div>
-		<div>
+		<div class="div-titulo-dato">
 			<span><?php echo $carrera['cod_carr'].' - '.$carrera['nom_carr']; ?></span>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 		<div class="div-titulo">
 			<span>Cátedra:</span>
 		</div>
-		<div>
+		<div class="div-titulo-dato">
 			<span><?php echo $catedra['cod_cat'].' - '.$catedra['nom_cat']; ?></span>
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 		<div class="div-titulo">
 			<span>Alumno:</span>
 		</div>
-		<div>
+		<div class="div-titulo-dato">
 			<span><?php echo $alumno['lu_alu'].' - '.$alumno['apellido_alu'].', '.$alumno['nom_alu']; ?></span>
 		</div>
 	</div>
@@ -69,7 +69,7 @@
 		<div class="div-titulo">
 			<span>Fecha del Examen:</span>
 		</div>
-		<div>
+		<div class="div-titulo-dato">
 			<span><?php echo $fecha; ?></span>
 		</div>
 	</div>
@@ -90,9 +90,15 @@
 
 	<!-- Nav tabs -->
 	<ul id="tab" class="nav nav-tabs">
-		<li><a href="#descripcion" data-toggle="tab">Descripción</a></li>
-		<li class="active"><a href="#evaluacion" data-toggle="tab">Evaluación</a></li>
-		<li><a href="#guia-estudiante" data-toggle="tab">Guía Estudiante</a></li>
+		<li>
+			<a href="#descripcion" data-toggle="tab">Descripción</a>
+		</li>
+		<li class="active">
+			<a href="#evaluacion" data-toggle="tab">Evaluación</a>
+		</li>
+		<li>
+			<a href="#guia-estudiante" data-toggle="tab">Guía Estudiante</a>
+		</li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -114,6 +120,22 @@
 			?>
 		</div>
 		<div id="evaluacion" class="tab-pane active">
+			<div class="grupo-item">
+			 		<div>
+			 			1  -  Nombre del item
+			 		</div>
+			 		<div>
+			 			Si 
+			 			<div class="div-checkbox">
+			 				<input type="checkbox" class="item-checkbox"/>
+			 			</div>
+			 			No
+			 			<div class="div-checkbox">
+			 				<input type="checkbox" class="item-checkbox"/>
+			 			</div>
+			 			<a class="btn btn-primary btn-xs">Obs</a>
+			 		</div>
+			 	</div>
 			<form>
 				<input type="hidden" name="fecha" id="input-fecha" value="<?php echo $fecha; ?>"/>
 				<input type="hidden" name="catedra" id="input-catedra" value="<?php echo $catedra['cod_cat']; ?>"/> <!-- no es necesario -->
@@ -142,20 +164,27 @@
 								}		
 							}
 						} 
-						elseif ($item['tipo']=='grupoitem') //si el item es un grupoitem
-						{ 
-							echo "{$item['nro']}. {$item['nom']}<br/>"; //nombre del grupoitem
-							foreach ($item['items'] as $item2)  //recorro la lista de items del grupo
+						else
+						{
+							if ($item['tipo']=='grupoitem') //si el item es un grupoitem
+							{ 
+								echo "{$item['nro']}. {$item['nom']}<br/>"; //nombre del grupoitem
+
+								foreach ($item['items'] as $item2)  //recorro la lista de items del grupo
+								{
+									print_item($item2); //imprime inputs y contenido del item
+								}
+							}
+							else // item suelto en la guia
 							{
-								print_item($item2); //imprime inputs y contenido del item
+								print_item($item); //imprime inputs y contenido del item
 							}
 						}
-						else // item suelto en la guia
-						{
-							print_item($item); //imprime inputs y contenido del item
-						}
 					}
-			 	?>			
+			 	?>	
+
+
+
 			</form>
 		</div>		
 	</div>

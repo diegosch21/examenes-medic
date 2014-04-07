@@ -24,21 +24,30 @@
 	width: 145px;
 }
 
-.span-titulo {
-	font-weight: bold;
-	margin-right: 86px;
-}
-
-.span-titulo-catedra {
-	margin-right: 84px;
-}
-
-.span-titulo-fecha {
-	margin-right: 10px;
+.div-titulo-dato {
+	text-align: left; 
+	display: inline-block;
 }
 
 .barra-division {
 	margin-top: 15px;
 	margin-bottom: 20px;
 	border-top: 2px solid #285E8E;
+}
+
+.grupo-item {
+	border: 1px solid #FFFFFF;
+	border-right: 0px;
+	border-left: 0px;
+}
+
+.div-checkbox {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.item-checkbox {
+	width: 23px;
+	height: 20px;
+	margin-top: 0px;
 }
