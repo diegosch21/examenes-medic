@@ -567,6 +567,7 @@ class Examen extends CI_Controller {
     public function archivar()
     {
         $this->load->model('examenes_model');
+        var_dump($this->input->post());
     }
 
 

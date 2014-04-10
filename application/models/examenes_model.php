@@ -98,5 +98,5 @@ class Examenes_model extends CI_Model {
 	
 }
 
-/* Fin del archivo guias_model.php */
-/* Location: ./application/models/guias_model.php */
+/* Fin del archivo examenes_model.php */
+/* Location: ./application/models/examenes_model.php */
