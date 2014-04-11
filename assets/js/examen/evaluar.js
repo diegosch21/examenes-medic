@@ -51,11 +51,15 @@ function event_handlers_buttons() {
 		}
 	});
 	$('.boton-obs').click(function(e){
-		text = $(this).next();
-		if(text.css('display')=='none')
-			text.show('fast');
-		else
-			text.hide('fast');
+		var text = $(this).next();
+		if(text.css('display')=='none') {
+			//text.show('fast');
+			text.show();
+		}
+		else {
+			//text.hide('fast');
+			text.hide();
+		}
 	})
 }
 
@@ -63,14 +67,16 @@ function activar_boton(boton,valor) {
 	if(valor=='SI') {
 		boton.addClass('btn-success').removeClass('btn-default');
 		boton.siblings('.boton-no').removeClass('btn-danger active').addClass('btn-default');
-		boton.siblings('input').val('1');	
-		boton.siblings('span').html('SÍ');	
+		var parent = boton.parent();
+		parent.siblings('input').val('1');	
+		parent.siblings('span').html('SÍ');	
 	}
 	else {
 		boton.addClass('btn-danger').removeClass('btn-default');
 		boton.siblings('.boton-si').removeClass('btn-success active').addClass('btn-default');
-		boton.siblings('input').val('0');
-		boton.siblings('span').html('NO');
+		var parent = boton.parent();
+		parent.siblings('input').val('0');
+		parent.siblings('span').html('NO');
 	}
 }
 
@@ -81,7 +87,8 @@ function desactivar_boton(boton,valor) {
 	else {
 		boton.removeClass('btn-danger').addClass('btn-default');	
 	}
-	boton.siblings('input').val('-1');
-	boton.siblings('span').html('-');
+	var parent = boton.parent();
+	parent.siblings('input').val('-1');
+	parent.siblings('span').html('-');
 	
 }

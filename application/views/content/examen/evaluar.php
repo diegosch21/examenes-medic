@@ -17,25 +17,25 @@
 		$id_item = $item['id'];
 		echo "<input type='hidden' name='item-id[]' id='input-item-{$id_item}' value='{$id_item}'/>";
 		echo "{$item['nro']}. {$item['nom']}";
-		echo "<span>";
+		//echo "<span>";
 		if(!$item['solo_texto'])
 		{
 			echo 	'<div class="btn-group" data-toggle="buttons">
-				 	  	<label class="boton-si btn btn-default btn-sm">
+				 	  	<label class="boton-si btn btn-default">
 							<input type="checkbox"> SÍ
 					    	<span class="glyphicon glyphicon-ok"></span>
 					  	</label>
-						<label class="boton-no btn btn-default btn-sm">
+						<label class="boton-no btn btn-default">
 							<input type="checkbox"> NO 
 							<span class="glyphicon glyphicon-remove"></span>
 						</label>
-						<input type="hidden" name="item-estado[]" id="estado-item-{$id_item}" data-item="{$id_item}" value="-1"/>
-						<span class="item-value">-</item>
-					</div>';
+					</div>
+					<input type="hidden" name="item-estado[]" id="estado-item-{$id_item}" data-item="{$id_item}" value="-1"/>
+					<span class="item-value">-</span>';
 		}
-		echo 	'<a class="boton-obs btn btn-primary btn-sm">Obs</a>
-				<textarea name="item-obs[]" class="item-obs form-control" rows="2" style="display:none;"	></textarea>
-			</span>';
+		echo 	'<a class="boton-obs btn btn-default">Obs <span class="glyphicon glyphicon-pencil"></span></a>
+				<textarea name="item-obs[]" class="item-obs form-control" rows="2" style="display:none;"	></textarea>';
+	//		</span>';
 		echo "</div>";
 
 		//via Javascript cambiar los input de los checkbox por hidden, al hacer clic en Calificar
