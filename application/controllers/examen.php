@@ -310,6 +310,18 @@ class Examen extends CI_Controller {
             $this->session->set_flashdata('error', 'Acceso inválido a la evaluación de un examen');
             redirect('examen/generar');
         }
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('carrera', 'carrera', 'required|integer');
+        $this->form_validation->set_rules('catedra', 'catedra', 'required|integer');
+        $this->form_validation->set_rules('guia', 'guia', 'required|integer');
+        $this->form_validation->set_rules('alumno', 'alumno', 'required|integer');
+        $this->form_validation->set_rules('fecha', 'fecha', 'required');
+
+        if (!$this->form_validation->run())  //si no verifica inputs
+        {
+            $this->session->set_flashdata('error', validation_errors());
+            redirect('examen/generar');
+        }
 
         //FECHA pasada por POST
         //Redirecciona si no es valida
@@ -557,7 +569,7 @@ class Examen extends CI_Controller {
      * Controlador de la accion archivar examen
      *  
      * En POST se reciben los datos del examen:
-     * id_guia, lu_alu, leg_doc, fecha, calificacion, obs_exam (opcional), porcentaje_exam
+     * catedra (cod), guia (id), alumno (lu), fecha (string), examen-calif (int), examen-obs (text, opcional), examen-porc (float, opcional)
      * Arreglos: item-id[], item-estado[], item-obs[]
      *
      * Responde con JSON con el id del examen (o mensaje de error)
@@ -567,9 +579,140 @@ class Examen extends CI_Controller {
     public function archivar()
     {
         $this->load->model('examenes_model');
-        var_dump($this->input->post());
-    }
+        
+        //var_dump($this->input->post());
 
+        if(!$this->input->post()) 
+        {
+            $this->util->json_response(FALSE,STATUS_EMPTY_POST,"Acceso inválido a la archivación de examen");
+        }
+        else 
+        {
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('catedra', 'catedra', 'required|integer');
+            $this->form_validation->set_rules('guia', 'guia', 'required|integer');
+            $this->form_validation->set_rules('alumno', 'alumno', 'required|integer');
+            $this->form_validation->set_rules('fecha', 'fecha', 'required');
+            $this->form_validation->set_rules('examen-calif', 'examen-calif', 'required|integer');
+            $this->form_validation->set_rules('examen-porc', 'examen-porc', 'numeric');
+            $this->form_validation->set_rules('item-id', 'item-id[]', 'required');
+            $this->form_validation->set_rules('item-estado', 'item-estado[]', 'required');
+            $this->form_validation->set_rules('item-obs', 'item-obs[]', 'required');
+
+            if (!$this->form_validation->run())  //si no verifica inputs requeridos
+            {
+                $errors = $this->form_validation->error_array();
+                $this->util->json_response(FALSE,STATUS_INVALID_POST,$errors);
+
+            }
+            else //están los inputs, los valido 
+            {
+                $valid = TRUE;
+                $input_errors = array(); 
+                //FECHA (verifica si es válida)
+                $fecha = $this->input->post('fecha');
+
+                if(!$fecha || !$this->util->validar_fecha_DMY($fecha))
+                {
+                    $valid = false;
+                    $input_errors['fecha']='Fecha invalida';
+                }
+                else
+                    $fecha = $this->util->DMYtoYMD($fecha);
+
+                //CATEDRA (chequea que sea válida y asociada al docente)
+                $cod_cat = $this->input->post('catedra');
+                if(!$cod_cat || $cod_cat==NO_SELECTED)
+                {
+                    $valid = false;
+                    $input_errors['catedra']='Catedra invalida';
+                }
+                if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
+                { 
+                    if(!$this->catedras_model->check_catedra_docente($cod_cat,$this->legajo))
+                    //catedra no perteneciente al docente (o no existe)
+                    {
+                        $valid = false;
+                        $input_errors['catedra']='Catedra no asociada al usuario';
+                    }
+                }
+
+                //ALUMNO (chequea que sea valido, y asociado a la catedra)
+                $lu_alu = $this->input->post('alumno');
+                if(!$lu_alu || $lu_alu==NO_SELECTED)
+                {
+                    $valid = false;
+                    $input_errors['alumno']='Alumno invalido';
+                }
+                if(!$this->alumnos_model->check_alumno_catedra($lu_alu,$cod_cat))
+                {
+                    //alumno no asociado a catedra (o no existe)
+                    $valid = false;
+                    $input_errors['alumno']='Alumno no asociado a la catedra';
+                }
+                //GUIA (chequea que sea valido, y de la catedra)
+                $id_guia = $this->input->post('guia');
+                if(!$id_guia || $id_guia==NO_SELECTED)
+                {
+                    $valid = false;
+                    $input_errors['guia']='Guia invalida';
+                }
+                if(!$this->guias_model->check_guia_catedra($id_guia,$cod_cat))
+                {
+                    //guia no es de la catedra (o no existe)
+                    $valid = false;
+                    $input_errors['guia']='Guia no asociada a la catedra';
+                }
+
+                //ITEMS: chequea que el array de id, estado y obs items no sea vacio, y tengan el mismo tamaño
+                $items_id = $this->input->post('item-id');
+                if(!$items_id || empty($items_id)) 
+                {
+                    $valid = false;
+                    $input_errors['item-id']='Arreglo item-id vacio';
+                }
+                $items_estado = $this->input->post('item-estado');
+                if(!$items_estado || empty($items_estado)) 
+                {
+                    $valid = false;
+                    $input_errors['item-estado']='Arreglo item-estado vacio'; 
+                }
+                $items_obs = $this->input->post('item-obs');
+                if(!$items_obs || empty($items_obs)) 
+                {
+                    $valid = false;
+                    $input_errors['item-obs']='Arreglo item-obs vacio'; 
+                }
+                if (!( count($items_id)==count($items_estado) && count($items_id)==count($items_estado) ) ) 
+                {
+                    $valid = false;
+                    $input_errors['items']='Arreglos item-id, item-estado, item-obs de distinto tamaño';
+                }
+                
+                //OBSERVACIÓN GENERAL (no es requerido)
+                $obs_exam = $this->input->post('examen-obs');
+
+                //PORCENTAJE (no es requerido, validado en form_validation)
+                $porc_exam = $this->input->post('examen-porc');
+
+                //CALIFICACION GENERAL (requerida, valor int, validado en form_validation)
+                $calif_exam = $this->input->post('examen-calif');
+
+                if (!$valid)    //si no pasa mi validacion
+                {
+                    $this->util->json_response(FALSE,STATUS_INVALID_POST,$input_errors);
+                }
+                else
+                {
+                    //CREAR ARREGLO DE ITEMS
+
+                } //validacion_propia
+
+            } //form_validation
+
+        } //no empty_post
+
+    }
 
 }    
 

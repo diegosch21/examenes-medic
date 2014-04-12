@@ -57,6 +57,7 @@ define('NO_SELECTED', -1);
 define('STATUS_OK', 100);
 define('STATUS_EMPTY_POST', 101);
 define('STATUS_INVALID_PARAM', 102);
+define('STATUS_INVALID_POST', 103);
 
 define('ERROR_NO_INSERT',201);
 define('ERROR_REPETIDO',202);

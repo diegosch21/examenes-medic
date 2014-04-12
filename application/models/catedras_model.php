@@ -60,7 +60,7 @@ class Catedras_model extends CI_Model {
 	 * @access	public
 	 * @param 	$legajo int legajo del docente
 	 * @param 	$cod_carrera int codigo de la carrera
-	 * @return	array - catedra asociadas al docente y la carrera (codigo y nombre)
+	 * @return	array - catedras asociadas al docente y la carrera (codigo y nombre)
 	 *
 	 */
 	public function get_catedras_docente_carrera($legajo,$cod_carrera)
@@ -92,6 +92,25 @@ class Catedras_model extends CI_Model {
 		$query = $this->db->query($query_string,array($legajo,$cod_carr,$cod_cat));
 	
 		return $query->row_array();
+	}
+
+	/**
+	 *	Verifica que una catedra esté asociada al docente 
+	 *
+	 * @access	public
+	 * @param 	$cod_cat int codigo de la catedra
+	 * @param 	$legajo int legajo del docente
+	 * @return	TRUE: docente asociado a catedra | FALSE: caso contrario.
+	 *
+	 */
+
+	public function check_catedra_docente($cod_cat,$legajo)
+	{
+		$query_string = "SELECT * FROM docentes_catedras
+				WHERE leg_doc = ? AND cod_cat = ?";
+		$query = $this->db->query($query_string,array($legajo,$cod_cat));
+	
+		return $query->num_rows()>0;
 	}
 	
 }

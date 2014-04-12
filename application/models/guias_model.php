@@ -56,6 +56,25 @@ class Guias_model extends CI_Model {
 	}
 
 	/**
+	 *	Verifica que la guia este asociada a la catedra
+	 *
+	 * @access	public
+	 * @param 	$cod_cat int codigo de la catedra
+	 * @param 	$id_guia int id de la guia
+	 * @return	array - dato de las guia
+	 *
+	 */
+
+	public function check_guia_catedra($id_guia,$cod_cat)
+	{
+		$query_string = "SELECT * FROM guias
+				WHERE cod_cat = ? AND id_guia = ?";
+		$query = $this->db->query($query_string,array($cod_cat,$id_guia));
+	
+		return $query->num_rows()>0;
+	}
+
+	/**
 	 *	Retorna todos los items de la guia
 	 *
 	 * @access	public

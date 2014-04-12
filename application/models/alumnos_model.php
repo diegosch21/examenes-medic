@@ -57,6 +57,24 @@ class Alumnos_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	/**
+	 *	Verificando que el alumno este asociado a la catedra 
+	 *
+	 * @access	public
+	 * @param 	$lu_alu int lu alumno
+	 * @param 	$cod_catedra int codigo de la catedra
+	 * @return	TRUE: alumno asociado a catedra | FALSE: caso contrario.
+	 *
+	 */
+
+	public function check_alumno_catedra($lu_alu,$cod_catedra)
+	{
+		$query_string = "SELECT * FROM alumnos_catedras
+				WHERE lu_alu = ? AND cod_cat = ?";
+		$query = $this->db->query($query_string,array($lu_alu,$cod_catedra));
+	
+		return $query->num_rows()>0;
+	}
 	
 	
 }

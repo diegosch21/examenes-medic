@@ -20,6 +20,8 @@ class Examenes_model extends CI_Model {
 
 	/**
 	 *	Almacena en la Base de Datos un nuevo  examen
+	 *	Comprueba que se puedan insertar todos los items, y se pueda insertar un examen valido.
+	 *	si el alumno, guia, docente, o algun id item es invalido, no inserta nada y lanza una excepción
 	 *
 	 * @access	public
 	 * @param 	$id_guia int id de la guia correspondiente
