@@ -36,3 +36,7 @@ class MY_Form_validation extends CI_Form_validation
  
     }
 }
+
+
+/* Fin del archivo MY_Form_validaton.php */
+/* Ubicación: ./application/libraries/MY_Form_validation.php */
