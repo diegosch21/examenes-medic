@@ -70,7 +70,7 @@ class Examen extends CI_Controller {
      * @access  public
      */
     public function generar($selects = NULL)
-    { 
+    {
         $this->view_data['title'] = "Generar Examen - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
 
@@ -98,6 +98,7 @@ class Examen extends CI_Controller {
 
             //Busco en post si hay carrera seleccionada por default, y actualiza el index seleccionado de la lista
             $cod_carr_default = $this->input->post('carrera') ;
+            
             if($cod_carr_default)
             {
                 $index_carrera = $this->util->buscar_indice($carreras,'cod_carr',$cod_carr_default);

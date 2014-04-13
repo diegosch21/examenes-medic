@@ -33,8 +33,23 @@ function inicializar_selects() {
 	}
 	else {
 
-		$('#select-carrera, #select-catedra').prepend('<option ></option>');
-	 	$('#select-guia, #select-alumno').prepend('<option selected="selected"></option>');
+		$('#select-carrera, #select-catedra').prepend('<option></option>');
+		console.log($('#select-guia option:selected'));
+
+		if($('#select-guia option:selected').length == 0) {
+			$('#select-guia').prepend('<option selected="selected"></option>');
+		}
+		else {
+			$('#select-guia').prepend('<option></option>');
+		}
+		
+		console.log($('#select-alumno').attr('selected'));
+		if($('#select-alumno option:selected').length == 0) {
+			$('#select-alumno').prepend('<option selected="selected"></option>');
+		}
+		else {
+			$('#select-alumno').prepend('<option></option>');
+		}
 
 		//Inicialización gráfica de los selects personalizados
 		inicializar_select('select-carrera', 'Seleccione una Carrera');

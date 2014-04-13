@@ -50,6 +50,7 @@ function event_handlers_buttons() {
 			activar_boton($(this),'NO');
 		}
 	});
+
 	$('.boton-obs').click(function(e){
 		var text = $(this).next();
 		if(text.css('display')=='none') {
@@ -60,7 +61,16 @@ function event_handlers_buttons() {
 			//text.hide('fast');
 			text.hide();
 		}
-	})
+	});
+
+	$('#btn-cancelar').click(function(event) {
+		event.preventDefault();
+
+		$('#form-evaluar').submit();
+
+	});
+
+
 }
 
 function activar_boton(boton,valor) {
@@ -69,14 +79,14 @@ function activar_boton(boton,valor) {
 		boton.siblings('.boton-no').removeClass('btn-danger active').addClass('btn-default');
 		var parent = boton.parent();
 		parent.siblings('input').val('1');	
-		parent.siblings('span').html('SÍ');	
+		parent.siblings('span').html('sí').removeClass('item-value-no').addClass('item-value-si');;	
 	}
 	else {
 		boton.addClass('btn-danger').removeClass('btn-default');
 		boton.siblings('.boton-si').removeClass('btn-success active').addClass('btn-default');
 		var parent = boton.parent();
 		parent.siblings('input').val('0');
-		parent.siblings('span').html('NO');
+		parent.siblings('span').html('no').removeClass('item-value-si').addClass('item-value-no');
 	}
 }
 
@@ -89,6 +99,6 @@ function desactivar_boton(boton,valor) {
 	}
 	var parent = boton.parent();
 	parent.siblings('input').val('-1');
-	parent.siblings('span').html('-');
+	parent.siblings('span').html('');
 	
 }

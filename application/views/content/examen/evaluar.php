@@ -11,32 +11,49 @@
 	 * @param 	$item array: id, nro, nom, solo_texto
 	 *
 	 */
-	function print_item($item) 
-	{
-		echo "<div class='item'>";
+	function print_item($item, $item_suelto) 
+	{		
+		$clase_botonera = '';
+		if($item_suelto) {
+			echo "<div>";
+			$clase_botonera = 'item-suelto-botonera';
+		}
+		else 
+		{
+			echo "<div class='item'>";
+		}
+
+		
+		echo"	<div class='item-botonera {$clase_botonera} pull-right'>";
+					if(!$item['solo_texto'])
+					{
+						echo 	'<div class="btn-group" data-toggle="buttons">
+							 	  	<label class="boton-si btn btn-default">
+										<input type="checkbox"> Sí
+								    	<span class="glyphicon glyphicon-ok"></span>
+								  	</label>
+									<label class="boton-no btn btn-default">
+										<input type="checkbox"> No
+										<span class="glyphicon glyphicon-remove"></span>
+									</label>
+								</div>
+								<input type="hidden" name="item-estado[]" id="estado-item-{$id_item}" data-item="{$id_item}" value="-1"/>
+								<span class="item-value"></span>';
+					}
+		echo 	'<a class="boton-obs btn btn-default">Obs <span class="glyphicon glyphicon-pencil"></span></a>
+				<textarea name="item-obs[]" class="item-obs form-control" rows="2" style="display:none;"></textarea>';
+
+		echo "</div><div>
+				<div class='item-texto'>";
 		$id_item = $item['id'];
 		echo "<input type='hidden' name='item-id[]' id='input-item-{$id_item}' value='{$id_item}'/>";
-		echo "{$item['nro']}. {$item['nom']}";
+		echo "<span class='numero'>{$item['nro']}.</span> {$item['nom']}";
 		//echo "<span>";
-		if(!$item['solo_texto'])
-		{
-			echo 	'<div class="btn-group" data-toggle="buttons">
-				 	  	<label class="boton-si btn btn-default">
-							<input type="checkbox"> SÍ
-					    	<span class="glyphicon glyphicon-ok"></span>
-					  	</label>
-						<label class="boton-no btn btn-default">
-							<input type="checkbox"> NO 
-							<span class="glyphicon glyphicon-remove"></span>
-						</label>
-					</div>
-					<input type="hidden" name="item-estado[]" id="estado-item-{$id_item}" data-item="{$id_item}" value="-1"/>
-					<span class="item-value">-</span>';
-		}
-		echo 	'<a class="boton-obs btn btn-default">Obs <span class="glyphicon glyphicon-pencil"></span></a>
-				<textarea name="item-obs[]" class="item-obs form-control" rows="2" style="display:none;"	></textarea>';
-	//		</span>';
-		echo "</div>";
+		echo "</div></div>
+
+		<div class='clearboth'></div>
+		</div>";
+
 
 		//via Javascript cambiar los input de los checkbox por hidden, al hacer clic en Calificar
 	}
@@ -130,11 +147,13 @@
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
 		<!--CAMBIAR FORM: EL BOTON ES POR AJAX -->
-			<form id="form-evaluar" class="form-evaluar" role="form" method="post" action="<?php echo site_url('examen/archivar');?>">
+			<form id="form-evaluar" class="form-evaluar" role="form" method="post" action="<?php echo site_url('examen/generar');?>">
 				<input type="hidden" name="fecha" id="input-fecha" value="<?php echo $fecha; ?>"/>
+				<input type="hidden" name="carrera" id="input-carrera" value="<?php echo $carrera['cod_carr']; ?>"/>
 				<input type="hidden" name="catedra" id="input-catedra" value="<?php echo $catedra['cod_cat']; ?>"/> <!-- no es necesario -->
 				<input type="hidden" name="alumno" id="input-alumno" value="<?php echo $alumno['lu_alu']; ?>"/>
 				<input type="hidden" name="guia" id="input-guia" value="<?php echo $guia['id_guia']; ?>"/>
+
 
 				<?php 
 					foreach ($guia['items'] as $item) 
@@ -142,42 +161,53 @@
 						if($item['tipo']=='seccion') //si el item es una seccion
 						{
 							echo "<div class='seccion'>
-									<h5>{$item['nro']}. {$item['nom']}</h5>"; //nombre de la seccion
+									{$item['nro']}. {$item['nom']}
+								 </div>"; //nombre de la seccion
+
 							foreach ($item['items'] as $item2)  //recorro la lista de items de la seccion
 							{
 								if($item2['tipo']=='grupoitem') //si el item es un grupoitem
 								{ 
-									echo "<div class='grupoitem'>
-											{$item2['nro']}. {$item2['nom']}<br/>"; //nombre del grupoitem
+									echo 	"<div class='sangria'>
+												<div class='grupo-item'>
+													<div class='item-texto'>
+														<span class='numero'>{$item2['nro']}</span>. {$item2['nom']}<br/>"; //nombre del grupoitem
+									echo "			</div>
+												</div>
+											
+										  	<div class='sangria'>";	
 									foreach ($item2['items'] as $item3)  //recorro la lista de items del grupo
 									{
-										print_item($item3); //imprime inputs y contenido del item
+										print_item($item3, false); //imprime inputs y contenido del item
 									}
-									echo "</div>";		
+									echo "</div></div>";
 								}
 								else //item suelto en la seccion
 								{
-									print_item($item2); //imprime inputs y contenido del item
+									echo "<div class='grupo-item sangria'>";
+										print_item($item2, true); //imprime inputs y contenido del item
+									echo "</div>";
 								}		
 							}
-							echo "</div>";
 						} 
 						else
 						{
 							if ($item['tipo']=='grupoitem') //si el item es un grupoitem
 							{ 
-								echo "<div class='grupoitem'>
+								echo "<div class='grupo-item'>
 										{$item['nro']}. {$item['nom']}<br/>"; //nombre del grupoitem
 
 								foreach ($item['items'] as $item2)  //recorro la lista de items del grupo
 								{
-									print_item($item2); //imprime inputs y contenido del item
+									print_item($item2, false); //imprime inputs y contenido del item
 								}
 								echo "</div>";	
 							}
 							else // item suelto en la guia
 							{
-								print_item($item); //imprime inputs y contenido del item
+								echo "<div class='grupo-item'>";
+										print_item($item, true); //imprime inputs y contenido del item
+								echo "</div>";
 							}
 						}
 					}
@@ -192,6 +222,7 @@
 				</div>
 
 			 	<h4>Porcentaje realizado:</h4> (calcular via js)
+			 	<input type="hidden" name="examen-porc" id="examen-porc" value="-1">
 
 			 	<h4>CALIFICACION:</h4>
 			 	<div id="examen-calificacion">

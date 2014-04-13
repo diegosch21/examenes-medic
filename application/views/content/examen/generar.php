@@ -13,6 +13,9 @@
 		<label>Generar Examen</label>
 	</div>
 
+<?php var_dump($guias); ?>
+<?php var_dump($alumnos); ?>
+
 	<form id="form-generar" class="form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
 	
 		<div class="form-group-generar">
@@ -76,7 +79,7 @@
 			}
 			else
 			{ 
-				echo '<select id="select-catedra" name="catedra" class="select">';
+				echo "<select id='select-catedra' name='catedra' class='select' data-selected='{$catedras['selected']}'>";
 
 				foreach ($catedras['list'] as $indice => $catedra): 
 					if($indice == $catedras['selected'])

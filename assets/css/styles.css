@@ -10,6 +10,10 @@ html, body {
 	height: 100%;
 }
 
+.clearboth {
+	clear:both;
+}
+
 .wrapper {
 	height: 100%;
 }
