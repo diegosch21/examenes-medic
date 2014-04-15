@@ -38,7 +38,11 @@ body {
 }
 
 .fecha {
-	width: 200px;
+	width: 200px !Important;
+}
+
+.fecha[disabled] {
+	background-color: #FFFFFF;
 }
 
 .form-group-buttons {

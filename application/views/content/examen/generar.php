@@ -4,8 +4,15 @@
 	COPYRIGHT	Marzo, 2014 - Departamento de Ciencias e Ingeniería de la Computación - UNIVERSIDAD NACIONAL DEL SUR 
 -->
 
-<script type="text/javascript"  src="<?php echo base_url('assets/js/examen/generar.js'); ?>"></script>
+<link type="text/css" href="<?php echo base_url('assets/css/datepicker/css/bootstrap-datetimepicker.min.css'); ?>" rel="stylesheet" media="screen"/>
+
 <link type="text/css" href="<?php echo base_url('assets/css/examen/generar.css'); ?>" rel="stylesheet" media="screen"/>
+
+<script type="text/javascript" src="<?php echo base_url('assets/css/datepicker/js/moment.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/css/datepicker/js/bootstrap-datetimepicker.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/css/datepicker/js/bootstrap-datetimepicker.es.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/js/examen/generar.js'); ?>"></script>
 
 <div id="div-form" class="form-container">
 
@@ -17,9 +24,13 @@
 	
 		<div class="form-group-generar form-group-generar-fecha">
 			<label for="fecha" class="control-label">Fecha</label>
-			<div>
-				<input id="fecha" class="form-control fecha" type="date" name="fecha" value="<?php echo $fecha;?>"/>
-			</div>
+			<div class="form-group fecha">
+                <div id='container-fecha' class='input-group date'>
+                    <input id="fecha" class="form-control fecha" type="text" name="fecha" value="<?php echo $fecha; ?>" disabled/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
 			<label id="error-fecha" class="label-error errores">Fecha inválida</label>
 		</div>
 

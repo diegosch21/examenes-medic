@@ -82,7 +82,7 @@ class Examen extends CI_Controller {
             $this->view_data['error'] = $error;
         
         //FECHA ACTUAL
-        $this->view_data['fecha'] = date('Y-m-d');
+        $this->view_data['fecha'] = date('d/m/Y'); 
         
         //LISTA CARRERAS
         $carreras = $this->_carreras();
@@ -327,12 +327,12 @@ class Examen extends CI_Controller {
         //FECHA pasada por POST
         //Redirecciona si no es valida
         $fecha = $this->input->post('fecha');
-        if(!$fecha || !$this->util->validar_fecha($fecha))
+        if(!$fecha || !$this->util->validar_fecha_DMY($fecha))
         {
             $this->session->set_flashdata('error', 'Fecha inválida');
             redirect('examen/generar');
         }
-        $this->view_data['fecha'] = $this->util->YMDtoDMY($fecha);
+        $this->view_data['fecha'] = $fecha;
 
         //CARRERA (pide los datos al modelo a partir del codigo pasado por POST)
         //Redirecciona si no es valida

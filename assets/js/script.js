@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 function inicializar_expresiones_regulares()
 {
-	expresiones_regulares['fecha'] = /^(19|20)\d\d[\-\/.](0[1-9]|1[012])[\-\/.](0[1-9]|[12][0-9]|3[01])$/;
+	expresiones_regulares['fecha'] = /^(0[1-9]|[12][0-9]|3[01])[\-\/.](0[1-9]|1[012])[\-\/.](19|20)\d\d$/;
 }
 
 function calculos_visualizacion() {
@@ -118,9 +118,9 @@ function fecha_actual() {
 	var month = d.getMonth()+1;
 	var day = d.getDate();
 
-	var output = d.getFullYear() + '-' +
-	    ((''+month).length<2 ? '0' : '') + month + '-' +
-	    ((''+day).length<2 ? '0' : '') + day;
+	var output = ((''+day).length<2 ? '0' : '') + day + '/' +
+	    ((''+month).length<2 ? '0' : '') + month + '/' +
+	    d.getFullYear();
 
 	return output;
 }

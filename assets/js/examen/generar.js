@@ -13,6 +13,7 @@ $('document').ready(function() {
 	}
 	
 	inicializar_selects();
+	inicializar_datepicker();
 	event_handlers_window();
 	event_handlers_formulario();
 
@@ -20,6 +21,16 @@ $('document').ready(function() {
 
 	
 });
+
+function inicializar_datepicker() {
+
+	$('#container-fecha').datetimepicker({
+		language: 'es',
+		pickTime: false
+	});
+
+	//$('#container-fecha').data("DateTimePicker").setDate(fecha_actual());
+}
 
 function inicializar_selects() {
 
@@ -284,6 +295,9 @@ function validar() {
 	if($('#fecha').val() == '' || !control_expresion_regular('fecha', $('#fecha').val())) {
 		validacion_general = false;
 		$('#error-fecha').show();
+	}
+	else {
+		$('#fecha').attr('disabled', false);
 	}
 
 	return validacion_general;
