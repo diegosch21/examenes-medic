@@ -10,6 +10,10 @@ var ITEM_NO = 0;
 var ITEM_SI = 1;
 var ITEM_VACIO = -1;
 
+var CALIF_COMPETENCIA_NO_ADQUIRIDA = 0;
+var CALIF_COMPETENCIA_MED_ADQUIRIDA = 1;
+var CALIF_COMPETENCIA_ADQUIRIDA = 2;
+
 var submit_on_cancel = true;
 
 $('document').ready(function() {
@@ -18,7 +22,9 @@ $('document').ready(function() {
 	event_handlers_window();
 //	event_handlers_tabs();	//poniendo los data-toggle en los tabs no es necesario llamar a esto!
 	event_handlers_buttons();
-	handler_formulario();	
+	handler_formulario();
+
+	ocultar_errores();	
 
 	$(window).resize(); // Disparo el evento para que el contenido quede centado
 });
@@ -82,7 +88,7 @@ function event_handlers_buttons() {
 			$('.item-botonera').addClass('item-value-botonera-calificar');
 			 
 			var rta_correctas = 0;
-			var rta_respondidas = 0;
+			var rta_respondidas = 0;			
 
 			$('.item-estado').each(function() {
 
@@ -90,16 +96,28 @@ function event_handlers_buttons() {
 					rta_correctas ++;
 					rta_respondidas ++;
 					$(this).parent().parent().addClass('bg-success');
+					
+					manage_observacion(true, $(this).parent().nextAll('.item-obs-container'));
 				}
 				else {
 					if($(this).val() == ITEM_NO) {
+
 						rta_respondidas ++;
 						$(this).parent().parent().addClass('bg-danger');	
+
+						manage_observacion(true, $(this).parent().nextAll('.item-obs-container'));
 					}
 					else {
+
 						$(this).parent().parent().addClass('bg-no-resp');
+
+						manage_observacion(true, $(this).parent().nextAll('.item-obs-container'));
 					}
 				}					
+			});
+
+			$('.solotexto').each(function() {
+				manage_observacion(true, $(this));	
 			});
 
 			var porcentaje_correcto = 0;
@@ -111,6 +129,8 @@ function event_handlers_buttons() {
 
 			$('#porcentaje-realizado').html(porcentaje_correcto + "%  - ("+rta_correctas+" / "+rta_respondidas+")");
 
+			$('#examen-obs').attr('disabled', true);
+
 		}
 		else {
 			$('.item-texto').removeClass('item-texto-padding');
@@ -118,8 +138,16 @@ function event_handlers_buttons() {
 			$('.item-botonera').removeClass('item-value-botonera-calificar');
 
 			$('.item-estado').each(function() {
-				$(this).parent().parent().removeClass('bg-success').removeClass('bg-danger').removeClass('bg-no-resp');					
+
+				$(this).parent().parent().removeClass('bg-success').removeClass('bg-danger').removeClass('bg-no-resp');	
+				manage_observacion(false, $(this).parent().nextAll('.item-obs-container'));			
 			});
+
+			$('.solotexto').each(function() {				
+				manage_observacion(false, $(this));
+			});
+
+			$('#examen-obs').attr('disabled', false);
 		}
 	});
 
@@ -146,9 +174,64 @@ function event_handlers_buttons() {
 	});
 
 	$('#btn-confirmar').click(function(event) {
-		mostrar_modal('warning-save');		
+
+		if(validar()) {
+			mostrar_modal('warning-save');
+		}
+
 	});
 }	
+
+function manage_observacion(calificando, container) {
+
+	var observacion = container.find('.observaciones');
+
+	if(calificando) {
+		
+		if(observacion.val() != '') {
+			container.show();
+		}
+		else {
+			container.hide();
+		}
+		
+		observacion.attr("disabled", true); 
+	}
+	else {
+		observacion.attr('disabled', false);
+	}	
+}
+
+function validar() {
+
+	ocultar_errores();
+
+	if( !$('#calificacion0').is(':checked') && 
+		!$('#calificacion1').is(':checked') &&
+		!$('#calificacion2').is(':checked'))
+	{
+		$('#error-radio').text('Debe seleccionar una opción');
+		$('#error-radio').show();
+		return false;
+	}
+	else {
+		
+		if( ($('#calificacion0').is(':checked') && ($('#calificacion0').val() != CALIF_COMPETENCIA_NO_ADQUIRIDA)) ||
+		    ($('#calificacion1').is(':checked') && ($('#calificacion1').val() != CALIF_COMPETENCIA_MED_ADQUIRIDA)) ||
+		    ($('#calificacion2').is(':checked') && ($('#calificacion2').val() != CALIF_COMPETENCIA_ADQUIRIDA)))
+		{
+			$('#error-radio').text('El valor de la opción seleccionada es inválido');
+			$('#error-radio').show();
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function ocultar_errores() {
+	$('.errores').hide();
+}
 
 function handler_formulario() {
 

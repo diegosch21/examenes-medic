@@ -17,8 +17,11 @@
 		
 		$botonera = "<div class='item-botonera pull-right'>";
 
+		$solo_texto = "solotexto";
+
 		if(!$item['solo_texto'])
 		{
+			$solo_texto = "";
 			$botonera =	$botonera.
 						"<div class='btn-group evaluacion' data-toggle='buttons'>
 					 	  	<label class='boton-si btn btn-default'>
@@ -42,8 +45,8 @@
 						<span class='numero'>{$item['nro']}.</span> {$item['nom']}
 					</div>";
 		$fin = 	"	<div class='clearboth'></div>
-					<div class='item-obs-container'>
-						<textarea name='item-obs[]' class='form-control item-obs observaciones' rows='2' placeholder='Ingrese una observación aquí'></textarea>
+					<div class='item-obs-container {$solo_texto}'>
+						<textarea name='item-obs[]' class='form-control item-obs observaciones input-deshabilitado' rows='2' placeholder='Ingrese una observación aquí'></textarea>
 					</div>";
 
 		if($item_suelto) 
@@ -244,7 +247,7 @@
 			 	?>	
 			 	
 			 	<h4>Observación General del Examen</h4>
-			 	<textarea name="examen-obs" class="examen-obs form-control" rows="3" placeholder="Ingrese una observación aquí"></textarea>
+			 	<textarea id="examen-obs" name="examen-obs" class="examen-obs form-control input-deshabilitado" rows="3" placeholder="Ingrese una observación aquí"></textarea>
 
 			 	<div class="evaluacion form-group-buttons botonera">
 					<a id="btn-cancelar" data-target="#" class="btn btn-default btn-lg">Cancelar</a>
@@ -277,6 +280,7 @@
 						 	</label>
 						 	</div>
 						</div>
+						<label id="error-radio" class="label-error errores"></label>
 					</div>
 
 					<div class="form-group-buttons  botonera">

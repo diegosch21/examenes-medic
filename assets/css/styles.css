@@ -294,3 +294,15 @@ footer {
 .bg-no-resp {
 	background-color: #EBECEC;
 }
+
+.input-deshabilitado[disabled] {
+	background-color: #FFFFFF;
+}
+
+.label-error {
+	text-align: left !Important;
+	color: red !Important;
+	width: 100% !Important;
+	font-weight: normal;
+	font-style: italic;
+}

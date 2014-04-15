@@ -26,7 +26,7 @@
 			<label for="fecha" class="control-label">Fecha</label>
 			<div class="form-group fecha">
                 <div id='container-fecha' class='input-group date'>
-                    <input id="fecha" class="form-control fecha" type="text" name="fecha" value="<?php echo $fecha; ?>" disabled/>
+                    <input id="fecha" class="form-control fecha input-deshabilitado" type="text" name="fecha" value="<?php echo $fecha; ?>" disabled/>
                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>

@@ -41,10 +41,6 @@ body {
 	width: 200px !Important;
 }
 
-.fecha[disabled] {
-	background-color: #FFFFFF;
-}
-
 .form-group-buttons {
 	text-align: center;
 	clear: both;
@@ -61,12 +57,4 @@ h2 {
 .select {
 	min-width: 250px;
 	max-width: 600px;
-}
-
-.label-error {
-	text-align: left !Important;
-	color: red !Important;
-	width: 100% !Important;
-	font-weight: normal;
-	font-style: italic;
 }
