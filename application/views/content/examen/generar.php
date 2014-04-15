@@ -13,12 +13,9 @@
 		<label>Generar Examen</label>
 	</div>
 
-<?php var_dump($guias); ?>
-<?php var_dump($alumnos); ?>
-
 	<form id="form-generar" class="form-generar" role="form" method="post" action="<?php echo site_url('examen/evaluar');?>">
 	
-		<div class="form-group-generar">
+		<div class="form-group-generar form-group-generar-fecha">
 			<label for="fecha" class="control-label">Fecha</label>
 			<div>
 				<input id="fecha" class="form-control fecha" type="date" name="fecha" value="<?php echo $fecha;?>"/>
@@ -38,8 +35,7 @@
 
 			if(!isset($carreras)) // si no existen carreras
 			{
-				echo 	'<select id="select-carrera" name="carrera" class="select" disabled>
-						 </select>';
+				echo 	'<select id="select-carrera" name="carrera" class="select" disabled></select>';
 			}
 			else
 			{ 
@@ -113,7 +109,7 @@
 			}
 			else
 			{ 
-				echo '<select id="select-guia" name="guia" data-live-search="true" class="select">';
+				echo "<select id='select-guia' name='guia' data-live-search='true' data-selected='{$guias['selected']}' class='select'>";
 
 				foreach ($guias['list'] as $indice => $guia): 
 					if($indice == $guias['selected'])
@@ -144,12 +140,11 @@
 
 			if(!isset($alumnos)) // si no existen alumnos
 			{
-				echo 	'<select id="select-alumno" name="alumno" data-live-search="true" class="select" disabled>
-						 </select>';
+				echo '<select id="select-alumno" name="alumno" data-live-search="true" class="select" disabled></select>';
 			}
 			else
 			{ 
-				echo '<select id="select-alumno" name="alumno" data-live-search="true" class="select">';
+				echo "<select id='select-alumno' name='alumno' data-live-search='true' data-selected='{$alumnos['selected']}' class='select'>";
 
 				foreach ($alumnos['list'] as $indice => $alumno): 
 					if($indice == $alumnos['selected'])

@@ -12,7 +12,7 @@ body {
 
 .form-container {
 	margin: 0px auto;
-	min-width: 250px;
+	min-width: 225px;
 }
 
 .form-group-generar {
@@ -31,6 +31,10 @@ body {
 
 .form-group-generar > div > div {
 	padding-top: 4px;
+}
+
+.form-group-generar-fecha {
+	min-width: 270px;
 }
 
 .fecha {

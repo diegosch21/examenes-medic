@@ -9,53 +9,98 @@
 	 *	Imprime en HTML los valores del item, incluyendo los input hidden y las opciones de seleccion
 	 *
 	 * @param 	$item array: id, nro, nom, solo_texto
+	 * @param 	$item_suelto boolean: indica si es item individual o subitem
 	 *
 	 */
-	function print_item($item, $item_suelto) 
-	{		
-		$clase_botonera = '';
-		if($item_suelto) {
-			echo "<div>";
-			$clase_botonera = 'item-suelto-botonera';
-		}
-		else 
-		{
-			echo "<div class='item'>";
-		}
-
+	function _print_item($item, $item_suelto) 
+	{	
 		
-		echo"	<div class='item-botonera {$clase_botonera} pull-right'>";
-					if(!$item['solo_texto'])
-					{
-						echo 	'<div class="btn-group" data-toggle="buttons">
-							 	  	<label class="boton-si btn btn-default">
-										<input type="checkbox"> Sí
-								    	<span class="glyphicon glyphicon-ok"></span>
-								  	</label>
-									<label class="boton-no btn btn-default">
-										<input type="checkbox"> No
-										<span class="glyphicon glyphicon-remove"></span>
-									</label>
-								</div>
-								<input type="hidden" name="item-estado[]" id="estado-item-{$id_item}" data-item="{$id_item}" value="-1"/>
-								<span class="item-value"></span>';
-					}
-		echo 	'<a class="boton-obs btn btn-default">Obs <span class="glyphicon glyphicon-pencil"></span></a>
-				<textarea name="item-obs[]" class="item-obs form-control" rows="2" style="display:none;"></textarea>';
+		$botonera = "<div class='item-botonera pull-right'>";
 
-		echo "</div><div>
-				<div class='item-texto'>";
-		$id_item = $item['id'];
-		echo "<input type='hidden' name='item-id[]' id='input-item-{$id_item}' value='{$id_item}'/>";
-		echo "<span class='numero'>{$item['nro']}.</span> {$item['nom']}";
-		//echo "<span>";
-		echo "</div></div>
+		if(!$item['solo_texto'])
+		{
+			$botonera =	$botonera.
+						"<div class='btn-group' data-toggle='buttons' rel='evaluacion'>
+					 	  	<label class='boton-si btn btn-default'>
+								<input type='checkbox'> Sí
+						    	<span class='glyphicon glyphicon-ok'></span>
+						  	</label>
+							<label class='boton-no btn btn-default'>
+								<input type='checkbox'> No
+								<span class='glyphicon glyphicon-remove'></span>
+							</label>
+						</div>
+						<input type='hidden' name='item-estado[]' rel='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>
+						<span class='item-value-titulo' rel='calificacion'>Respuesta: </span><span class='item-value' rel='calificacion'>-</span>";
+		}
 
-		<div class='clearboth'></div>
-		</div>";
+		$botonera =	$botonera."<a class='btn btn-default boton-obs pull-right' rel='evaluacion'>Obs <span class='glyphicon glyphicon-pencil'></span></a>				   		
+				    </div>";
 
+		$texto =	"<div class='item-texto'>						
+						<input type='hidden' name='item-id[]' id='input-item-{$item['id']}' value='{$item['id']}'/>
+						<span class='numero'>{$item['nro']}.</span> {$item['nom']}
+					</div>";
+		$fin = 	"	<div class='clearboth'></div>
+					<div class='item-obs-container' rel='calificacion'>
+						<textarea name='item-obs[]' class='form-control item-obs' rel='observaciones' rows='2' placeholder='Ingrese una observación aquí'></textarea>
+					</div>";
+
+		if($item_suelto) 
+		{
+			echo $botonera.$texto.$fin;
+		}
+		else
+		{
+			echo "<div class='item borde-item'>".$botonera.$texto.$fin."</div>";
+		}		
 
 		//via Javascript cambiar los input de los checkbox por hidden, al hacer clic en Calificar
+	}
+
+	/**
+	 *	Imprime en HTML un item
+	 *
+	 * @param 	$grupoitem array: nro, nom, items
+	 *
+	 */
+	function print_item($item) {
+
+		echo "<div class='grupo-item borde-grupoitem'>";
+				_print_item($item, true); //imprime inputs y contenido del item
+		echo "</div>";
+
+	}
+
+	/**
+	 *	Imprime en HTML un grupoitem
+	 *
+	 * @param 	$grupoitem array: nro, nom, items
+	 *
+	 */
+	function print_grupo_item($grupoitem) {
+		echo 	"<div class='grupo-item borde-grupoitem'>
+					<div class='item-texto'>
+						<span class='numero'>{$grupoitem['nro']}</span>. {$grupoitem['nom']}<br/>"; //nombre del grupoitem
+		echo "		</div>
+				</div>				
+			  	<div class='sangria'>";	
+					foreach ($grupoitem['items'] as $item)  //recorro la lista de items del grupo
+					{
+						_print_item($item, false); //imprime inputs y contenido del item
+					}
+		echo "  </div>";
+	}
+
+	/**
+	 *	Imprime en HTML los datos de una seccion
+	 *
+	 * @param 	$seccion array: nro, nom
+	 *
+	 */
+	function print_seccion($seccion) {
+		echo "<div class='seccion'>{$seccion['nro']}. {$seccion['nom']}</div>"; //nombre de la seccion
+
 	}
  ?>
 
@@ -156,107 +201,135 @@
 
 
 				<?php 
+
+					$tiene_secciones = false;
+
 					foreach ($guia['items'] as $item) 
 					{
-						if($item['tipo']=='seccion') //si el item es una seccion
+						if($item['tipo'] == 'seccion') //si el item es una seccion
 						{
-							echo "<div class='seccion'>
-									{$item['nro']}. {$item['nom']}
-								 </div>"; //nombre de la seccion
+							$tiene_secciones = true;
+
+							print_seccion($item);
 
 							foreach ($item['items'] as $item2)  //recorro la lista de items de la seccion
 							{
 								if($item2['tipo']=='grupoitem') //si el item es un grupoitem
 								{ 
-									echo 	"<div class='sangria'>
-												<div class='grupo-item'>
-													<div class='item-texto'>
-														<span class='numero'>{$item2['nro']}</span>. {$item2['nom']}<br/>"; //nombre del grupoitem
-									echo "			</div>
-												</div>
-											
-										  	<div class='sangria'>";	
-									foreach ($item2['items'] as $item3)  //recorro la lista de items del grupo
-									{
-										print_item($item3, false); //imprime inputs y contenido del item
-									}
-									echo "</div></div>";
+									print_grupo_item($item2);
 								}
 								else //item suelto en la seccion
 								{
-									echo "<div class='grupo-item sangria'>";
-										print_item($item2, true); //imprime inputs y contenido del item
-									echo "</div>";
+									print_item($item2);
 								}		
 							}
+							echo "<div class='borde-grupoitem borde-final'></div>"; //último borde de la seccion
 						} 
 						else
 						{
 							if ($item['tipo']=='grupoitem') //si el item es un grupoitem
 							{ 
-								echo "<div class='grupo-item'>
-										{$item['nro']}. {$item['nom']}<br/>"; //nombre del grupoitem
-
-								foreach ($item['items'] as $item2)  //recorro la lista de items del grupo
-								{
-									print_item($item2, false); //imprime inputs y contenido del item
-								}
-								echo "</div>";	
+								print_grupo_item($item);	
 							}
 							else // item suelto en la guia
 							{
-								echo "<div class='grupo-item'>";
-										print_item($item, true); //imprime inputs y contenido del item
-								echo "</div>";
+								print_item($item);
 							}
 						}
 					}
+
+					if(!$tiene_secciones) {
+						echo "<div class='borde-grupoitem borde-final'></div>"; //último borde
+					}
 			 	?>	
+			 	
+			 	<h4>Observación General del Examen</h4>
+			 	<textarea name="examen-obs" class="examen-obs form-control" rows="3" placeholder="Ingrese una observación aquí"></textarea>
 
-			 	<h4>Observación general del examen</h4>
-			 	<textarea name="examen-obs" class="examen-obs form-control" rows="3"	></textarea>
-
-			 	<div class="form-group-buttons">
-					<a id="btn-cancelar" href="#" class="btn btn-default">Cancelar</a>
-					<a id="btn-calificar" href="#" class="btn btn-primary">Calificar</a>
+			 	<div rel="evaluacion" class="form-group-buttons botonera">
+					<a id="btn-cancelar" data-target="#" class="btn btn-default btn-lg">Cancelar</a>
+					<a id="btn-calificar" data-target="#" class="btn btn-primary btn-lg">Calificar</a>
 				</div>
 
-			 	<h4>Porcentaje realizado:</h4> (calcular via js)
-			 	<input type="hidden" name="examen-porc" id="examen-porc" value="-1">
+				<div rel="calificacion" class="container-calificacion">
+				 	Porcentaje correctas: <span id="porcentaje-realizado">porcentaje</span>
+				 	<input type="hidden" name="examen-porc" id="examen-porc" value="-1">
 
-			 	<h4>CALIFICACION:</h4>
-			 	<div id="examen-calificacion">
-			 		<div class="radio">
-				 	<label>
-						<input type="radio" name="examen-calif" id="calificacion2" value="2">
-						Competencia adquirida
-				 	</label>
-				 	</div>
-				 	<div class="radio">
-				 	<label>
-						<input type="radio" name="examen-calif" id="calificacion1" value="1">
-						Competencia medianamente adquirida
-				 	</label>
-				 	</div>
-				 	<div class="radio">
-				 	<label>
-						<input type="radio" name="examen-calif" id="calificacion0" value="0">
-						Competencia no adquirida
-				 	</label>
-				 	</div>
+				 	<div class="calificacion">
+					 	<h4>CALIFICACION:</h4>
+					 	<div id="examen-calificacion" class="examen-calificacion">
+					 		<div class="radio">
+						 	<label>
+								<input type="radio" name="examen-calif" id="calificacion2" value="2">
+								Competencia adquirida
+						 	</label>
+						 	</div>
+						 	<div class="radio">
+						 	<label>
+								<input type="radio" name="examen-calif" id="calificacion1" value="1">
+								Competencia medianamente adquirida
+						 	</label>
+						 	</div>
+						 	<div class="radio">
+						 	<label>
+								<input type="radio" name="examen-calif" id="calificacion0" value="0">
+								Competencia no adquirida
+						 	</label>
+						 	</div>
+						</div>
+					</div>
+
+					<div class="form-group-buttons  botonera">
+						<a id="btn-atras" href="#" class="btn btn-default btn-lg">Atrás</a>
+						<a id="btn-confirmar" name="boton" class="btn btn-primary btn-lg">Confirmar</a>
+					</div>
 				</div>
-
-				<div class="form-group-buttons">
-					<a id="btn-atras" href="#" class="btn btn-default">Atrás</a>
-					<button id="btn-submit" name="boton" class="btn btn-primary" type="submit">Confirmar</button>
-				</div>
-	
-
 
 			</form>
 		</div>		
 	</div>
 </div>
+
+
+<div id="modal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 id="modal-titulo" class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+
+				<div id="alert-warning-exit" class="alert alert-warning modal-body-content">
+					<strong>ATENCIÓN!</strong> Usted está por abandonar el examen. Si continúa perderá los datos y deberá generar el examen nuevamente.
+				</div>
+
+				<div id="alert-warning-save" class="alert alert-warning modal-body-content">
+					<strong>ATENCIÓN!</strong> ¿Está realmente seguro que desea guardar este examen?
+				</div>
+
+				<div id="alert-success" class="alert alert-success modal-body-content">
+					<strong>EXAMEN GUARDADO CORRECTAMENTE!</strong><br/>Cód. Examen: xxxxxxx
+				</div>
+
+				<div id="progressbar" class="progress progress-striped active modal-body-content-loadingbar">
+					<div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+						<span>Guardando Examen</span>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="btn-modal-cancelar" rel="btn-modal-warning" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				<a id="btn-modal-abortar" rel="btn-modal-warning" class="btn btn-primary">Abortar</a>
+				<a id="btn-modal-save" class="btn btn-primary">Continuar</a>
+
+				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" rel="btn-modal-success" class="btn btn-default">Inicio</a>
+				<a id="btn-modal-ver" href="#" rel="btn-modal-success" class="btn btn-primary">Ver Examen</a>
+				<a id="btn-modal-nuevo" href="<?php echo site_url('examen/generar');?>" rel="btn-modal-success" class="btn btn-primary">Nuevo Examen</a>
+				
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

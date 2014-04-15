@@ -276,3 +276,21 @@ footer {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
 	background-image: linear-gradient(to top, #eee 0%, #fff 50%);
 }
+
+.modal-footer {
+	margin-top: 0px;
+}
+
+.modal-body-content {
+	margin: 0px;
+}
+
+.modal-body-content-loadingbar {
+	margin-top: 18px;
+	margin-bottom: 18px;
+	font-weight: bold;
+}
+
+.bg-no-resp {
+	background-color: #EBECEC;
+}

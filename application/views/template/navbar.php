@@ -16,7 +16,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<?php echo site_url('home'); ?>"><?php echo $nombre." ".$apellido ?></a>
+					<a id="navbar-brand" class="navbar-brand" href="<?php echo site_url('home'); ?>"><?php echo $nombre." ".$apellido ?></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -27,15 +27,15 @@
 						{
 							echo ' 
 							<li class="active">
-								<a href="#"><span class="glyphicon glyphicon-file"></span> Mis Exámenes</a>
+								<a id="navbar-mis-examenes" href="#"><span class="glyphicon glyphicon-file"></span> Mis Exámenes</a>
 							</li>
 							<li>
-								<a href="#"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
+								<a id="navbar-mis-datos" href="#"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
 							</li>';
 						}
 					?>
 						<li>
-							<a href="<?php echo site_url('login/desloguear_usuario'); ?>"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
+							<a id="navbar-cerrar-cesion" href="<?php echo site_url('login/desloguear_usuario'); ?>"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
 						</li>						
 					</ul>
 				</div><!-- /.navbar-collapse -->
