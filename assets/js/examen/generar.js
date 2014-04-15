@@ -291,5 +291,5 @@ function validar() {
 }
 
 function ocultar_errores() {
-	$('[rel="errores"]').hide();
+	$('.errores').hide();
 }

@@ -72,10 +72,10 @@ function event_handlers_buttons() {
 
 		$(window).scrollTop(0);
 
-		$('[rel="calificacion"]').toggle();
-		$('[rel="evaluacion"]').toggle();
+		$('.calificacion').toggle();
+		$('.evaluacion').toggle();
 
-		if($('[rel="calificacion"]').is(':visible')) {
+		if($('.calificacion').is(':visible')) {
 
 			$('.item-texto').addClass('item-texto-padding');
 			$('.borde-item').addClass('borde-grupoitem');
@@ -84,7 +84,7 @@ function event_handlers_buttons() {
 			var rta_correctas = 0;
 			var rta_respondidas = 0;
 
-			$('[rel="item-estado"]').each(function() {
+			$('.item-estado').each(function() {
 
 				if($(this).val() == ITEM_SI) {
 					rta_correctas ++;
@@ -117,7 +117,7 @@ function event_handlers_buttons() {
 			$('.borde-item').removeClass('borde-grupoitem');
 			$('.item-botonera').removeClass('item-value-botonera-calificar');
 
-			$('[rel="item-estado"]').each(function() {
+			$('.item-estado').each(function() {
 				$(this).parent().parent().removeClass('bg-success').removeClass('bg-danger').removeClass('bg-no-resp');					
 			});
 		}

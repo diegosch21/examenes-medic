@@ -20,7 +20,7 @@
 		if(!$item['solo_texto'])
 		{
 			$botonera =	$botonera.
-						"<div class='btn-group' data-toggle='buttons' rel='evaluacion'>
+						"<div class='btn-group evaluacion' data-toggle='buttons'>
 					 	  	<label class='boton-si btn btn-default'>
 								<input type='checkbox'> Sí
 						    	<span class='glyphicon glyphicon-ok'></span>
@@ -30,11 +30,11 @@
 								<span class='glyphicon glyphicon-remove'></span>
 							</label>
 						</div>
-						<input type='hidden' name='item-estado[]' rel='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>
-						<span class='item-value-titulo' rel='calificacion'>Respuesta: </span><span class='item-value' rel='calificacion'>-</span>";
+						<input type='hidden' name='item-estado[]' class='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>
+						<span class='item-value-titulo calificacion'>Respuesta: </span><span class='item-value calificacion'>-</span>";
 		}
 
-		$botonera =	$botonera."<a class='btn btn-default boton-obs pull-right' rel='evaluacion'>Obs <span class='glyphicon glyphicon-pencil'></span></a>				   		
+		$botonera =	$botonera."<a class='btn btn-default boton-obs pull-right evaluacion'>Obs <span class='glyphicon glyphicon-pencil'></span></a>				   		
 				    </div>";
 
 		$texto =	"<div class='item-texto'>						
@@ -42,8 +42,8 @@
 						<span class='numero'>{$item['nro']}.</span> {$item['nom']}
 					</div>";
 		$fin = 	"	<div class='clearboth'></div>
-					<div class='item-obs-container' rel='calificacion'>
-						<textarea name='item-obs[]' class='form-control item-obs' rel='observaciones' rows='2' placeholder='Ingrese una observación aquí'></textarea>
+					<div class='item-obs-container'>
+						<textarea name='item-obs[]' class='form-control item-obs observaciones' rows='2' placeholder='Ingrese una observación aquí'></textarea>
 					</div>";
 
 		if($item_suelto) 
@@ -246,18 +246,18 @@
 			 	<h4>Observación General del Examen</h4>
 			 	<textarea name="examen-obs" class="examen-obs form-control" rows="3" placeholder="Ingrese una observación aquí"></textarea>
 
-			 	<div rel="evaluacion" class="form-group-buttons botonera">
+			 	<div class="evaluacion form-group-buttons botonera">
 					<a id="btn-cancelar" data-target="#" class="btn btn-default btn-lg">Cancelar</a>
 					<a id="btn-calificar" data-target="#" class="btn btn-primary btn-lg">Calificar</a>
 				</div>
 
-				<div rel="calificacion" class="container-calificacion">
+				<div class="calificacion container-calificacion">
 				 	Porcentaje correctas: <span id="porcentaje-realizado">porcentaje</span>
 				 	<input type="hidden" name="examen-porc" id="examen-porc" value="-1">
 
-				 	<div class="calificacion">
+				 	<div class="examen-calificacion">
 					 	<h4>CALIFICACION:</h4>
-					 	<div id="examen-calificacion" class="examen-calificacion">
+					 	<div id="examen-calificacion" class="opciones-calificacion">
 					 		<div class="radio">
 						 	<label>
 								<input type="radio" name="examen-calif" id="calificacion2" value="2">

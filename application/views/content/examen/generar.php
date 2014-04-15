@@ -20,7 +20,7 @@
 			<div>
 				<input id="fecha" class="form-control fecha" type="date" name="fecha" value="<?php echo $fecha;?>"/>
 			</div>
-			<label id="error-fecha" class="label-error" rel="errores">Fecha inválida</label>
+			<label id="error-fecha" class="label-error errores">Fecha inválida</label>
 		</div>
 
 		<div class="form-group-generar">
@@ -58,7 +58,7 @@
 			}
 		?>
 			</div>
-			<label id="error-carrera" class="label-error" rel="errores">Carrera inválida</label>
+			<label id="error-carrera" class="label-error errores">Carrera inválida</label>
 		</div>
 		<div class="form-group-generar">
 			<div>
@@ -92,7 +92,7 @@
 			}
 		?>
 			</div>
-			<label id="error-catedra" class="label-error" rel="errores">Cátedra inválida</label>
+			<label id="error-catedra" class="label-error errores">Cátedra inválida</label>
 		</div>
 		<div class="form-group-generar">
 			<div>
@@ -127,7 +127,7 @@
 
 		?>
 			</div>
-			<label id="error-guia" class="label-error" rel="errores">Guía inválida</label>
+			<label id="error-guia" class="label-error errores">Guía inválida</label>
 		</div>
 		<div class="form-group-generar">
 			<div>
@@ -161,7 +161,7 @@
 			}
 		?>
 			</div>
-			<label id="error-alumno" class="label-error" rel="errores">Alumno inválido</label>
+			<label id="error-alumno" class="label-error errores">Alumno inválido</label>
 		</div>
 
 		<div class="form-group-buttons">
