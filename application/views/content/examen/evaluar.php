@@ -18,6 +18,8 @@
 		$botonera = "<div class='item-botonera pull-right'>";
 
 		$solo_texto = "solotexto";
+		$inputs = 	"<input type='hidden' name='item-id[]' id='input-item-{$item['id']}' value='{$item['id']}'/>
+					 <input type='hidden' name='item-estado[]' class='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>";
 
 		if(!$item['solo_texto'])
 		{
@@ -33,7 +35,6 @@
 								<span class='glyphicon glyphicon-remove'></span>
 							</label>
 						</div>
-						<input type='hidden' name='item-estado[]' class='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>
 						<span class='item-value-titulo calificacion'>Respuesta: </span><span class='item-value calificacion'>-</span>";
 		}
 
@@ -41,7 +42,6 @@
 				    </div>";
 
 		$texto =	"<div class='item-texto'>						
-						<input type='hidden' name='item-id[]' id='input-item-{$item['id']}' value='{$item['id']}'/>
 						<span class='numero'>{$item['nro']}.</span> {$item['nom']}
 					</div>";
 		$fin = 	"	<div class='clearboth'></div>
@@ -51,11 +51,11 @@
 
 		if($item_suelto) 
 		{
-			echo $botonera.$texto.$fin;
+			echo $inputs.$botonera.$texto.$fin;
 		}
 		else
 		{
-			echo "<div class='item borde-item'>".$botonera.$texto.$fin."</div>";
+			echo "<div class='item borde-item'>".$inputs.$botonera.$texto.$fin."</div>";
 		}		
 
 		//via Javascript cambiar los input de los checkbox por hidden, al hacer clic en Calificar
@@ -194,7 +194,7 @@
 			?>
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
-		<!--CAMBIAR FORM: EL BOTON ES POR AJAX -->
+		<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
 			<form id="form-evaluar" class="form-evaluar" role="form" method="post" action="<?php echo site_url('examen/generar');?>">
 				<input type="hidden" name="fecha" id="input-fecha" value="<?php echo $fecha; ?>"/>
 				<input type="hidden" name="carrera" id="input-carrera" value="<?php echo $carrera['cod_carr']; ?>"/>
@@ -261,6 +261,7 @@
 				 	<div class="examen-calificacion">
 					 	<h4>CALIFICACION:</h4>
 					 	<div id="examen-calificacion" class="opciones-calificacion">
+					 		<input type="radio" name="examen-calif" id="calificacion-1" value="-1" style="display:none" checked="checked">
 					 		<div class="radio">
 						 	<label>
 								<input type="radio" name="examen-calif" id="calificacion2" value="2">
@@ -308,11 +309,12 @@
 				</div>
 
 				<div id="alert-warning-save" class="alert alert-warning modal-body-content">
-					<strong>ATENCIÓN!</strong> ¿Está realmente seguro que desea guardar este examen?
+					<strong>ATENCIÓN!</strong> ¿Está realmente seguro de que desea guardar este examen?
 				</div>
 
 				<div id="alert-success" class="alert alert-success modal-body-content">
-					<strong>EXAMEN GUARDADO CORRECTAMENTE!</strong><br/>Cód. Examen: xxxxxxx
+					
+					<div id="response-success"></div>
 				</div>
 
 				<div id="progressbar" class="progress progress-striped active modal-body-content-loadingbar">
@@ -322,13 +324,13 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="btn-modal-cancelar" rel="btn-modal-warning" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<a id="btn-modal-abortar" rel="btn-modal-warning" class="btn btn-primary">Abortar</a>
+				<button id="btn-modal-cancelar" class="btn btn-default btn-modal-warning" data-dismiss="modal">Cancelar</button>
+				<a id="btn-modal-abortar" class="btn btn-primary btn-modal-warning">Abortar</a>
 				<a id="btn-modal-save" class="btn btn-primary">Continuar</a>
 
-				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" rel="btn-modal-success" class="btn btn-default">Inicio</a>
-				<a id="btn-modal-ver" href="#" rel="btn-modal-success" class="btn btn-primary">Ver Examen</a>
-				<a id="btn-modal-nuevo" href="<?php echo site_url('examen/generar');?>" rel="btn-modal-success" class="btn btn-primary">Nuevo Examen</a>
+				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" class="btn btn-default btn-modal-success">Inicio</a>
+				<a id="btn-modal-ver" href="#" class="btn btn-primary btn-modal-success">Ver Examen</a>
+				<a id="btn-modal-nuevo" href="<?php echo site_url('examen/generar');?>" class="btn btn-primary btn-modal-success">Nuevo Examen</a>
 				
 			</div>
 		</div><!-- /.modal-content -->

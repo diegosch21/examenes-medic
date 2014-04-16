@@ -95,23 +95,23 @@ function event_handlers_buttons() {
 				if($(this).val() == ITEM_SI) {
 					rta_correctas ++;
 					rta_respondidas ++;
-					$(this).parent().parent().addClass('bg-success');
+					$(this).parent().addClass('bg-success');
 					
-					manage_observacion(true, $(this).parent().nextAll('.item-obs-container'));
+					manage_observacion(true, $(this).nextAll('.item-obs-container'));
 				}
 				else {
 					if($(this).val() == ITEM_NO) {
 
 						rta_respondidas ++;
-						$(this).parent().parent().addClass('bg-danger');	
+						$(this).parent().addClass('bg-danger');	
 
-						manage_observacion(true, $(this).parent().nextAll('.item-obs-container'));
+						manage_observacion(true, $(this).nextAll('.item-obs-container'));
 					}
 					else {
 
-						$(this).parent().parent().addClass('bg-no-resp');
+						$(this).parent().addClass('bg-no-resp');
 
-						manage_observacion(true, $(this).parent().nextAll('.item-obs-container'));
+						manage_observacion(true, $(this).nextAll('.item-obs-container'));
 					}
 				}					
 			});
@@ -139,8 +139,8 @@ function event_handlers_buttons() {
 
 			$('.item-estado').each(function() {
 
-				$(this).parent().parent().removeClass('bg-success').removeClass('bg-danger').removeClass('bg-no-resp');	
-				manage_observacion(false, $(this).parent().nextAll('.item-obs-container'));			
+				$(this).parent().removeClass('bg-success').removeClass('bg-danger').removeClass('bg-no-resp');	
+				manage_observacion(false, $(this).nextAll('.item-obs-container'));			
 			});
 
 			$('.solotexto').each(function() {				
@@ -237,24 +237,44 @@ function handler_formulario() {
 
 	$('#btn-modal-save').click(function(event) {
 		event.preventDefault();
+		//rehabilito las observaciones para que se manden en el form
+		$('textarea').attr('disabled', false);
+
 
 		mostrar_modal('loading-bar');
 
+		//DEBUG////////////////////////////////////////////////////////////////////////
+		//$('#form-evaluar').attr('action', $('body').data('site-url')+"/examen/archivar");
+		//$('#form-evaluar').submit();
+		///////////////////////////////////////////////////////////////////////////////////
+		
 		$.ajax({ 
 				data: $('#form-evaluar').serialize(), // dato enviado en el post: codigo carrera
 				type: "post",
 
-				url: $('body').data('site-url')+"/examen/evaluar", // controlador
+				url: $('body').data('site-url')+"/examen/archivar", // controlador
 
 				error: function() {
-					 alert(ERROR_AJAX);
+					 alert(ERROR_AJAX);    //TODO
 				},
 
 				success: function(json) { 
-
-					mostrar_modal('success');				
+					var response = $.parseJSON(json);
+					if(response.ok) 
+					{
+						mostrar_modal('success');	
+						$("#response-success").html("<strong>EXAMEN GUARDADO CORRECTAMENTE!</strong> "+JSON.stringify(response.data));
+					}
+					else
+					{
+						//mostrar_modal('error','ERROR',response.data);
+						mostrar_modal('success');	
+						$("#response-success").html('ERROR '+response.status+": "+response.data);
+					}
+								
 				}
 		});
+
 	});	
 }
 
@@ -293,7 +313,7 @@ function activar_boton(boton, valor) {
 		boton.addClass('btn-success').removeClass('btn-default');
 		boton.siblings('.boton-no').removeClass('btn-danger active').addClass('btn-default');
 		var parent = boton.parent();
-		parent.siblings('input').val(ITEM_SI);	
+		parent.parent().siblings('.item-estado').val(ITEM_SI);	
 		parent.siblings('span.item-value').html('sí').removeClass('item-value-no').addClass('item-value-si');;	
 	}
 	else {
@@ -301,7 +321,7 @@ function activar_boton(boton, valor) {
 		boton.addClass('btn-danger').removeClass('btn-default');
 		boton.siblings('.boton-si').removeClass('btn-success active').addClass('btn-default');
 		var parent = boton.parent();
-		parent.siblings('input').val(ITEM_NO);
+		parent.parent().siblings('.item-estado').val(ITEM_NO);
 		parent.siblings('span.item-value').html('no').removeClass('item-value-si').addClass('item-value-no');
 	}
 }
@@ -315,7 +335,7 @@ function desactivar_boton(boton,valor) {
 		boton.removeClass('btn-danger').addClass('btn-default');	
 	}
 	var parent = boton.parent();
-	parent.siblings('input').val(ITEM_VACIO);
+	parent.parent().siblings('.item-estado').val(ITEM_VACIO);
 	parent.siblings('span.item-value').html('-').removeClass('item-value-si').removeClass('item-value-no');
 }
 
@@ -327,25 +347,25 @@ function mostrar_modal(mensaje) {
 							$('#modal-titulo').html("Abortar Examen");
 							$('#alert-warning-save').hide();
 							$('#alert-success').hide();
-							$('[rel="btn-modal-success"]').hide();
+							$('.btn-modal-success').hide();
 
 							$('#progressbar').hide();
 
 							$('#btn-modal-save').hide();
 
 							$('#alert-warning-exit').show();
-							$('[rel="btn-modal-warning"]').show();
+							$('.btn-modal-warning').show();
 							break;
 
 		case 'warning-save': 
 							$('#modal-titulo').html("Guardar Examen");
 							$('#alert-warning-exit').hide();
 							$('#alert-success').hide();
-							$('[rel="btn-modal-success"]').hide();
+							$('.btn-modal-success').hide();
 
 							$('#progressbar').hide();
 
-							$('[rel="btn-modal-warning"]').hide();
+							$('.btn-modal-warning').hide();
 
 							$('#btn-modal-cancelar').show();
 							$('#btn-modal-save').show();
@@ -358,24 +378,24 @@ function mostrar_modal(mensaje) {
 
 						$('#alert-warning-exit').hide();
 						$('#alert-warning-save').hide();
-						$('[rel="btn-modal-warning"]').hide();
+						$('.btn-modal-warning').hide();
 
 						$('#progressbar').hide();
 
 						$('#btn-modal-save').hide();
 
 						$('#alert-success').show();
-						$('[rel="btn-modal-success"]').show();					
+						$('.btn-modal-success').show();					
 						break;
 		
 		default:
 						$('#modal-titulo').html("Guardar Examen");
 						$('#alert-warning-exit').hide();
 						$('#alert-warning-save').hide();
-						$('[rel="btn-modal-warning"]').hide();
+						$('.btn-modal-warning').hide();
 
 						$('#alert-success').hide();
-						$('[rel="btn-modal-success"]').hide();
+						$('.btn-modal-success').hide();
 
 						$('#btn-modal-save').hide();
 

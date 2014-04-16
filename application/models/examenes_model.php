@@ -21,7 +21,8 @@ class Examenes_model extends CI_Model {
 	/**
 	 *	Almacena en la Base de Datos un nuevo  examen
 	 *	Comprueba que se puedan insertar todos los items, y se pueda insertar un examen valido.
-	 *	si el alumno, guia, docente, o algun id item es invalido, no inserta nada y lanza una excepción
+	 *	Si el alumno, guia, docente, o algun id item es invalido, no inserta nada y lanza una excepción
+	 *	Si la cantidad de items es menor a la indicada en la guia, no inserta nada y lanza una excepción.
 	 *
 	 * @access	public
 	 * @param 	$id_guia int id de la guia correspondiente
@@ -30,21 +31,40 @@ class Examenes_model extends CI_Model {
 	 * @param 	$fecha timestamp fecha y hora del examen
 	 * @param 	$calificacion int calificacion dada al examen (-1,0,1,2: usar constantes)
 	 * @param 	$obs_exam string observación general del examen
-	 * @param 	$items array(id,estado,obs) arreglo de los items
+	 * @param 	$items array arreglo de los items: (id,estado,obs)
 	 * @param 	$porcentaje_exam float porcentaje de items hechos
-	 * @return	int - id_examen
+	 * @return	array - datos del examen id_examen,id_guia,lu_alu....
 	 *
 	 */
 	public function guardar_examen($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$items,$porcentaje_exam) 
 	{
 		//Verifico que no exista un examen con misma guia, alumno, legajo y diferencia de fecha menor a 5 minutos
 		$query_string = "SELECT fecha FROM examenes
-				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 5";
-		$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha));
+				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 5 AND TIMESTAMPDIFF(MINUTE,fecha,?) > 0";
+		$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$fecha));
 		if($this->db->affected_rows() > 0) 
 		{
 			throw new Exception(ERROR_REPETIDO);
 		}
+		//Verifico que estén todos los items
+		$query_string = "SELECT id_item	FROM items NATURAL LEFT JOIN items_guias
+			WHERE id_guia = ? ORDER BY id_item ASC";
+		$query = $this->db->query($query_string,array($id_guia));
+		$items_guia = $query->result_array();
+		//recorro todos los items, y busco que este entre los id que recibo por param. Si alguno falta, corta lanzando excepcion
+		foreach ($items_guia as $item_guia) {
+			$esta = false;
+			foreach ($items as $item) {
+				if($item['id']==$item_guia['id_item']) {
+					$esta = true;
+					break;
+				}
+			}
+			if(!$esta)
+				throw new Exception(ERROR_FALTA_ITEM);
+		}
+
+
 		//Inserto info en la tabla examenes
 		if($obs_exam)
 		{
@@ -55,13 +75,13 @@ class Examenes_model extends CI_Model {
 		else 
 		{
 			$query_string = "INSERT INTO examenes (id_guia,lu_alu,leg_doc,fecha,calificacion,porcentaje_exam) 
-				 VALUES (?,?,?,?,?,?,?)";
+				 VALUES (?,?,?,?,?,?)";
 			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$porcentaje_exam));
 		}
 		
 		if($this->db->affected_rows() == 0)
 		{
-			throw new Exception(ERROR_NO_INSERT);
+			throw new Exception(ERROR_NO_INSERT_EXAM);
 		}
 		$id_exam = $this->db->insert_id();
 		
@@ -87,9 +107,13 @@ class Examenes_model extends CI_Model {
 		{
 		    $query_string = "DELETE FROM examenes WHERE id_exam = ?";
 			$this->db->query($query_string,array($id_exam));
-		    throw new Exception(ERROR_NO_INSERT);
+		    throw new Exception(ERROR_NO_INSERT_ITEMEXAM);
 		}
-		return $id_exam;
+		$query_string = "SELECT * FROM examenes
+				WHERE id_exam = ?";
+		$query = $this->db->query($query_string,array($id_exam));
+		
+		return $query->row_array();
 
 	}
 

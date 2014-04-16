@@ -596,9 +596,11 @@ class Examen extends CI_Controller {
             $this->form_validation->set_rules('fecha', 'fecha', 'required');
             $this->form_validation->set_rules('examen-calif', 'examen-calif', 'required|integer');
             $this->form_validation->set_rules('examen-porc', 'examen-porc', 'numeric');
-            $this->form_validation->set_rules('item-id', 'item-id[]', 'required');
-            $this->form_validation->set_rules('item-estado', 'item-estado[]', 'required');
-            $this->form_validation->set_rules('item-obs', 'item-obs[]', 'required');
+            $this->form_validation->set_rules('item-id', 'item-id', 'required');
+            $this->form_validation->set_rules('item-id[]', 'item-id[]', 'required|integer');
+            $this->form_validation->set_rules('item-estado', 'item-estado', 'required');
+            $this->form_validation->set_rules('item-estado[]', 'item-estado[]', 'required|integer');
+            $this->form_validation->set_rules('item-obs', 'item-obs', 'required');
 
             if (!$this->form_validation->run())  //si no verifica inputs requeridos
             {
@@ -619,7 +621,12 @@ class Examen extends CI_Controller {
                     $input_errors['fecha']='Fecha invalida';
                 }
                 else
+                {
                     $fecha = $this->util->DMYtoYMD($fecha);
+                    $fecha_array = date_parse_from_format('Y-m-d',$fecha);
+                    
+                    $timestamp = date('Y-m-d H:i:s', mktime(date('H'),date('i'),date('s'),$fecha_array['month'],$fecha_array['day'],$fecha_array['year'])); 
+                }
 
                 //CATEDRA (chequea que sea válida y asociada al docente)
                 $cod_cat = $this->input->post('catedra');
@@ -695,9 +702,11 @@ class Examen extends CI_Controller {
 
                 //PORCENTAJE (no es requerido, validado en form_validation)
                 $porc_exam = $this->input->post('examen-porc');
+                //VALIDAR QUE SEA ENTRE 0 Y 100??
 
                 //CALIFICACION GENERAL (requerida, valor int, validado en form_validation)
                 $calif_exam = $this->input->post('examen-calif');
+                //VALIDAR QUE SEA ENTRE 0 Y 2??
 
                 if (!$valid)    //si no pasa mi validacion
                 {
@@ -705,11 +714,46 @@ class Examen extends CI_Controller {
                 }
                 else
                 {
-                    //CREAR ARREGLO DE ITEMS
+                    //Armo items
+                    $items = array();
+                    for($i = 0; $i < count($items_id); $i++)
+                    {
+                        $items[$i]['id'] = $items_id[$i];
+                        $items[$i]['estado'] = $items_estado[$i];
+                        $items[$i]['obs'] = $items_obs[$i];
+                    }
+                    
+                    //Guardo el examen y sus items mediante el modelo (operacion atomica, si falla, lanza excepcion)
+                    try {
+                        $examen = $this->examenes_model->guardar_examen($id_guia,$lu_alu,$this->legajo,$timestamp,$calif_exam,$obs_exam,$items,$porc_exam);
+                        //$examen['id_exam'] = $id_exam;
+                        $this->util->json_response(TRUE,STATUS_OK,$examen); //no mandar el JSON tal cual la BD
 
-                } //validacion_propia
+                    } catch (Exception $e) {
+                        switch ($e->getMessage()) {
+                            case ERROR_REPETIDO:
+                                $this->util->json_response(FALSE,STATUS_REPEATED_POST,"El examen del alumno {$lu_alu} sobre la guía {$id_guia}, ya ha sido guardado en la base de datos hace menos de 5 minutos");
+                                break;
+                            case ERROR_FALTA_ITEM:
+                                $this->util->json_response(FALSE,STATUS_REPEATED_POST,"Falta(n) item(s) de la guia. El examen no fue guardado en la base de datos");
+                                break;
+                            case ERROR_NO_INSERT_EXAM:
+                                $this->util->json_response(FALSE,STATUS_NO_INSERT,"El examen no pudo ser archivado en la base de datos");
+                                break;
+                            case ERROR_NO_INSERT_ITEMEXAM:
+                                $this->util->json_response(FALSE,STATUS_NO_INSERT,"Uno o más items no pudieron ser archivados en la base de datos. Operación abortada, el examen no fue guardado");
+                                break;
 
-            } //form_validation
+                            default:
+                                $this->util->json_response(FALSE,STATUS_UNKNOWN_ERROR,"Error desconocido. Operación abortada, el examen no fue guardado en la base de datos");
+                                break;
+                        }
+                    } //errores al intentar guardar examen
+
+                    
+                } //validacion_propia ok
+
+            } //form_validation ok
 
         } //no empty_post
 
