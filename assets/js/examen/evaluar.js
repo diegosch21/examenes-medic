@@ -22,6 +22,7 @@ $('document').ready(function() {
 	event_handlers_window();
 //	event_handlers_tabs();	//poniendo los data-toggle en los tabs no es necesario llamar a esto!
 	event_handlers_buttons();
+	event_handlers_radio_buttons();
 	handler_formulario();
 
 	ocultar_errores();	
@@ -200,6 +201,12 @@ function manage_observacion(calificando, container) {
 	else {
 		observacion.attr('disabled', false);
 	}	
+}
+
+function event_handlers_radio_buttons() {
+	$('.radio-texto').click(function() {
+		$(this).prev().click();
+	});
 }
 
 function validar() {

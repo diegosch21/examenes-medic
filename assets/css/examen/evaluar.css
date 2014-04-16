@@ -169,3 +169,7 @@ body {
 .opciones-calificacion {
 	margin-left: 50px;
 }
+
+input[type="radio"] {
+	cursor: pointer;
+}

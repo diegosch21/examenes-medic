@@ -265,19 +265,19 @@
 					 		<div class="radio">
 						 	<label>
 								<input type="radio" name="examen-calif" id="calificacion2" value="2">
-								Competencia adquirida
+								<span class="radio-texto">Competencia adquirida</span>
 						 	</label>
 						 	</div>
 						 	<div class="radio">
 						 	<label>
 								<input type="radio" name="examen-calif" id="calificacion1" value="1">
-								Competencia medianamente adquirida
+								<span class="radio-texto">Competencia medianamente adquirida</span>
 						 	</label>
 						 	</div>
 						 	<div class="radio">
 						 	<label>
 								<input type="radio" name="examen-calif" id="calificacion0" value="0">
-								Competencia no adquirida
+								<span class="radio-texto">Competencia no adquirida</span>
 						 	</label>
 						 	</div>
 						</div>
