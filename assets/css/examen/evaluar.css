@@ -181,18 +181,6 @@ input[type="radio"] {
 	margin-bottom: 10px;
 }
 
-.tabla {
-	display: table;
-}
-
-.fila {
-	display: table-row;
-}
-
-.columna {
-	display: table-cell;
-}
-
 .div-tabla-descripciones {
 	border-spacing: 0px 10px;
 }

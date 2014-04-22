@@ -306,3 +306,19 @@ footer {
 	font-weight: normal;
 	font-style: italic;
 }
+
+
+/*
+ * DIV-TABLES
+ */
+.tabla {
+	display: table;
+}
+
+.fila {
+	display: table-row;
+}
+
+.columna {
+	display: table-cell;
+}
