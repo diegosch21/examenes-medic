@@ -161,17 +161,34 @@
 		?>
 	</div>
 			
-
 	<!-- Nav tabs -->
 	<ul id="tab" class="nav nav-tabs">
-		<li>
-			<a href="#descripcion" data-toggle="tab">Descripción</a>
+		<?php 
+			if($guia['desc'])
+			{
+				echo '<li>';
+			}
+			else 
+			{
+				echo '<li class="disabled">';
+			}
+		?>
+			<a href="#descripcion" class="nav-tab-link" data-toggle="tab">Descripción</a>
 		</li>
 		<li class="active">
-			<a href="#evaluacion" data-toggle="tab">Evaluación</a>
+			<a href="#evaluacion" class="nav-tab-link" data-toggle="tab">Evaluación</a>
 		</li>
-		<li>
-			<a href="#guia-estudiante" data-toggle="tab">Guía Estudiante</a>
+		<?php 
+			if($guia['itemsestudiante'])
+			{
+				echo '<li>';
+			}
+			else 
+			{
+				echo '<li class="disabled">';
+			}
+		?>
+			<a href="#guia-estudiante" class="nav-tab-link" data-toggle="tab">Guía Estudiante</a>
 		</li>
 	</ul>
 

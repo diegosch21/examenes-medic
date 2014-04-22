@@ -23,6 +23,7 @@ $('document').ready(function() {
 //	event_handlers_tabs();	//poniendo los data-toggle en los tabs no es necesario llamar a esto!
 	event_handlers_buttons();
 	event_handlers_radio_buttons();
+	event_handlers_nav_tabs();
 	handler_formulario();
 
 	ocultar_errores();	
@@ -41,11 +42,14 @@ function event_handlers_window() {
 	});
 }
 
-function event_handlers_tabs() {
+function event_handlers_nav_tabs() {
 
-	$('#tab a').click(function (e) {
-	  e.preventDefault()
-	  $(this).tab('show');
+	$('.nav-tab-link').click(function (event) {
+
+		if($(this).parent().hasClass('disabled'))
+		{
+			return false; //cancelo el evento para que la pestaña no se muestre
+		}
 	})
 }
 
