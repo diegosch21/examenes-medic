@@ -76,7 +76,8 @@ function event_handlers_buttons() {
 
 	$('.boton-obs').click(function(e){
 
-		$(this).parent().nextAll('.item-obs-container:first').toggle();
+		$(this).parent().nextAll('.item-obs-container:first').toggle().find('.item-obs').focus();
+		$(this).toggleClass('active');
 	});
 
 	$('#btn-calificar, #btn-atras').click(function(event) {
@@ -134,7 +135,7 @@ function event_handlers_buttons() {
 
 			$('#porcentaje-realizado').html(porcentaje_correcto + "%  - ("+rta_correctas+" / "+rta_respondidas+")");
 
-			$('#examen-obs').attr('disabled', true);
+			manage_observacion_gral_examen(true);
 
 		}
 		else {
@@ -152,7 +153,7 @@ function event_handlers_buttons() {
 				manage_observacion(false, $(this));
 			});
 
-			$('#examen-obs').attr('disabled', false);
+			manage_observacion_gral_examen(false);
 		}
 	});
 
@@ -187,23 +188,53 @@ function event_handlers_buttons() {
 	});
 }	
 
+function manage_observacion_gral_examen(calificando) {
+
+	if(calificando) {
+		
+		$('.examen-obs').hide();
+
+		if($('.examen-obs').val() != '') {
+			
+			$('.span-examen-obs-container > span').html($('.examen-obs').val());
+		}
+		else {
+
+			$('.span-examen-obs-container > span').html("&nbsp;");			
+		}
+
+		$('.span-examen-obs-container').show();
+	}
+	else {	
+
+		$('.span-examen-obs-container').hide();
+		$('.examen-obs').show();
+	}	
+}
+
 function manage_observacion(calificando, container) {
 
 	var observacion = container.find('.observaciones');
+	var container_label_observacion = container.find('.span-item-obs-container');
 
 	if(calificando) {
 		
 		if(observacion.val() != '') {
+			
+			container_label_observacion.find('.span-item-obs').html(observacion.val());
+			container_label_observacion.show();
+			observacion.hide();
 			container.show();
 		}
 		else {
+			
+			container.siblings('.item-botonera').find('.boton-obs').removeClass('active'); //quito el estado activo para los botones de obs que no poseen comentarios
 			container.hide();
 		}
-		
-		observacion.attr("disabled", true); 
 	}
-	else {
-		observacion.attr('disabled', false);
+	else {	
+		container_label_observacion.hide();
+		observacion.show();	
 	}	
 }
 
@@ -248,7 +279,8 @@ function handler_formulario() {
 
 	$('#btn-modal-save').click(function(event) {
 		event.preventDefault();
-		//rehabilito las observaciones para que se manden en el form
+
+		//habilito las observaciones para que se manden en el form
 		$('textarea').attr('disabled', false);
 
 

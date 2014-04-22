@@ -47,6 +47,9 @@
 		$fin = 	"	<div class='clearboth'></div>
 					<div class='item-obs-container {$solo_texto}'>
 						<textarea name='item-obs[]' class='form-control item-obs observaciones input-deshabilitado' rows='2' placeholder='Ingrese una observación aquí'></textarea>
+						<div class='label-obs span-item-obs-container'>
+							<span class='span-item-obs'></span>
+						</div>
 					</div>";
 
 		if($item_suelto) 
@@ -263,8 +266,11 @@
 					}
 			 	?>	
 			 	
-			 	<h4>Observación General del Examen</h4>
+			 	<h4>Observación General del Examen</h4>			 	
 			 	<textarea id="examen-obs" name="examen-obs" class="examen-obs form-control input-deshabilitado" rows="3" placeholder="Ingrese una observación aquí"></textarea>
+			 	<div class='label-obs label-obs-gral span-examen-obs-container'>
+					<span class='span-examen-obs'></span>
+				</div>
 
 			 	<div class="evaluacion form-group-buttons botonera">
 					<a id="btn-cancelar" data-target="#" class="btn btn-default btn-lg">Cancelar</a>

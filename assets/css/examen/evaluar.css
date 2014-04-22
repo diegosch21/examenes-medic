@@ -173,3 +173,16 @@ body {
 input[type="radio"] {
 	cursor: pointer;
 }
+
+.label-obs { 
+	background-color: #F9F9F9; 
+	border-radius: 4px; 
+	padding: 4px 6px;
+	word-break: break-word;
+	border: 1px solid #D6D6D6;
+	display: none;
+}
+
+.label-obs-gral {
+	margin-bottom: 10px;
+}
