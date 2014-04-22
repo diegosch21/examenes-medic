@@ -181,11 +181,16 @@ input[type="radio"] {
 	margin-bottom: 10px;
 }
 
-.div-tabla-descripciones {
+.fila-spacing {
 	border-spacing: 0px 10px;
 }
 
 .div-descripcion-titulo {
 	width: 180px;	
+	font-weight: bold;	
+}
+
+.div-num {
+	width: 20px;	
 	font-weight: bold;	
 }

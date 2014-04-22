@@ -201,7 +201,7 @@
 	<!-- Tab panes -->
 	<div class="tab-content">
 		<div id="descripcion" class="tab-pane fade" > 
-			<div class="tabla div-tabla-descripciones">
+			<div class="tabla fila-spacing">
 				<?php 
 					foreach ($guia['desc'] as $desc) 
 					{
@@ -215,16 +215,25 @@
 							</div>									
 						</div>";
 					}
-				?>
+				?>				
 			</div>
 		</div>
 		<div id="guia-estudiante" class="tab-pane fade" >
-			<?php 
+			<div class='table fila-spacing'>
+			<?php 				
 				foreach ($guia['itemsestudiante'] as $itemest)
-				{
-					echo "<b>{$itemest['nro_item']})</b> {$itemest['nom_itemest']}<br/>";
-				}
+				{echo "						
+					<div class='fila'>	
+						<div class='columna div-num'>
+							{$itemest['nro_item']})
+						</div>
+						<div class='columna'>
+							{$itemest['nom_itemest']}
+						</div>
+					</div>";
+				}							
 			?>
+			</div>	
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
 		<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
