@@ -280,10 +280,6 @@ function handler_formulario() {
 	$('#btn-modal-save').click(function(event) {
 		event.preventDefault();
 
-		//habilito las observaciones para que se manden en el form
-		$('textarea').attr('disabled', false);
-
-
 		mostrar_modal('loading-bar');
 
 		//DEBUG////////////////////////////////////////////////////////////////////////

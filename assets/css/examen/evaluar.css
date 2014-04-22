@@ -35,13 +35,7 @@ body {
 
 .div-titulo { 
 	font-weight: bold;
-	float: left;
 	width: 145px;
-}
-
-.div-titulo-dato {
-	text-align: left; 
-	display: inline-block;
 }
 
 .barra-division {
@@ -185,4 +179,25 @@ input[type="radio"] {
 
 .label-obs-gral {
 	margin-bottom: 10px;
+}
+
+.tabla {
+	display: table;
+}
+
+.fila {
+	display: table-row;
+}
+
+.columna {
+	display: table-cell;
+}
+
+.div-tabla-descripciones {
+	border-spacing: 0px 10px;
+}
+
+.div-descripcion-titulo {
+	width: 180px;	
+	font-weight: bold;	
 }

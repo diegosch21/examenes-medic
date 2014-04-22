@@ -114,41 +114,44 @@
 <script type="text/javascript"  src="<?php echo base_url('assets/js/examen/evaluar.js'); ?>"></script>
 
 <div id="div-evaluar">
-	
-	<div>
-		<div class="div-titulo" style="height: 100%;">
-			<span>Carrera:</span>
-		</div>
-		<div class="div-titulo-dato">
-			<span><?php echo $carrera['cod_carr'].' - '.$carrera['nom_carr']; ?></span>
-		</div>
-	</div>
 
-	<div>
-		<div class="div-titulo">
-			<span>Cátedra:</span>
+	<div class="tabla">
+		<div class="fila">	
+			<div class="columna div-titulo">
+				Carrera:
+			</div>
+			<div class="columna">
+				<?php echo $carrera['cod_carr'].' - '.$carrera['nom_carr']; ?>
+			</div>
 		</div>
-		<div class="div-titulo-dato">
-			<span><?php echo $catedra['cod_cat'].' - '.$catedra['nom_cat']; ?></span>
-		</div>
-	</div>
 
-	<div>
-		<div class="div-titulo">
-			<span>Alumno:</span>
+		<div class="fila">	
+			<div class="columna div-titulo">
+				Cátedra:
+			</div>
+			<div class="columna">
+				<?php echo $catedra['cod_cat'].' - '.$catedra['nom_cat']; ?>
+			</div>
 		</div>
-		<div class="div-titulo-dato">
-			<span><?php echo $alumno['lu_alu'].' - '.$alumno['apellido_alu'].', '.$alumno['nom_alu']; ?></span>
-		</div>
-	</div>
 
-	<div>
-		<div class="div-titulo">
-			<span>Fecha del Examen:</span>
+		<div class="fila">	
+			<div class="columna div-titulo">
+				Alumno:
+			</div>
+			<div class="columna">
+				<?php echo $alumno['lu_alu'].' - '.$alumno['apellido_alu'].', '.$alumno['nom_alu']; ?>
+			</div>
 		</div>
-		<div class="div-titulo-dato">
-			<span><?php echo $fecha; ?></span>
+
+		<div class="fila">	
+			<div class="columna div-titulo">
+				Fecha del Examen:
+			</div>
+			<div class="columna">
+				<?php echo $fecha; ?>
+			</div>
 		</div>
+
 	</div>
 
 	<div class="barra-division"></div>
@@ -161,7 +164,7 @@
 			if($guia['subtit_guia']) {
 				echo $guia['subtit_guia']; 
 			}
-		?>
+		?>		
 	</div>
 			
 	<!-- Nav tabs -->
@@ -197,13 +200,23 @@
 
 	<!-- Tab panes -->
 	<div class="tab-content">
-		<div id="descripcion" class="tab-pane fade" >
-			<?php 
-				foreach ($guia['desc'] as $desc) 
-				{
-					echo "<b>{$desc['nom_desc']}:</b> {$desc['contenido_desc']}<br/>";
-				}
-			?>
+		<div id="descripcion" class="tab-pane fade" > 
+			<div class="tabla div-tabla-descripciones">
+				<?php 
+					foreach ($guia['desc'] as $desc) 
+					{
+						echo "
+						<div class='fila'>		
+							<div class='columna div-descripcion-titulo'>
+								{$desc['nom_desc']}:
+							</div>
+							<div class='columna'>
+								{$desc['contenido_desc']}	
+							</div>									
+						</div>";
+					}
+				?>
+			</div>
 		</div>
 		<div id="guia-estudiante" class="tab-pane fade" >
 			<?php 
