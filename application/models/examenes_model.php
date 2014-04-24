@@ -19,7 +19,7 @@ class Examenes_model extends CI_Model {
 
 
 	/**
-	 *	Almacena en la Base de Datos un nuevo  examen
+	 *	Almacena en la Base de Datos un nuevo examen
 	 *	Comprueba que se puedan insertar todos los items, y se pueda insertar un examen valido.
 	 *	Si el alumno, guia, docente, o algun id item es invalido, no inserta nada y lanza una excepción
 	 *	Si la cantidad de items es menor a la indicada en la guia, no inserta nada y lanza una excepción.
@@ -116,6 +116,7 @@ class Examenes_model extends CI_Model {
 		return $query->row_array();
 
 	}
+
 
 
 

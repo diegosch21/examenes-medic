@@ -2,7 +2,7 @@
 
 /**
  * Controlador Examen. Encargado de la generación de un examen (armado de listas de catedras, guias y alumnos),
- * evaluación, y almacenamiento en la BD
+ * evaluación, almacenamiento en la BD, y vista de uno examen guardado
  *
  *@package      controllers
  *@author       Fernando Andrés Prieto
@@ -573,7 +573,7 @@ class Examen extends CI_Controller {
      * catedra (cod), guia (id), alumno (lu), fecha (string), examen-calif (int), examen-obs (text, opcional), examen-porc (float, opcional)
      * Arreglos: item-id[], item-estado[], item-obs[]
      *
-     * Responde con JSON con el id del examen (o mensaje de error)
+     * Responde con JSON los datos del examen (o mensaje de error)
      * 
      * @access  public
      */
@@ -773,6 +773,39 @@ class Examen extends CI_Controller {
 
         } //no empty_post
 
+    }
+
+
+    /**
+     * Controlador de la accion ver un examen guardado
+     *  
+     * En POST se recibe solo el id del examen
+     *
+     * Carga vista del examen
+     * 
+     * @access  public
+     * @param   $id int id del examen deseado
+     */
+    public function ver($id)
+    {
+        if(!isset($id) || !$id || !ctype_digit($id))   //chequea que $id esté y sea sólo numeros
+        {
+            $this->session->set_flashdata('error', 'Acceso inválido a Ver Examen');
+            redirect('home');
+        }
+
+        
+        $this->view_data['id'] = $id;
+
+
+
+
+        $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          
+        $this->load->view('template/header', $this->view_data);
+
+        $this->load->view('content/examen/ver', $this->view_data);
+
+        $this->load->view('template/footer');
     }
 
 }    

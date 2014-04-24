@@ -312,10 +312,13 @@ function handler_formulario() {
 					if(response.ok) 
 					{
 						var msj = "El examen fue archivado exitosamente en la base de datos, con ID: "+response.data.id_exam+". ";
-						//////////////////////////DEBUG/////
-						msj += "<br/>"+JSON.stringify(response.data);
+						//DEBUG//////////////////////////////
+						//msj += "<br/>"+JSON.stringify(response.data);
 						///////////////////////////////////
 						$("#response-success").html(msj);
+
+						$('#btn-modal-ver').attr('href', $('#btn-modal-ver').data('link')+'/'+response.data.id_exam);
+
 						mostrar_modal('success');	
 					}
 					else
@@ -344,8 +347,8 @@ function handler_formulario() {
 						}
 
 						var msj = response.data.error_msj;
-						//////////////////////////DEBUG/////
-						msj += "<br/>"+JSON.stringify(response.data);
+						//DEBUG/////////////////////////////
+						//msj += "<br/>"+JSON.stringify(response.data);
 						///////////////////////////////////
 						$("#response-error").html(status+"<br/>"+msj);
 						mostrar_modal('error');	

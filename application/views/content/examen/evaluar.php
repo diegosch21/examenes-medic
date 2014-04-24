@@ -381,8 +381,8 @@
 				<button id="btn-modal-revisar" class="btn btn-default btn-modal-error" data-dismiss="modal">Revisar Examen</button>
 
 				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" class="btn btn-default btn-modal-success btn-modal-error">Inicio</a>
-				<a id="btn-modal-ver" href="#" class="btn btn-primary btn-modal-success">Ver Examen</a>
-				<a id="btn-modal-nuevo" class="btn btn-primary btn-modal-success">Nuevo Examen</a>  <!-- hace Submit a /generar para que tenga datos precargados -->
+				<a id="btn-modal-ver" class="btn btn-success btn-modal-success" data-link="<?php echo site_url('examen/ver');?>">Ver Examen Archivado</a>
+				<a id="btn-modal-nuevo" class="btn btn-primary btn-modal-success">Iniciar Nuevo Examen</a>  <!-- hace Submit a /generar para que tenga datos precargados -->
 						
 				<a id="btn-modal-reintentar" class="btn btn-primary btn-modal-error">Reintentar</a>  <!-- hace Submit a generar para que tenga datos precargados -->
 				
