@@ -357,13 +357,11 @@
 					<strong>ATENCIÓN!</strong> ¿Está realmente seguro de que desea guardar este examen?
 				</div>
 
-				<div id="alert-success" class="alert alert-success modal-body-content">
-					
+				<div id="alert-success" class="alert alert-success modal-body-content">					
 					<div id="response-success"></div>
 				</div>
 
-				<div id="alert-error" class="alert alert-danger modal-body-content">
-					
+				<div id="alert-error" class="alert alert-danger modal-body-content">					
 					<div id="response-error"></div>
 				</div>
 

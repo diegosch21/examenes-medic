@@ -18,11 +18,21 @@
 		<input id="input-legajo" name="legajo" class="form-control" type="text"  placeholder="Legajo"/>
 		<input id="input-password" name="password" class="form-control" type="password"  placeholder="Contraseña"/>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+		
+		<?php 
+			if (isset($error_login))
+			{
+				echo '<label id="error-login" class="label-error errores">'.$error_login.'</label>';
+			}
 
-		<?php if (function_exists('validation_errors')) echo validation_errors(); ?>  <!-- aplicar estilo, divs, etc -->
-		<?php if (isset($error_login)) echo $error_login; ?>	 <!-- aplicar estilo, divs, etc -->
+			if (function_exists('validation_errors')) 
+			{
+				echo '<label class="label-error errores">'.validation_errors().'</label>'; 
+			}
+		?>
 
+		<label id="error" class="label-error errores"></label>
+
+		<button class="btn btn-lg btn-primary btn-block btn-submit" type="submit">Ingresar</button>
 	</form>
-
 </div>

@@ -35,7 +35,18 @@
 }
 
 .form-login input[type="password"] {
-	margin-bottom: 10px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+
+.btn-submit {
+	margin-top: 10px;
+}
+
+.label-error {
+	margin-bottom: 0px;
+}
+
+.label-error > p {
+	margin-bottom: 0px;
 }

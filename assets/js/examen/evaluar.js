@@ -22,8 +22,11 @@ $('document').ready(function() {
 	event_handlers_window();
 //	event_handlers_tabs();	//poniendo los data-toggle en los tabs no es necesario llamar a esto!
 	event_handlers_buttons();
+	event_handlers_keyboard();
 	event_handlers_radio_buttons();
 	event_handlers_nav_tabs();
+	
+
 	handler_formulario();
 
 	ocultar_errores();	
@@ -39,6 +42,22 @@ function event_handlers_window() {
 	$(window).resize(function() {
 		calculos_visualizacion();
 		centrar_contenido('div-evaluar');
+	});
+}
+
+function event_handlers_keyboard() {
+
+	$('.observaciones, #examen-obs').keydown(function(event) {
+
+		 var code = event.keyCode || event.which;	
+
+		if (code == 13) //Enter keycode
+		{
+		    if (event.shiftKey !== true)
+		    {
+		         $(this).blur();
+		    }		    
+		}
 	});
 }
 
@@ -196,7 +215,7 @@ function manage_observacion_gral_examen(calificando) {
 
 		if($('.examen-obs').val() != '') {
 			
-			$('.span-examen-obs-container > span').html($('.examen-obs').val());
+			$('.span-examen-obs-container > span').text($('.examen-obs').val());
 		}
 		else {
 
@@ -221,7 +240,7 @@ function manage_observacion(calificando, container) {
 		
 		if(observacion.val() != '') {
 			
-			container_label_observacion.find('.span-item-obs').html(observacion.val());
+			container_label_observacion.find('.span-item-obs').text(observacion.val());
 			container_label_observacion.show();
 			observacion.hide();
 			container.show();
@@ -397,13 +416,13 @@ function event_handlers_modal_buttons() {
 
 	$('#btn-modal-abortar').click(function(event) {
 
-		event.preventDefault();
-
 		if(submit_on_cancel)
 		{
+			event.preventDefault();
 			$('#form-evaluar').submit();
 		}
 	});
+
 	$('#btn-modal-nuevo').click(function(event) {
 
 		event.preventDefault();
