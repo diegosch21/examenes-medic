@@ -14,14 +14,6 @@ var CALIF_COMPETENCIA_NO_ADQUIRIDA = 0;
 var CALIF_COMPETENCIA_MED_ADQUIRIDA = 1;
 var CALIF_COMPETENCIA_ADQUIRIDA = 2;
 
-var STATUS_OK = 100;
-var STATUS_EMPTY_POST = 101;
-var STATUS_INVALID_PARAM = 102;
-var STATUS_INVALID_POST = 103;
-var STATUS_REPEATED_POST = 104;
-var STATUS_NO_INSERT = 105;
-var STATUS_UNKNOWN_ERROR = 106;
-
 var submit_on_cancel = true;
 
 $('document').ready(function() {
@@ -298,17 +290,25 @@ function handler_formulario() {
 		$.ajax({ 
 				data: $('#form-evaluar').serialize(), // dato enviado en el post: codigo carrera
 				type: "post",
-
 				url: $('body').data('site-url')+"/examen/archivar", // controlador
+				dataType: "json",
+				timeout: 10000,
 
-				error: function() {
+				error: function(jqXHR, textStatus, errorThrown) {
+					
+					var msj = 'Error de comunicación con el servidor. Intente de nuevo.';
+					//DEBUG/////////////////////////////////////////////////////////
+					//msj+='<br/>'+JSON.stringify(jqXHR)+' '+textStatus+' '+errorThrown;
+					////////////////////////////////////////////////////////////////
+					
+					$("#response-error").html(msj);
 					mostrar_modal('error');	
-					$("#response-error").html('Error de comunicación con el servidor. Intente de nuevo.');
+
 				},
 
 				success: function(json) { 
-					var response = $.parseJSON(json);
-					
+					//var response = $.parseJSON(json);  //dataType json, ya lo parsea
+					var response = json;
 					if(response.ok) 
 					{
 						var msj = "El examen fue archivado exitosamente en la base de datos, con ID: "+response.data.id_exam+". ";
@@ -341,6 +341,12 @@ function handler_formulario() {
 							case STATUS_NO_INSERT:
 								status = "<strong>ERROR EN EL SERVIDOR</strong>";
 								break;
+							case STATUS_REDIRECT:
+								status = "<strong>ERROR DE ACCESO</strong>";	
+								break;
+							case STATUS_SESSION_EXPIRED:
+								status = "<strong>SESIÓN INVALIDA</strong>"
+								break;
 							default:
 								status = "<strong>ERROR DESCONOCIDO</strong>";
 								break;
@@ -352,6 +358,18 @@ function handler_formulario() {
 						///////////////////////////////////
 						$("#response-error").html(status+"<br/>"+msj);
 						mostrar_modal('error');	
+						if(response.status==STATUS_REPEATED_POST) //examen ya guardado, cambian los botones
+						{
+							$('#btn-modal-ver').attr('href', $('#btn-modal-ver').data('link')+'/'+response.data.id_exam);
+							$('#btn-modal-ver').show();
+							$('#btn-modal-reintentar').hide();
+							$('#btn-modal-revisar').hide();
+						}
+						else if(response.status==STATUS_REDIRECT || response.status==STATUS_SESSION_EXPIRED)  //redireccion, solo boton inicio
+						{ 
+							$('.btn-modal-error').hide();
+							$('#btn-modal-inicio').show();
+						}
 					}
 								
 				}

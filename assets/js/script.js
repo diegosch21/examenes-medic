@@ -5,6 +5,17 @@
 */
 
 var ERROR_AJAX = "Ha ocurrido un error en el servidor. Por favor intente más tarde.";
+
+var STATUS_OK = 100;
+var STATUS_EMPTY_POST = 101;
+var STATUS_INVALID_PARAM = 102;
+var STATUS_INVALID_POST = 103;
+var STATUS_REPEATED_POST = 104;
+var STATUS_NO_INSERT = 105;
+var STATUS_UNKNOWN_ERROR = 106;
+var STATUS_REDIRECT = 108;
+var STATUS_SESSION_EXPIRED = 107;
+
 var expresiones_regulares = new Array();
 
 $(document).ready(function(){	 				

@@ -378,11 +378,10 @@
 				<a id="btn-modal-abortar" class="btn btn-primary btn-modal-warning">Abortar</a>  <!-- hace Submit a /generar, o es un link, dependiendo de lo que se cliqueo -->
 				<a id="btn-modal-save" class="btn btn-primary">Continuar</a>
 
-				<button id="btn-modal-revisar" class="btn btn-default btn-modal-error" data-dismiss="modal">Revisar Examen</button>
-
 				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" class="btn btn-default btn-modal-success btn-modal-error">Inicio</a>
+				<button id="btn-modal-revisar" class="btn btn-default btn-modal-error" data-dismiss="modal">Revisar Examen</button>
 				<a id="btn-modal-ver" class="btn btn-success btn-modal-success" data-link="<?php echo site_url('examen/ver');?>">Ver Examen Archivado</a>
-				<a id="btn-modal-nuevo" class="btn btn-primary btn-modal-success">Iniciar Nuevo Examen</a>  <!-- hace Submit a /generar para que tenga datos precargados -->
+				<a id="btn-modal-nuevo" class="btn btn-primary btn-modal-success btn-modal-error">Iniciar Nuevo Examen</a>  <!-- hace Submit a /generar para que tenga datos precargados -->
 						
 				<a id="btn-modal-reintentar" class="btn btn-primary btn-modal-error">Reintentar</a>  <!-- hace Submit a generar para que tenga datos precargados -->
 				

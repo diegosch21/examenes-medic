@@ -39,12 +39,13 @@ class Examenes_model extends CI_Model {
 	public function guardar_examen($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$items,$porcentaje_exam) 
 	{
 		//Verifico que no exista un examen con misma guia, alumno, legajo y diferencia de fecha menor a 3 minutos
-		$query_string = "SELECT fecha FROM examenes
+		$query_string = "SELECT id_exam,fecha FROM examenes
 				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 3 AND TIMESTAMPDIFF(MINUTE,fecha,?) > -3";
-		$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$fecha));
+		$query = $this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$fecha));
 		if($this->db->affected_rows() > 0) 
 		{
-			throw new Exception(ERROR_REPETIDO);
+			$exam = $query->row_array();	
+			throw new Exception(ERROR_REPETIDO,$exam['id_exam']);
 		}
 		//Verifico que estén todos los items
 		$query_string = "SELECT id_item	FROM items NATURAL LEFT JOIN items_guias

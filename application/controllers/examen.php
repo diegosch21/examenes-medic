@@ -17,10 +17,12 @@ class Examen extends CI_Controller {
     private $view_data;
     private $legajo;
     private $privilegio;
+    private $redirected = false;  //si redirecciona via AJAX, no hace nada en los metodos
     
 	public function __construct()
     {
         parent::__construct();
+
     
         if($this->usuario->acceso_permitido(PRIVILEGIO_DOCENTE)) 
    		{
@@ -37,12 +39,30 @@ class Examen extends CI_Controller {
         }
         else if($this->usuario->logueado()) //no tiene privilegio, pero esta logueado
         { 
-            redirect('home/index/error_privilegio');
+            if($this->input->is_ajax_request())
+            {
+                $error['error_msj'] = "No tiene permiso para realizar esta acción";
+                $this->load->helper('url');
+                $error['redirect'] = site_url('home/index/error_privilegio');
+                $this->util->json_response(FALSE,STATUS_REDIRECT,$error);
+                $this->redirected = true;
+            }   
+            else
+                redirect('home/index/error_privilegio');
 
         }
         else
         {
-            redirect('login');
+            if($this->input->is_ajax_request())
+            {
+                $error['error_msj'] = "Sesión caducada. Vuelva a iniciar sesión";
+                $this->load->helper('url');
+                $error['redirect'] = site_url('login');
+                $this->util->json_response(FALSE,STATUS_SESSION_EXPIRED,$error);
+                $this->redirected = true;
+            }
+            else
+                redirect('login');
         }
     }
 
@@ -260,17 +280,20 @@ class Examen extends CI_Controller {
      */
     public function get_catedras()
     {
-        $cod_carr = $this->input->post('carrera') ;
-        if($cod_carr)
+        if(!$this->redirected)
         {
-            $catedras = $this->_catedras($cod_carr); 
-            if(count($catedras)>0)
-                $this->util->json_response(TRUE,STATUS_OK,$catedras);    
+            $cod_carr = $this->input->post('carrera') ;
+            if($cod_carr)
+            {
+                $catedras = $this->_catedras($cod_carr); 
+                if(count($catedras)>0)
+                    $this->util->json_response(TRUE,STATUS_OK,$catedras);    
+                else
+                    $this->util->json_response(FALSE,STATUS_INVALID_PARAM,""); 
+            }
             else
-                $this->util->json_response(FALSE,STATUS_INVALID_PARAM,""); 
+                $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
         }
-        else
-            $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
     }
 
     /**
@@ -282,17 +305,20 @@ class Examen extends CI_Controller {
      */
     public function get_guias_alumnos()
     {
-        $cod_cat = $this->input->post('catedra') ;
-        if($cod_cat)
+        if(!$this->redirected)
         {
-            $guias = $this->_guias($cod_cat); 
-            $alumnos = $this->_alumnos($cod_cat); 
-            
-            $this->util->json_response(TRUE,STATUS_OK,array('guias' => $guias,'alumnos' => $alumnos));    
-            
+            $cod_cat = $this->input->post('catedra') ;
+            if($cod_cat)
+            {
+                $guias = $this->_guias($cod_cat); 
+                $alumnos = $this->_alumnos($cod_cat); 
+                
+                $this->util->json_response(TRUE,STATUS_OK,array('guias' => $guias,'alumnos' => $alumnos));    
+                
+            }
+            else
+                $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
         }
-        else
-            $this->util->json_response(FALSE,STATUS_EMPTY_POST,"");
     }
 
     /**
@@ -579,199 +605,206 @@ class Examen extends CI_Controller {
      */
     public function archivar()
     {
-        $this->load->model('examenes_model');
-        
-        //var_dump($this->input->post());
-
-        if(!$this->input->post()) 
+        if(!$this->redirected)
         {
-            $error['error_msj'] = "Acceso inválido a la archivación de examen";
-            $this->util->json_response(FALSE,STATUS_EMPTY_POST,$error);
-        }
-        else 
-        {
-            $this->load->library('form_validation');
-            $this->form_validation->set_rules('catedra', 'catedra', 'required|integer');
-            $this->form_validation->set_rules('guia', 'guia', 'required|integer');
-            $this->form_validation->set_rules('alumno', 'alumno', 'required|integer');
-            $this->form_validation->set_rules('fecha', 'fecha', 'required');
-            $this->form_validation->set_rules('examen-calif', 'examen-calif', 'required|integer');
-            $this->form_validation->set_rules('examen-porc', 'examen-porc', 'numeric');
-            $this->form_validation->set_rules('item-id', 'item-id', 'required');
-            $this->form_validation->set_rules('item-id[]', 'item-id[]', 'required|integer');
-            $this->form_validation->set_rules('item-estado', 'item-estado', 'required');
-            $this->form_validation->set_rules('item-estado[]', 'item-estado[]', 'required|integer');
-            $this->form_validation->set_rules('item-obs', 'item-obs', 'required');
+            $this->load->model('examenes_model');
+            
+            //var_dump($this->input->post());
 
-            if (!$this->form_validation->run())  //si no verifica inputs requeridos
+            if(!$this->input->post()) 
             {
-                $errors = $this->form_validation->error_array();
-                $msj = '';
-                foreach ($errors as $error) {
-                    $msj = $msj . $error . " "; 
-                }
-                $errors['error_msj'] = $msj;
-                $this->util->json_response(FALSE,STATUS_INVALID_POST,$errors);
-
+                $error['error_msj'] = "Acceso inválido a la archivación de examen";
+                $this->util->json_response(FALSE,STATUS_EMPTY_POST,$error);
             }
-            else //están los inputs, los valido 
+            else 
             {
-                $valid = TRUE;
-                $input_errors = array(); 
-                //FECHA (verifica si es válida)
-                $fecha = $this->input->post('fecha');
+                $this->load->library('form_validation');
+                $this->form_validation->set_rules('catedra', 'catedra', 'required|integer');
+                $this->form_validation->set_rules('guia', 'guia', 'required|integer');
+                $this->form_validation->set_rules('alumno', 'alumno', 'required|integer');
+                $this->form_validation->set_rules('fecha', 'fecha', 'required');
+                $this->form_validation->set_rules('examen-calif', 'examen-calif', 'required|integer');
+                $this->form_validation->set_rules('examen-porc', 'examen-porc', 'numeric');
+                $this->form_validation->set_rules('item-id', 'item-id', 'required');
+                $this->form_validation->set_rules('item-id[]', 'item-id[]', 'required|integer');
+                $this->form_validation->set_rules('item-estado', 'item-estado', 'required');
+                $this->form_validation->set_rules('item-estado[]', 'item-estado[]', 'required|integer');
+                $this->form_validation->set_rules('item-obs', 'item-obs', 'required');
 
-                if(!$fecha || !$this->util->validar_fecha_DMY($fecha))
+                if (!$this->form_validation->run())  //si no verifica inputs requeridos
                 {
-                    $valid = false;
-                    $input_errors['fecha']='Fecha invalida';
-                }
-                else
-                {
-                    $fecha = $this->util->DMYtoYMD($fecha);
-                    $fecha_array = date_parse_from_format('Y-m-d',$fecha);
-                    
-                    $timestamp = date('Y-m-d H:i:s', mktime(date('H'),date('i'),date('s'),$fecha_array['month'],$fecha_array['day'],$fecha_array['year'])); 
-                }
+                    $errors = $this->form_validation->error_array();
+                    $msj = '';
+                    foreach ($errors as $error) {
+                        $msj = $msj . $error . " "; 
+                    }
+                    $errors['error_msj'] = $msj;
+                    $this->util->json_response(FALSE,STATUS_INVALID_POST,$errors);
 
-                //CATEDRA (chequea que sea válida y asociada al docente)
-                $cod_cat = $this->input->post('catedra');
-                if(!$cod_cat || $cod_cat==NO_SELECTED)
-                {
-                    $valid = false;
-                    $input_errors['catedra']='Catedra invalida';
                 }
-                if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
-                { 
-                    if(!$this->catedras_model->check_catedra_docente($cod_cat,$this->legajo))
-                    //catedra no perteneciente al docente (o no existe)
+                else //están los inputs, los valido 
+                {
+                    $valid = TRUE;
+                    $input_errors = array(); 
+                    //FECHA (verifica si es válida)
+                    $fecha = $this->input->post('fecha');
+
+                    if(!$fecha || !$this->util->validar_fecha_DMY($fecha))
                     {
                         $valid = false;
-                        $input_errors['catedra']='Catedra no asociada al usuario';
+                        $input_errors['fecha']='Fecha invalida';
                     }
-                }
-
-                //ALUMNO (chequea que sea valido, y asociado a la catedra)
-                $lu_alu = $this->input->post('alumno');
-                if(!$lu_alu || $lu_alu==NO_SELECTED)
-                {
-                    $valid = false;
-                    $input_errors['alumno']='Alumno invalido';
-                }
-                if(!$this->alumnos_model->check_alumno_catedra($lu_alu,$cod_cat))
-                {
-                    //alumno no asociado a catedra (o no existe)
-                    $valid = false;
-                    $input_errors['alumno']='Alumno no asociado a la catedra';
-                }
-                //GUIA (chequea que sea valido, y de la catedra)
-                $id_guia = $this->input->post('guia');
-                if(!$id_guia || $id_guia==NO_SELECTED)
-                {
-                    $valid = false;
-                    $input_errors['guia']='Guia invalida';
-                }
-                if(!$this->guias_model->check_guia_catedra($id_guia,$cod_cat))
-                {
-                    //guia no es de la catedra (o no existe)
-                    $valid = false;
-                    $input_errors['guia']='Guia no asociada a la catedra';
-                }
-
-                //ITEMS: chequea que el array de id, estado y obs items no sea vacio, y tengan el mismo tamaño
-                $items_id = $this->input->post('item-id');
-                if(!$items_id || empty($items_id)) 
-                {
-                    $valid = false;
-                    $input_errors['item-id']='Arreglo item-id vacio';
-                }
-                $items_estado = $this->input->post('item-estado');
-                if(!$items_estado || empty($items_estado)) 
-                {
-                    $valid = false;
-                    $input_errors['item-estado']='Arreglo item-estado vacio'; 
-                }
-                $items_obs = $this->input->post('item-obs');
-                if(!$items_obs || empty($items_obs)) 
-                {
-                    $valid = false;
-                    $input_errors['item-obs']='Arreglo item-obs vacio'; 
-                }
-                if (!( count($items_id)==count($items_estado) && count($items_id)==count($items_estado) ) ) 
-                {
-                    $valid = false;
-                    $input_errors['items']='Arreglos item-id, item-estado, item-obs de distinto tamaño';
-                }
-                
-                //OBSERVACIÓN GENERAL (no es requerido)
-                $obs_exam = $this->input->post('examen-obs');
-
-                //PORCENTAJE (no es requerido, validado en form_validation)
-                $porc_exam = $this->input->post('examen-porc');
-                //VALIDAR QUE SEA ENTRE 0 Y 100??
-
-                //CALIFICACION GENERAL (requerida, valor int, validado en form_validation)
-                $calif_exam = $this->input->post('examen-calif');
-                //VALIDAR QUE SEA ENTRE 0 Y 2??
-
-                if (!$valid)    //si no pasa mi validacion
-                {
-                    $msj = '';
-                    foreach ($input_errors as $error) {
-                        $msj = $msj . $error . ". "; 
-                    }
-                    $input_errors['error_msj'] = $msj;
-                    $this->util->json_response(FALSE,STATUS_INVALID_POST,$input_errors);
-                }
-                else
-                {
-                    //Armo items
-                    $items = array();
-                    for($i = 0; $i < count($items_id); $i++)
+                    else
                     {
-                        $items[$i]['id'] = $items_id[$i];
-                        $items[$i]['estado'] = $items_estado[$i];
-                        $items[$i]['obs'] = $items_obs[$i];
+                        $fecha = $this->util->DMYtoYMD($fecha);
+                        $fecha_array = date_parse_from_format('Y-m-d',$fecha);
+                        
+                        $timestamp = date('Y-m-d H:i:s', mktime(date('H'),date('i'),date('s'),$fecha_array['month'],$fecha_array['day'],$fecha_array['year'])); 
+                    }
+
+                    //CATEDRA (chequea que sea válida y asociada al docente)
+                    $cod_cat = $this->input->post('catedra');
+                    if(!$cod_cat || $cod_cat==NO_SELECTED)
+                    {
+                        $valid = false;
+                        $input_errors['catedra']='Catedra invalida';
+                    }
+                    if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
+                    { 
+                        if(!$this->catedras_model->check_catedra_docente($cod_cat,$this->legajo))
+                        //catedra no perteneciente al docente (o no existe)
+                        {
+                            $valid = false;
+                            $input_errors['catedra']='Catedra no asociada al usuario';
+                        }
+                    }
+
+                    //ALUMNO (chequea que sea valido, y asociado a la catedra)
+                    $lu_alu = $this->input->post('alumno');
+                    if(!$lu_alu || $lu_alu==NO_SELECTED)
+                    {
+                        $valid = false;
+                        $input_errors['alumno']='Alumno invalido';
+                    }
+                    if(!$this->alumnos_model->check_alumno_catedra($lu_alu,$cod_cat))
+                    {
+                        //alumno no asociado a catedra (o no existe)
+                        $valid = false;
+                        $input_errors['alumno']='Alumno no asociado a la catedra';
+                    }
+                    //GUIA (chequea que sea valido, y de la catedra)
+                    $id_guia = $this->input->post('guia');
+                    if(!$id_guia || $id_guia==NO_SELECTED)
+                    {
+                        $valid = false;
+                        $input_errors['guia']='Guia invalida';
+                    }
+                    if(!$this->guias_model->check_guia_catedra($id_guia,$cod_cat))
+                    {
+                        //guia no es de la catedra (o no existe)
+                        $valid = false;
+                        $input_errors['guia']='Guia no asociada a la catedra';
+                    }
+
+                    //ITEMS: chequea que el array de id, estado y obs items no sea vacio, y tengan el mismo tamaño
+                    $items_id = $this->input->post('item-id');
+                    if(!$items_id || empty($items_id)) 
+                    {
+                        $valid = false;
+                        $input_errors['item-id']='Arreglo item-id vacio';
+                    }
+                    $items_estado = $this->input->post('item-estado');
+                    if(!$items_estado || empty($items_estado)) 
+                    {
+                        $valid = false;
+                        $input_errors['item-estado']='Arreglo item-estado vacio'; 
+                    }
+                    $items_obs = $this->input->post('item-obs');
+                    if(!$items_obs || empty($items_obs)) 
+                    {
+                        $valid = false;
+                        $input_errors['item-obs']='Arreglo item-obs vacio'; 
+                    }
+                    if (!( count($items_id)==count($items_estado) && count($items_id)==count($items_estado) ) ) 
+                    {
+                        $valid = false;
+                        $input_errors['items']='Arreglos item-id, item-estado, item-obs de distinto tamaño';
                     }
                     
-                    //Guardo el examen y sus items mediante el modelo (operacion atomica, si falla, lanza excepcion)
-                    try {
-                        $examen = $this->examenes_model->guardar_examen($id_guia,$lu_alu,$this->legajo,$timestamp,$calif_exam,$obs_exam,$items,$porc_exam);
-                        //$examen['id_exam'] = $id_exam;
-                        $this->util->json_response(TRUE,STATUS_OK,$examen); //no mandar el JSON tal cual la BD por seguridad??
+                    //OBSERVACIÓN GENERAL (no es requerido)
+                    $obs_exam = $this->input->post('examen-obs');
 
-                    } catch (Exception $e) {
-                        switch ($e->getMessage()) {
-                            case ERROR_REPETIDO:
-                                $error['error_msj'] = "El examen del alumno {$lu_alu} sobre la guía {$id_guia}, ya ha sido guardado en la base de datos hace menos de 3 minutos";
-                                $this->util->json_response(FALSE,STATUS_REPEATED_POST,$error);
-                                break;
-                            case ERROR_FALTA_ITEM:
-                                $error['error_msj'] = "Falta(n) item(s) de la guia. El examen no fue guardado en la base de datos";
-                                $this->util->json_response(FALSE,STATUS_INVALID_PARAM,$error);
-                                break;
-                            case ERROR_NO_INSERT_EXAM:
-                                $error['error_msj'] = "El examen no pudo ser archivado en la base de datos";
-                                $this->util->json_response(FALSE,STATUS_NO_INSERT,$error);
-                                break;
-                            case ERROR_NO_INSERT_ITEMEXAM:
-                                $error['error_msj'] = "Uno o más items no pudieron ser archivados en la base de datos. El examen no fue guardado";
-                                $this->util->json_response(FALSE,STATUS_NO_INSERT,$error);
-                                break;
+                    //PORCENTAJE (no es requerido, validado en form_validation)
+                    $porc_exam = $this->input->post('examen-porc');
+                    //VALIDAR QUE SEA ENTRE 0 Y 100??
 
-                            default:
-                                $error['error_msj'] = "El examen no fue guardado en la base de datos";
-                                $this->util->json_response(FALSE,STATUS_UNKNOWN_ERROR,$error);
-                                break;
+                    //CALIFICACION GENERAL (requerida, valor int, validado en form_validation)
+                    $calif_exam = $this->input->post('examen-calif');
+                    //VALIDAR QUE SEA ENTRE 0 Y 2??
+
+                    if (!$valid)    //si no pasa mi validacion
+                    {
+                        $msj = '';
+                        foreach ($input_errors as $error) {
+                            $msj = $msj . $error . ". "; 
                         }
-                    } //errores al intentar guardar examen
+                        $input_errors['error_msj'] = $msj;
+                        $this->util->json_response(FALSE,STATUS_INVALID_POST,$input_errors);
+                    }
+                    else
+                    {
+                        //Armo items
+                        $items = array();
+                        for($i = 0; $i < count($items_id); $i++)
+                        {
+                            $items[$i]['id'] = $items_id[$i];
+                            $items[$i]['estado'] = $items_estado[$i];
+                            $items[$i]['obs'] = $items_obs[$i];
+                        }
+                        
+                        //Guardo el examen y sus items mediante el modelo (operacion atomica, si falla, lanza excepcion)
+                        try {
+                            $examen = $this->examenes_model->guardar_examen($id_guia,$lu_alu,$this->legajo,$timestamp,$calif_exam,$obs_exam,$items,$porc_exam);
+                            //$examen['id_exam'] = $id_exam;
+                            $this->util->json_response(TRUE,STATUS_OK,$examen); //no mandar el JSON tal cual la BD por seguridad??
 
-                    
-                } //validacion_propia ok
 
-            } //form_validation ok
+                        } catch (Exception $e) {
+                            switch ($e->getMessage()) {
+                                case ERROR_REPETIDO:
+                                    $id = $e->getCode();
+                                    $error['error_msj'] = "El examen del alumno {$lu_alu} sobre la guía {$id_guia}, ya ha sido guardado en la base de datos hace menos de 3 minutos, con id: {$id}";
+                                    $error['id_exam'] = $id;
+                                    $this->util->json_response(FALSE,STATUS_REPEATED_POST,$error);
+                                    break;
+                                case ERROR_FALTA_ITEM:
+                                    $error['error_msj'] = "Falta(n) item(s) de la guia. El examen no fue guardado en la base de datos";
+                                    $this->util->json_response(FALSE,STATUS_INVALID_PARAM,$error);
+                                    break;
+                                case ERROR_NO_INSERT_EXAM:
+                                    $error['error_msj'] = "El examen no pudo ser archivado en la base de datos";
+                                    $this->util->json_response(FALSE,STATUS_NO_INSERT,$error);
+                                    break;
+                                case ERROR_NO_INSERT_ITEMEXAM:
+                                    $error['error_msj'] = "Uno o más items no pudieron ser archivados en la base de datos. El examen no fue guardado";
+                                    $this->util->json_response(FALSE,STATUS_NO_INSERT,$error);
+                                    break;
 
-        } //no empty_post
+                                default:
+                                    $error['error_msj'] = "El examen no fue guardado en la base de datos";
+                                    $this->util->json_response(FALSE,STATUS_UNKNOWN_ERROR,$error);
+                                    break;
+                            }
+                        } //errores al intentar guardar examen
+
+                        
+                    } //validacion_propia ok
+
+                } //form_validation ok
+
+            } //no empty_post
+
+        } //no redirecciona    
 
     }
 

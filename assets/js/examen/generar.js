@@ -175,7 +175,27 @@ function event_handlers_selects() {
 							$('#select-catedra').change();
 						}
 						else {
-							alert("Invalid selected value en carreras");
+
+							switch(catedras.status)
+							{
+								case STATUS_INVALID_PARAM:
+									alert("Carrera seleccionada inválida");
+									break;
+								case STATUS_EMPTY_POST:
+									alert("Comunicación inválida con el servidor. Vuelva atrás e intente de nuevo");
+									break;
+								case STATUS_REDIRECT:
+									alert("Error de acceso. Vuelva atrás e intente de nuevo");	
+									break;
+								case STATUS_SESSION_EXPIRED:
+									alert("La sesión ha caducado. Vuelva a iniciar sesión");
+									break;
+								default:
+									alert("Error desconocido. Vuelva atrás e intente de nuevo");
+									break;
+							}
+
+							
 						}
 					}
 			});
@@ -246,7 +266,21 @@ function event_handlers_selects() {
 							$('#select-alumno').api_enable(true);
 						}
 						else {
-							alert("Invalid select value en catedras");
+							switch(catedras.status)
+							{
+								case STATUS_EMPTY_POST:
+									alert("Comunicación inválida con el servidor. Vuelva atrás e intente de nuevo");
+									break;
+								case STATUS_REDIRECT:
+									alert("Error de acceso. Vuelva atrás e intente de nuevo");	
+									break;
+								case STATUS_SESSION_EXPIRED:
+									alert("La sesión ha caducado. Vuelva a iniciar sesión");
+									break;
+								default:
+									alert("Error desconocido. Vuelva atrás e intente de nuevo");
+									break;
+							}
 						}
 					}
 			});
