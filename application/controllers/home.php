@@ -50,6 +50,13 @@ class Home extends CI_Controller {
             if($info == 'error_privilegio')
                 $this->view_data['info'] = 'No tiene permiso para ingresar en esa sección';
         }
+
+        $msj_error = $this->session->flashdata('error');
+        if($msj_error) 
+        {
+            $this->view_data['info'].= $msj_error;
+        }
+
         $this->load->view('template/header', $this->view_data); 
         if($this->usuario->activo()) {
             

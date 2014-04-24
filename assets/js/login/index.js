@@ -45,7 +45,7 @@ function validar() {
 
 	if( $('#input-legajo').val() == "" || !es_integer($('#input-legajo').val()) || $('#input-password').val() == "") {
 
-		if($('#input-legajo').val() == "" && $('#input-password').val() == "")
+		if($('#input-legajo').val() == "" || $('#input-password').val() == "")
 		{
 			$('#error').text('Debe completar los campos.');
 		}

@@ -39,6 +39,16 @@ class Login extends CI_Controller {
     	{     
     		$this->view_data['title'] = "Departamento de Ciencias de la Salud";
 
+            $msj_error = $this->session->flashdata('error');
+            if($msj_error) 
+            {
+                $msj= '';
+                if(isset($this->view_data['error_login']))
+                    $msj = $this->view_data['error_login'];
+                $this->view_data['error_login'] = $msj . $msj_error;
+            }
+
+
             $this->load->view('template/header', $this->view_data);
 		    $this->load->view('content/login/index', $this->view_data);  //muestra errores si los hubo
 		    $this->load->view('template/footer'); 	  		
@@ -69,7 +79,7 @@ class Login extends CI_Controller {
             }
             else
             {
-                $this->view_data['error_login'] = 'Legajo o contraseña incorrectos'; //discriminar error 
+                $this->view_data['error_login'] = 'Legajo o contraseña incorrectos. '; //discriminar error 
                 $this->index();
             }
 

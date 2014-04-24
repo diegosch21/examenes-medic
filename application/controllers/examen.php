@@ -48,7 +48,10 @@ class Examen extends CI_Controller {
                 $this->redirected = true;
             }   
             else
+            {
+                $this->session->set_flashdata('error', 'No tiene permiso para realizar esta acción');
                 redirect('home/index/error_privilegio');
+            }
 
         }
         else
@@ -62,7 +65,10 @@ class Examen extends CI_Controller {
                 $this->redirected = true;
             }
             else
+            {
+                $this->session->set_flashdata('error', 'Sesión caducada. Vuelva a iniciar sesión');
                 redirect('login');
+            }
         }
     }
 
