@@ -33,14 +33,14 @@ class Examenes_model extends CI_Model {
 	 * @param 	$obs_exam string observación general del examen
 	 * @param 	$items array arreglo de los items: (id,estado,obs)
 	 * @param 	$porcentaje_exam float porcentaje de items hechos
-	 * @return	array - datos del examen id_examen,id_guia,lu_alu....
+	 * @return	array - datos del examen id_exam,id_guia,lu_alu....
 	 *
 	 */
 	public function guardar_examen($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$items,$porcentaje_exam) 
 	{
-		//Verifico que no exista un examen con misma guia, alumno, legajo y diferencia de fecha menor a 5 minutos
+		//Verifico que no exista un examen con misma guia, alumno, legajo y diferencia de fecha menor a 3 minutos
 		$query_string = "SELECT fecha FROM examenes
-				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 5 AND TIMESTAMPDIFF(MINUTE,fecha,?) > 0";
+				WHERE id_guia = ? AND lu_alu = ? AND leg_doc = ? AND TIMESTAMPDIFF(MINUTE,fecha,?) < 3 AND TIMESTAMPDIFF(MINUTE,fecha,?) > -3";
 		$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$fecha));
 		if($this->db->affected_rows() > 0) 
 		{

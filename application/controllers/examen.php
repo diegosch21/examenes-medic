@@ -585,7 +585,8 @@ class Examen extends CI_Controller {
 
         if(!$this->input->post()) 
         {
-            $this->util->json_response(FALSE,STATUS_EMPTY_POST,"Acceso inválido a la archivación de examen");
+            $error['error_msj'] = "Acceso inválido a la archivación de examen";
+            $this->util->json_response(FALSE,STATUS_EMPTY_POST,$error);
         }
         else 
         {
@@ -605,6 +606,11 @@ class Examen extends CI_Controller {
             if (!$this->form_validation->run())  //si no verifica inputs requeridos
             {
                 $errors = $this->form_validation->error_array();
+                $msj = '';
+                foreach ($errors as $error) {
+                    $msj = $msj . $error . " "; 
+                }
+                $errors['error_msj'] = $msj;
                 $this->util->json_response(FALSE,STATUS_INVALID_POST,$errors);
 
             }
@@ -710,6 +716,11 @@ class Examen extends CI_Controller {
 
                 if (!$valid)    //si no pasa mi validacion
                 {
+                    $msj = '';
+                    foreach ($input_errors as $error) {
+                        $msj = $msj . $error . ". "; 
+                    }
+                    $input_errors['error_msj'] = $msj;
                     $this->util->json_response(FALSE,STATUS_INVALID_POST,$input_errors);
                 }
                 else
@@ -727,25 +738,30 @@ class Examen extends CI_Controller {
                     try {
                         $examen = $this->examenes_model->guardar_examen($id_guia,$lu_alu,$this->legajo,$timestamp,$calif_exam,$obs_exam,$items,$porc_exam);
                         //$examen['id_exam'] = $id_exam;
-                        $this->util->json_response(TRUE,STATUS_OK,$examen); //no mandar el JSON tal cual la BD
+                        $this->util->json_response(TRUE,STATUS_OK,$examen); //no mandar el JSON tal cual la BD por seguridad??
 
                     } catch (Exception $e) {
                         switch ($e->getMessage()) {
                             case ERROR_REPETIDO:
-                                $this->util->json_response(FALSE,STATUS_REPEATED_POST,"El examen del alumno {$lu_alu} sobre la guía {$id_guia}, ya ha sido guardado en la base de datos hace menos de 5 minutos");
+                                $error['error_msj'] = "El examen del alumno {$lu_alu} sobre la guía {$id_guia}, ya ha sido guardado en la base de datos hace menos de 3 minutos";
+                                $this->util->json_response(FALSE,STATUS_REPEATED_POST,$error);
                                 break;
                             case ERROR_FALTA_ITEM:
-                                $this->util->json_response(FALSE,STATUS_REPEATED_POST,"Falta(n) item(s) de la guia. El examen no fue guardado en la base de datos");
+                                $error['error_msj'] = "Falta(n) item(s) de la guia. El examen no fue guardado en la base de datos";
+                                $this->util->json_response(FALSE,STATUS_INVALID_PARAM,$error);
                                 break;
                             case ERROR_NO_INSERT_EXAM:
-                                $this->util->json_response(FALSE,STATUS_NO_INSERT,"El examen no pudo ser archivado en la base de datos");
+                                $error['error_msj'] = "El examen no pudo ser archivado en la base de datos";
+                                $this->util->json_response(FALSE,STATUS_NO_INSERT,$error);
                                 break;
                             case ERROR_NO_INSERT_ITEMEXAM:
-                                $this->util->json_response(FALSE,STATUS_NO_INSERT,"Uno o más items no pudieron ser archivados en la base de datos. Operación abortada, el examen no fue guardado");
+                                $error['error_msj'] = "Uno o más items no pudieron ser archivados en la base de datos. El examen no fue guardado";
+                                $this->util->json_response(FALSE,STATUS_NO_INSERT,$error);
                                 break;
 
                             default:
-                                $this->util->json_response(FALSE,STATUS_UNKNOWN_ERROR,"Error desconocido. Operación abortada, el examen no fue guardado en la base de datos");
+                                $error['error_msj'] = "El examen no fue guardado en la base de datos";
+                                $this->util->json_response(FALSE,STATUS_UNKNOWN_ERROR,$error);
                                 break;
                         }
                     } //errores al intentar guardar examen

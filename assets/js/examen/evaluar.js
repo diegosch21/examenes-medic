@@ -14,6 +14,14 @@ var CALIF_COMPETENCIA_NO_ADQUIRIDA = 0;
 var CALIF_COMPETENCIA_MED_ADQUIRIDA = 1;
 var CALIF_COMPETENCIA_ADQUIRIDA = 2;
 
+var STATUS_OK = 100;
+var STATUS_EMPTY_POST = 101;
+var STATUS_INVALID_PARAM = 102;
+var STATUS_INVALID_POST = 103;
+var STATUS_REPEATED_POST = 104;
+var STATUS_NO_INSERT = 105;
+var STATUS_UNKNOWN_ERROR = 106;
+
 var submit_on_cancel = true;
 
 $('document').ready(function() {
@@ -157,18 +165,18 @@ function event_handlers_buttons() {
 		}
 	});
 
-	$('#btn-cancelar, #navbar-brand, #navbar-mis-examenes, #navbar-mis-datos, #navbar-cerrar-cesion').click(function(event) {
+	$('#btn-cancelar, #navbar-brand, #navbar-mis-examenes, #navbar-mis-datos, #navbar-cerrar-sesion').click(function(event) {
 
 		event.preventDefault();
 
-		console.log('paso por aca');
+//		console.log('paso por aca');
 
 		if(($(this).attr('id') == 'navbar-mis-examenes') 
 			|| ($(this).attr('id') == 'navbar-mis-datos') 
-			|| ($(this).attr('id') == 'navbar-cerrar-cesion')
+			|| ($(this).attr('id') == 'navbar-cerrar-sesion')
 			|| ($(this).attr('id') == 'navbar-brand'))
 		{
-			console.log("entre aca");
+//			console.log("entre aca");
 			$('#btn-modal-abortar').attr('href', $(this).attr('href'));
 			submit_on_cancel = false;
 		}
@@ -277,7 +285,7 @@ function ocultar_errores() {
 
 function handler_formulario() {
 
-	$('#btn-modal-save').click(function(event) {
+	$('#btn-modal-save, #btn-modal-reintentar').click(function(event) {
 		event.preventDefault();
 
 		mostrar_modal('loading-bar');
@@ -294,21 +302,53 @@ function handler_formulario() {
 				url: $('body').data('site-url')+"/examen/archivar", // controlador
 
 				error: function() {
-					 alert(ERROR_AJAX);    //TODO
+					mostrar_modal('error');	
+					$("#response-error").html('Error de comunicación con el servidor. Intente de nuevo.');
 				},
 
 				success: function(json) { 
 					var response = $.parseJSON(json);
+					
 					if(response.ok) 
 					{
+						var msj = "El examen fue archivado exitosamente en la base de datos, con ID: "+response.data.id_exam+". ";
+						//////////////////////////DEBUG/////
+						msj += "<br/>"+JSON.stringify(response.data);
+						///////////////////////////////////
+						$("#response-success").html(msj);
 						mostrar_modal('success');	
-						$("#response-success").html("<strong>EXAMEN GUARDADO CORRECTAMENTE!</strong> "+JSON.stringify(response.data));
 					}
 					else
 					{
-						//mostrar_modal('error','ERROR',response.data);
-						mostrar_modal('success');	
-						$("#response-success").html('ERROR '+response.status+": "+response.data);
+						var status;
+						switch(response.status)
+						{
+							case STATUS_EMPTY_POST:
+								status = "<strong>ACCESO INVÁLIDO</strong>";
+								break;
+							case STATUS_INVALID_POST:
+								status = "<strong>DATOS INVÁLIDOS</strong>";
+								break;
+							case STATUS_REPEATED_POST:
+								status = "<strong>ACCESO REPETIDO</strong>";
+								break;
+							case STATUS_INVALID_PARAM:
+								status = "<strong>DATOS INVÁLIDOS</strong>";
+								break;
+							case STATUS_NO_INSERT:
+								status = "<strong>ERROR EN EL SERVIDOR</strong>";
+								break;
+							default:
+								status = "<strong>ERROR DESCONOCIDO</strong>";
+								break;
+						}
+
+						var msj = response.data.error_msj;
+						//////////////////////////DEBUG/////
+						msj += "<br/>"+JSON.stringify(response.data);
+						///////////////////////////////////
+						$("#response-error").html(status+"<br/>"+msj);
+						mostrar_modal('error');	
 					}
 								
 				}
@@ -342,6 +382,13 @@ function event_handlers_modal_buttons() {
 		{
 			$('#form-evaluar').submit();
 		}
+	});
+	$('#btn-modal-nuevo').click(function(event) {
+
+		event.preventDefault();
+
+		$('#input-alumno').val('');
+		$('#form-evaluar').submit();
 	});
 }
 
@@ -383,37 +430,57 @@ function mostrar_modal(mensaje) {
 	switch(mensaje)
 	{
 		case 'warning-exit': 
-							$('#modal-titulo').html("Abortar Examen");
-							$('#alert-warning-save').hide();
-							$('#alert-success').hide();
-							$('.btn-modal-success').hide();
+						$('#modal-titulo').html("Abortar Examen");
+						$('#alert-warning-save').hide();
+						$('#alert-success').hide();
+						$('.btn-modal-success').hide();
+						$('#alert-error').hide();
+						$('.btn-modal-error').hide();
 
-							$('#progressbar').hide();
+						$('#progressbar').hide();
 
-							$('#btn-modal-save').hide();
+						$('#btn-modal-save').hide();
 
-							$('#alert-warning-exit').show();
-							$('.btn-modal-warning').show();
-							break;
+						$('#alert-warning-exit').show();
+						$('.btn-modal-warning').show();
+						break;
 
 		case 'warning-save': 
-							$('#modal-titulo').html("Guardar Examen");
-							$('#alert-warning-exit').hide();
-							$('#alert-success').hide();
-							$('.btn-modal-success').hide();
+						$('#modal-titulo').html("Guardar Examen");
+						$('#alert-warning-exit').hide();
+						$('#alert-success').hide();
+						$('.btn-modal-success').hide();
+						$('#alert-error').hide();
+						$('.btn-modal-error').hide();
 
-							$('#progressbar').hide();
+						$('#progressbar').hide();
 
-							$('.btn-modal-warning').hide();
+						$('.btn-modal-warning').hide();
 
-							$('#btn-modal-cancelar').show();
-							$('#btn-modal-save').show();
-							$('#alert-warning-save').show();
-							
-							break;
+						$('#btn-modal-cancelar').show();
+						$('#btn-modal-save').show();
+						$('#alert-warning-save').show();
+						
+						break;
 
 		case 'success':
-						$('#modal-titulo').html("Guardar Examen");
+						$('#modal-titulo').html("Examen guardado correctamente");
+
+						$('#alert-warning-exit').hide();
+						$('#alert-warning-save').hide();
+						$('.btn-modal-warning').hide();
+
+						$('#progressbar').hide();
+
+						$('#btn-modal-save').hide();
+						$('#alert-error').hide();
+						$('.btn-modal-error').hide();
+						$('#alert-success').show();
+						$('.btn-modal-success').show();	
+
+						break;
+		case 'error':
+						$('#modal-titulo').html("ERROR");
 
 						$('#alert-warning-exit').hide();
 						$('#alert-warning-save').hide();
@@ -423,11 +490,13 @@ function mostrar_modal(mensaje) {
 
 						$('#btn-modal-save').hide();
 
-						$('#alert-success').show();
-						$('.btn-modal-success').show();					
+						$('#alert-success').hide();
+						$('.btn-modal-success').hide();
+						$('#alert-error').show();
+						$('.btn-modal-error').show();					
 						break;
 		
-		default:
+		case 'loading-bar':
 						$('#modal-titulo').html("Guardar Examen");
 						$('#alert-warning-exit').hide();
 						$('#alert-warning-save').hide();
@@ -435,10 +504,29 @@ function mostrar_modal(mensaje) {
 
 						$('#alert-success').hide();
 						$('.btn-modal-success').hide();
-
+						$('#alert-error').hide();
+						$('.btn-modal-error').hide();
+						
 						$('#btn-modal-save').hide();
 
 						$('#progressbar').show();
+						break;
+		default:
+						$('#modal-titulo').html("");
+						$('#alert-warning-exit').hide();
+						$('#alert-warning-save').hide();
+						$('.btn-modal-warning').hide();
+
+						$('#alert-success').hide();
+						$('#alert-error').hide();
+						$('.btn-modal-success').hide();
+						$('.btn-modal-error').hide();
+
+						$('#btn-modal-save').hide();
+							
+						$('#progressbar').hide();
+						break;
+
 	}
 
 	// permite llamar a esta funcion dos veces evitando que existan multiples backdrops

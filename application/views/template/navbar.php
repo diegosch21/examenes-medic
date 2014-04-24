@@ -35,7 +35,7 @@
 						}
 					?>
 						<li>
-							<a id="navbar-cerrar-cesion" href="<?php echo site_url('login/desloguear_usuario'); ?>"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
+							<a id="navbar-cerrar-sesion" href="<?php echo site_url('login/desloguear_usuario'); ?>"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
 						</li>						
 					</ul>
 				</div><!-- /.navbar-collapse -->

@@ -362,6 +362,11 @@
 					<div id="response-success"></div>
 				</div>
 
+				<div id="alert-error" class="alert alert-danger modal-body-content">
+					
+					<div id="response-error"></div>
+				</div>
+
 				<div id="progressbar" class="progress progress-striped active modal-body-content-loadingbar">
 					<div class="progress-bar"  role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
 						<span>Guardando Examen</span>
@@ -370,13 +375,18 @@
 			</div>
 			<div class="modal-footer">
 				<button id="btn-modal-cancelar" class="btn btn-default btn-modal-warning" data-dismiss="modal">Cancelar</button>
-				<a id="btn-modal-abortar" class="btn btn-primary btn-modal-warning">Abortar</a>
+				<a id="btn-modal-abortar" class="btn btn-primary btn-modal-warning">Abortar</a>  <!-- hace Submit a /generar, o es un link, dependiendo de lo que se cliqueo -->
 				<a id="btn-modal-save" class="btn btn-primary">Continuar</a>
 
-				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" class="btn btn-default btn-modal-success">Inicio</a>
+				<button id="btn-modal-revisar" class="btn btn-default btn-modal-error" data-dismiss="modal">Revisar Examen</button>
+
+				<a id="btn-modal-inicio" href="<?php echo site_url('home');?>" class="btn btn-default btn-modal-success btn-modal-error">Inicio</a>
 				<a id="btn-modal-ver" href="#" class="btn btn-primary btn-modal-success">Ver Examen</a>
-				<a id="btn-modal-nuevo" href="<?php echo site_url('examen/generar');?>" class="btn btn-primary btn-modal-success">Nuevo Examen</a>
+				<a id="btn-modal-nuevo" class="btn btn-primary btn-modal-success">Nuevo Examen</a>  <!-- hace Submit a /generar para que tenga datos precargados -->
+						
+				<a id="btn-modal-reintentar" class="btn btn-primary btn-modal-error">Reintentar</a>  <!-- hace Submit a generar para que tenga datos precargados -->
 				
+
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
