@@ -22,6 +22,10 @@
 			<a href="#" class="btn btn-default btn-lg btn-block">Vincular Alumnos</a>	
 		</div>
 	</div>
+	<?php 
+		if(isset($info))
+			echo '<label id="error-server" class="label-error">'.$info .'</label> ';
+	?>
 </div>
 
-<?php if(isset($info)) echo $info;?>
+
