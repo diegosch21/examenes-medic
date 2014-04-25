@@ -237,12 +237,11 @@
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
 
-			<div class="col-xs-12 col-titulo-guia titulo-revision calificacion">
-				[REVISIÓN DE LAS RESPUESTAS]
-			</div>
-
+			<div class="col-titulo-guia titulo-revision calificacion clearboth">[REVISIÓN DE LAS RESPUESTAS]</div>
+			
 		<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
 			<form id="form-evaluar" class="form-evaluar" role="form" method="post" action="<?php echo site_url('examen/generar');?>">
+
 				<input type="hidden" name="fecha" id="input-fecha" value="<?php echo $fecha; ?>"/>
 				<input type="hidden" name="carrera" id="input-carrera" value="<?php echo $carrera['cod_carr']; ?>"/>
 				<input type="hidden" name="catedra" id="input-catedra" value="<?php echo $catedra['cod_cat']; ?>"/> <!-- no es necesario -->
@@ -339,12 +338,10 @@
 						<a id="btn-confirmar" name="boton" class="btn btn-primary btn-lg">Confirmar</a>
 					</div>
 				</div>
-
 			</form>
 		</div>		
 	</div>
 </div>
-
 
 <div id="modal" class="modal fade">
 	<div class="modal-dialog">
