@@ -18,18 +18,26 @@ var submit_on_cancel = true;
 
 $('document').ready(function() {
 
-	inicializar_modal();
+	
 	event_handlers_window();
 //	event_handlers_tabs();	//poniendo los data-toggle en los tabs no es necesario llamar a esto!
-	event_handlers_buttons();
-	event_handlers_keyboard();
-	event_handlers_radio_buttons();
-	event_handlers_nav_tabs();
-	
 
-	handler_formulario();
+	if($('#div-evaluar').data('evaluando')) {
 
-	ocultar_errores();	
+		inicializar_modal();
+		event_handlers_buttons();
+		event_handlers_keyboard();
+		event_handlers_radio_buttons();
+		event_handlers_nav_tabs();
+		handler_formulario();
+		ocultar_errores();	
+	}
+	else {
+
+		revisar_items(false);
+		$('.calificacion').show();
+		$('.label-obs').show();
+	}
 
 	$(window).resize(); // Disparo el evento para que el contenido quede centado
 });
@@ -112,47 +120,11 @@ function event_handlers_buttons() {
 			$('.borde-item').addClass('borde-grupoitem');
 			$('.item-botonera').addClass('item-value-botonera-calificar');
 			 
-			var rta_correctas = 0;
-			var rta_respondidas = 0;			
-
-			$('.item-estado').each(function() {
-
-				if($(this).val() == ITEM_SI) {
-					rta_correctas ++;
-					rta_respondidas ++;
-					$(this).parent().addClass('bg-success');
-					
-					manage_observacion(true, $(this).nextAll('.item-obs-container'));
-				}
-				else {
-					if($(this).val() == ITEM_NO) {
-
-						rta_respondidas ++;
-						$(this).parent().addClass('bg-danger');	
-
-						manage_observacion(true, $(this).nextAll('.item-obs-container'));
-					}
-					else {
-
-						$(this).parent().addClass('bg-no-resp');
-
-						manage_observacion(true, $(this).nextAll('.item-obs-container'));
-					}
-				}					
-			});
+			revisar_items(true);
 
 			$('.solotexto').each(function() {
 				manage_observacion(true, $(this));	
 			});
-
-			var porcentaje_correcto = 0;
-
-			if(rta_respondidas > 0) {
-				porcentaje_correcto = (rta_correctas * 100) / rta_respondidas;
-				porcentaje_correcto = porcentaje_correcto.toFixed(2);
-			}
-
-			$('#porcentaje-realizado').html(porcentaje_correcto + "%  - ("+rta_correctas+" / "+rta_respondidas+")");
 
 			manage_observacion_gral_examen(true);
 
@@ -206,6 +178,54 @@ function event_handlers_buttons() {
 
 	});
 }	
+
+function revisar_items(evaluando) {
+
+	var rta_correctas = 0;
+	var rta_respondidas = 0;			
+
+	if(evaluando) {			
+
+		$('.item-estado').each(function() {
+
+			if($(this).val() == ITEM_SI) {
+				rta_correctas ++;
+				rta_respondidas ++;
+				$(this).parent().addClass('bg-success');
+				
+				manage_observacion(true, $(this).nextAll('.item-obs-container'));
+			}
+			else {
+				if($(this).val() == ITEM_NO) {
+
+					rta_respondidas ++;
+					$(this).parent().addClass('bg-danger');	
+
+					manage_observacion(true, $(this).nextAll('.item-obs-container'));
+				}
+				else {
+
+					$(this).parent().addClass('bg-no-resp');
+
+					manage_observacion(true, $(this).nextAll('.item-obs-container'));
+				}
+			}					
+		});
+	}
+	else {
+
+	}
+
+	var porcentaje_correcto = 0;
+
+	if(rta_respondidas > 0) {
+		porcentaje_correcto = (rta_correctas * 100) / rta_respondidas;
+		porcentaje_correcto = porcentaje_correcto.toFixed(2);
+	}
+
+	$('#porcentaje-realizado').html(porcentaje_correcto + "%  - ("+rta_correctas+" / "+rta_respondidas+")");
+
+}
 
 function manage_observacion_gral_examen(calificando) {
 

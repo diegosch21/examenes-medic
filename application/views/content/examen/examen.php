@@ -113,7 +113,7 @@
 <link type="text/css" href="<?php echo base_url('assets/css/examen/examen.css'); ?>" rel="stylesheet" media="screen"/>
 <script type="text/javascript"  src="<?php echo base_url('assets/js/examen/examen.js'); ?>"></script>
 
-<div id="div-evaluar">
+<div id="div-evaluar" data-evaluando="<?php echo $evaluar; ?>">
 
 	<div class="tabla">
 		<div class="fila">	
@@ -134,6 +134,17 @@
 			</div>
 		</div>
 
+		<?php if(!$evaluar): ?>
+		<div class="fila">	
+			<div class="columna div-titulo">
+				Docente:
+			</div>
+			<div class="columna">
+				<?php echo $docente['leg_doc'].' - '.$docente['apellido_doc'].', '.$docente['nom_doc']; ?>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="fila">	
 			<div class="columna div-titulo">
 				Alumno:
@@ -142,6 +153,17 @@
 				<?php echo $alumno['lu_alu'].' - '.$alumno['apellido_alu'].', '.$alumno['nom_alu']; ?>
 			</div>
 		</div>
+
+		<?php if(!$evaluar): ?>
+		<div class="fila">	
+			<div class="columna div-titulo">
+				ID Examen:
+			</div>
+			<div class="columna">
+				<?php echo $examen['id_exam']; ?>
+			</div>
+		</div>
+		<?php endif; ?>
 
 		<div class="fila">	
 			<div class="columna div-titulo">
@@ -236,7 +258,7 @@
 			</div>	
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
-
+			<?php if($evaluar): ?>
 			<div class="col-titulo-guia titulo-revision calificacion clearboth">[REVISIÓN DE LAS RESPUESTAS]</div>
 			
 		<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
@@ -248,6 +270,7 @@
 				<input type="hidden" name="alumno" id="input-alumno" value="<?php echo $alumno['lu_alu']; ?>"/>
 				<input type="hidden" name="guia" id="input-guia" value="<?php echo $guia['id_guia']; ?>"/>
 
+			<?php endif; ?>
 
 				<?php 
 
@@ -291,17 +314,23 @@
 						echo "<div class='borde-grupoitem borde-final'></div>"; //último borde
 					}
 			 	?>	
-			 	
+
 			 	<h4>Observación General del Examen</h4>			 	
-			 	<textarea id="examen-obs" name="examen-obs" class="examen-obs form-control input-deshabilitado" rows="3" placeholder="Ingrese una observación aquí"></textarea>
+			 	
 			 	<div class='label-obs label-obs-gral span-examen-obs-container'>
-					<span class='span-examen-obs'></span>
+					<span class='span-examen-obs'>
+						<?php if(!$evaluar){ echo $examen['obs_exam'];} ?>
+					</span>
 				</div>
+
+				<?php if($evaluar): ?>
+				<textarea id="examen-obs" name="examen-obs" class="examen-obs form-control input-deshabilitado" rows="3" placeholder="Ingrese una observación aquí"></textarea>
 
 			 	<div class="evaluacion form-group-buttons botonera">
 					<a id="btn-cancelar" data-target="#" class="btn btn-default btn-lg">Cancelar</a>
 					<a id="btn-calificar" data-target="#" class="btn btn-primary btn-lg">Calificar</a>
 				</div>
+				<?php endif; ?>
 
 				<div class="calificacion container-calificacion">
 				 	Porcentaje correctas: <span id="porcentaje-realizado">porcentaje</span>
@@ -309,40 +338,72 @@
 
 				 	<div class="examen-calificacion">
 					 	<h4>CALIFICACION:</h4>
-					 	<div id="examen-calificacion" class="opciones-calificacion">
-					 		<input type="radio" name="examen-calif" id="calificacion-1" value="-1" style="display:none" checked="checked">
-					 		<div class="radio">
-						 	<label>
-								<input type="radio" name="examen-calif" id="calificacion2" value="2">
-								<span class="radio-texto">Competencia adquirida</span>
-						 	</label>
-						 	</div>
-						 	<div class="radio">
-						 	<label>
-								<input type="radio" name="examen-calif" id="calificacion1" value="1">
-								<span class="radio-texto">Competencia medianamente adquirida</span>
-						 	</label>
-						 	</div>
-						 	<div class="radio">
-						 	<label>
-								<input type="radio" name="examen-calif" id="calificacion0" value="0">
-								<span class="radio-texto">Competencia no adquirida</span>
-						 	</label>
-						 	</div>
-						</div>
-						<label id="error-radio" class="label-error errores"></label>
+					 	<?php
+
+				 			if(!$evaluar)
+				 			{
+				 				switch($examen['calificacion'])
+				 				{
+				 					case CALIF_COMPETENCIA_NO_ADQUIRIDA:
+				 															echo "Competencia no adquirida.";
+				 															break;
+
+				 					case CALIF_COMPETENCIA_MED_ADQUIRIDA:	echo "Competencia medianamente adquirida.";
+				 															break;
+
+				 					case CALIF_COMPETENCIA_ADQUIRIDA:		echo "Competencia adquirida.";
+				 															break;
+				 					default:
+				 															echo "Sin calificar.";
+				 				}
+				 			}
+				 			else {
+				 				echo '
+				 					<div id="examen-calificacion" class="opciones-calificacion">
+								 		<input type="radio" name="examen-calif" id="calificacion-1" value="-1" style="display:none" checked="checked">
+								 		<div class="radio">
+									 	<label>						 		
+											<input type="radio" name="examen-calif" id="calificacion2" value="2">
+											<span class="radio-texto">Competencia adquirida</span>
+									 	</label>
+									 	</div>
+									 	<div class="radio">
+									 	<label>
+											<input type="radio" name="examen-calif" id="calificacion1" value="1">
+											<span class="radio-texto">Competencia medianamente adquirida</span>
+									 	</label>
+									 	</div>
+									 	<div class="radio">
+									 	<label>
+											<input type="radio" name="examen-calif" id="calificacion0" value="0">
+											<span class="radio-texto">Competencia no adquirida</span>
+									 	</label>
+									 	</div>
+									</div>
+									<label id="error-radio" class="label-error errores"></label>
+				 				';
+				 			}
+				 		?>
+					 	
 					</div>
 
+					<?php if($evaluar): ?>
 					<div class="form-group-buttons  botonera">
 						<a id="btn-atras" href="#" class="btn btn-default btn-lg">Atrás</a>
 						<a id="btn-confirmar" name="boton" class="btn btn-primary btn-lg">Confirmar</a>
-					</div>
+					</div>				
+					<?php endif; ?>
+
 				</div>
+
+			<?php if($evaluar): ?>
 			</form>
+			<?php endif; ?>
 		</div>		
 	</div>
 </div>
 
+<?php if($evaluar): ?>
 <div id="modal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -390,10 +451,4 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
-
-
-
-
+<?php endif; ?>
