@@ -600,8 +600,8 @@ class Examen extends CI_Controller {
         $this->view_data['title'] = "Evaluar Guía - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
 
-
-        $this->load->view('content/examen/evaluar', $this->view_data);
+        $this->view_data['evaluar'] = TRUE;
+        $this->load->view('content/examen/examen', $this->view_data);
 
         $this->load->view('template/footer'); 
     }
@@ -673,7 +673,8 @@ class Examen extends CI_Controller {
                         $fecha = $this->util->DMYtoYMD($fecha);
                         $fecha_array = date_parse_from_format('Y-m-d',$fecha);
                         
-                        $timestamp = date('Y-m-d H:i:s', mktime(date('H'),date('i'),date('s'),$fecha_array['month'],$fecha_array['day'],$fecha_array['year'])); 
+                        $timestamp = date('Y-m-d H:i:s', mktime(date('H'),date('i'),date('s'),
+                                $fecha_array['month'],$fecha_array['day'],$fecha_array['year'])); 
                     }
 
                     //CATEDRA (chequea que sea válida y asociada al docente)
@@ -739,7 +740,7 @@ class Examen extends CI_Controller {
                         $valid = false;
                         $input_errors['item-obs']='Arreglo item-obs vacio'; 
                     }
-                    if (!( count($items_id)==count($items_estado) && count($items_id)==count($items_estado) ) ) 
+                    if (!( count($items_id)==count($items_estado) && count($items_id)==count($items_obs) ) ) 
                     {
                         $valid = false;
                         $input_errors['items']='Arreglos item-id, item-estado, item-obs de distinto tamaño';

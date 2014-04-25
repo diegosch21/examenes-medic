@@ -110,8 +110,8 @@
 	}
  ?>
 
-<link type="text/css" href="<?php echo base_url('assets/css/examen/evaluar.css'); ?>" rel="stylesheet" media="screen"/>
-<script type="text/javascript"  src="<?php echo base_url('assets/js/examen/evaluar.js'); ?>"></script>
+<link type="text/css" href="<?php echo base_url('assets/css/examen/examen.css'); ?>" rel="stylesheet" media="screen"/>
+<script type="text/javascript"  src="<?php echo base_url('assets/js/examen/examen.js'); ?>"></script>
 
 <div id="div-evaluar">
 
