@@ -236,6 +236,11 @@
 			</div>	
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
+
+			<div class="col-xs-12 col-titulo-guia titulo-revision calificacion">
+				[REVISIÓN DE LAS RESPUESTAS]
+			</div>
+
 		<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
 			<form id="form-evaluar" class="form-evaluar" role="form" method="post" action="<?php echo site_url('examen/generar');?>">
 				<input type="hidden" name="fecha" id="input-fecha" value="<?php echo $fecha; ?>"/>
