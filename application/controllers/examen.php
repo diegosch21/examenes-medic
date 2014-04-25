@@ -844,8 +844,59 @@ class Examen extends CI_Controller {
         $this->load->model('examenes_model');
 
         $examen = $this->examenes_model->get_examen_id($id);
+        //SI VACIO.... REDIRECT
         
-        $this->view_data['examen'] = $examen;
+        //CARRERA
+        $carrera['cod_carr'] = $examen['cod_carr'];
+        $carrera['nom_carr'] = $examen['nom_carr'];
+        $this->view_data['carrera'] = $carrera;
+
+        //CATEDRA 
+        $catedra['cod_cat'] = $examen['cod_cat'];
+        $catedra['nom_cat'] = $examen['nom_cat'];
+        $this->view_data['catedra'] = $catedra;
+
+        //DOCENTE 
+        $docente['leg_doc'] = $examen['leg_doc'];
+        $docente['apellido_doc'] = $examen['apellido_doc'];
+        $docente['nom_doc'] = $examen['nom_doc'];
+        $this->view_data['docente'] = $docente;
+        
+        //ALUMNO 
+        $alumno['lu_alu'] = $examen['lu_alu'];
+        $alumno['apellido_alu'] = $examen['apellido_alu'];
+        $alumno['nom_alu'] = $examen['nom_alu'];
+        $this->view_data['alumno'] = $alumno;
+
+        //GUIA 
+        $guia['id_guia'] = $examen['id_guia'];
+        $guia['nro_guia'] = $examen['nro_guia'];
+        $guia['tit_guia'] = $examen['tit_guia'];
+        $guia['subtit_guia'] = $examen['subtit_guia'];
+        $this->view_data['guia'] = $guia;
+
+        //FECHA
+        $this->view_data['fecha'] = $examen['fecha'];
+
+        //EXAMEN
+        $exam['id_exam'] = $examen['id_exam'];
+        $exam['calificacion'] = $examen['calificacion'];
+        $exam['porcentaje_exam'] = $examen['porcentaje_exam'];
+        $exam['obs_exam'] = $examen['obs_exam'];
+        $this->view_data['examen'] = $exam;
+        
+        //////////check permiso para ver catedra, o que el examen sea del usuario
+        //if(!$this->privilegio>=PRIVILEGIO_ADMIN)  
+        //    $catedra = $this->catedras_model->get_catedra_docente_carrera($cod_cat,$this->legajo,$cod_carr);
+        //{
+        //        $this->session->set_flashdata('error', 'Usuario sin permiso para tomar examen en esta cátedra');
+        //        redirect('examen/generar');
+        //    }
+
+
+
+
+
 
 
         $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          
