@@ -29,6 +29,7 @@ class Home extends CI_Controller {
         }
         else
         {
+            $this->session->set_flashdata('error', 'Sesión caducada. Vuelva a iniciar sesión');
             redirect('login');
         }
     }

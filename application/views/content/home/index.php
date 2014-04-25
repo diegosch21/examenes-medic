@@ -24,7 +24,7 @@
 	</div>
 	<?php 
 		if(isset($info))
-			echo '<label id="error-server" class="label-error">'.$info .'</label> ';
+			echo '<br/><label id="error-server" class="label-error">'.$info .'</label> ';
 	?>
 </div>
 

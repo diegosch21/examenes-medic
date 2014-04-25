@@ -708,6 +708,8 @@ class CI_Input {
 			}
 		}
 
+		$str = strip_tags($str);
+
 		return $str;
 	}
 
