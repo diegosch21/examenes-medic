@@ -45,8 +45,8 @@ INSERT INTO alumnos_catedras(lu_alu,cod_cat) VALUES(93256,20020);
 INSERT INTO docentes_catedras(leg_doc,cod_cat,permiso_doc) VALUES
 	(5201,20018,1),
 	(7865,20018,0),
-	(7865,20020,1);
-INSERT INTO docentes_catedras(leg_doc,cod_cat) VALUES (10325,20059);
+	(7865,20020,2),
+	(10325,20059,2);
 
 #Guia
 INSERT INTO guias (cod_cat,nro_guia,tit_guia) 

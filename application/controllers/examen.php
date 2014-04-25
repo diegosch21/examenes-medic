@@ -573,9 +573,9 @@ class Examen extends CI_Controller {
         }
         if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
         { 
-            if(!$this->catedras_model->check_catedra_docente_permiso($cod_cat,$this->legajo,PERMISO_BASICO))
+            if(!$this->catedras_model->check_catedra_docente_permiso($cod_cat,$this->legajo,PERMISO_EVALUAR))
             {
-                $this->session->set_flashdata('error', 'Usuario sin permiso para tomar examen en esta cátedra');
+                $this->session->set_flashdata('error', 'Usuario sin permiso para tomar examen en la cátedra '.$catedra['nom_cat']);
                 redirect('examen/generar');
             }
         }
@@ -722,11 +722,11 @@ class Examen extends CI_Controller {
                     }
                     if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
                     { 
-                        if(!$this->catedras_model->check_catedra_docente_permiso($cod_cat,$this->legajo,PERMISO_BASICO))
+                        if(!$this->catedras_model->check_catedra_docente_permiso($cod_cat,$this->legajo,PERMISO_EVALUAR))
                         //catedra no perteneciente al docente (o no existe)
                         {
                             $valid = false;
-                            $input_errors['catedra']='Usuario sin permiso para tomar examen en la cátedra';
+                            $input_errors['catedra']='Usuario sin permiso para tomar examen en la cátedra '.$catedra['nom_cat'];
                         }
                     }
 
@@ -880,7 +880,11 @@ class Examen extends CI_Controller {
         $this->load->model('examenes_model');
 
         $examen = $this->examenes_model->get_examen_id($id);
-        //SI VACIO.... REDIRECT
+        if(!$examen)   //chequea que $id esté y sea sólo numeros
+        {
+            $this->session->set_flashdata('error', 'ID de examen inexistente');
+            redirect('home');
+        }
         
         //CARRERA
         $carrera['cod_carr'] = $examen['cod_carr'];
@@ -891,6 +895,16 @@ class Examen extends CI_Controller {
         $catedra['cod_cat'] = $examen['cod_cat'];
         $catedra['nom_cat'] = $examen['nom_cat'];
         $this->view_data['catedra'] = $catedra;
+
+        //check permiso para ver catedra
+        if(!$this->privilegio>=PRIVILEGIO_ADMIN)  
+        {
+            if(!$this->catedras_model->check_catedra_docente_permiso($catedra['cod_cat'],$this->legajo,PERMISO_VER))
+            {
+                $this->session->set_flashdata('error', 'Usuario sin permiso para ver exámenes en la cátedra '.$catedra['nom_cat']);
+                redirect('home');
+            }
+        }
 
         //DOCENTE 
         $docente['leg_doc'] = $examen['leg_doc'];
@@ -921,14 +935,6 @@ class Examen extends CI_Controller {
         $exam['obs_exam'] = $examen['obs_exam'];
         $this->view_data['examen'] = $exam;
         
-        //////////check permiso para ver catedra, o que el examen sea del usuario
-        //if(!$this->privilegio>=PRIVILEGIO_ADMIN)  
-        //    $catedra = $this->catedras_model->get_catedra_docente_carrera($cod_cat,$this->legajo,$cod_carr);
-        //{
-        //        $this->session->set_flashdata('error', 'Usuario sin permiso para tomar examen en esta cátedra');
-        //        redirect('examen/generar');
-        //    }
-
         //ITEMS DE LA GUIA CON EL ESTADO Y OBS DEL EXAMEN
         $this->view_data['guia']['items'] = $this->_itemsguia($examen['id_exam'],TRUE); //boolean: examen
 
@@ -939,8 +945,6 @@ class Examen extends CI_Controller {
         //ITEMS DEL ESTUDIANTE DE LA GUIA (pide al modelo en base al id)
         $itemsestudiante = $this->guias_model->get_itemsestudiante($guia['id_guia']);
         $this->view_data['guia']['itemsestudiante'] = $itemsestudiante;
-
-
 
 
         $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          
