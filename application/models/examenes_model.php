@@ -120,7 +120,7 @@ class Examenes_model extends CI_Model {
 
 
 	/**
-	 *	Obtiene el examen de id especificada
+	 *	Obtiene el examen de id especificada. Devuelve datos completos de docente, alumno, catedra, guia.
 	 *
 	 * @access	public
 	 * @param 	$id_exam int id del examen
@@ -137,18 +137,30 @@ class Examenes_model extends CI_Model {
 							WHERE id_exam = ?";
 		$query = $this->db->query($query_string,array($id_exam));
 		$exam = $query->row_array();
-		if(count($exam) > 0) 
-		{
-			$query_string = "SELECT id_item,nom_item,solo_texto,estado_item,obs_item FROM items_examenes NATURAL JOIN items	WHERE id_exam = ?";
-			$query = $this->db->query($query_string,array($id_exam));
-			//COMO EN LAS GUIAS
-			//$exam['items'] = 
-			
-		}
-
+		
 		return $exam;
-
 	}
+
+	/**
+	 *	Retorna todos los items del examen, con su posicion en la guia
+	 *
+	 * @access	public
+	 * @param 	$id_exam int id del exam
+	 * @return	array de items - item: id,pos,nro_seccion,nombre_seccion,nro_grupoitem,nombre_grupoitem,nro_item,nombre_item,solo_texto,estado (examen), obs (examen)
+	 *
+	 */
+
+	public function get_items($id_exam)
+	{
+		$query_string = "SELECT id_item,pos_item,nro_sec,nom_sec,nro_grupoitem,nom_grupoitem,nro_item,nom_item,solo_texto,estado_item,obs_item 
+			FROM items NATURAL LEFT JOIN items_examenes NATURAL LEFT JOIN items_guias NATURAL LEFT JOIN secciones NATURAL LEFT JOIN grupositems 
+			WHERE id_exam = ? ORDER BY pos_item ASC";
+		$query = $this->db->query($query_string,array($id_exam));
+	
+		return $query->result_array();
+	}
+
+
 
 
 

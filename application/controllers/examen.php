@@ -328,6 +328,168 @@ class Examen extends CI_Controller {
     }
 
     /**
+     * Devuelve arreglo con los items de la guia especificada (y el estado si es examen), con la siguiente estructura:
+     *
+     * ITEMS DE LA GUIA (ARREGLO, AGRUPADOS POR SECCION Y GROUP_ITEM). 
+     * Pide al modelo, en base al id.
+     * Arma arreglo para pasar a la en la vista en $guia['items'], agrupados en subarreglos así:
+     * $guia( [[datos]], [items] => 
+     *                  ([pos] =>([tipo]=> seccion-grupoitem-item, [nro], [nom],
+     *                              (si tipo es item):[id],[solo_texto],
+     *                              (si tipo es seccion o grupo):[items] => 
+     *                    ([pos] => ([tipo]=>grupoitem-item, [nro], [nom],
+     *                                  (si tipo es item):[id],[solo_texto],
+     *                                  (si tipo es grupo):[items] => 
+     *                      ([pos] => ([tipo]=>item,[nro],[nom],[id],[solo_texto])) )) )) )
+     * @param   $id_guia int id guia
+     * @param   $examen bool agregar datos examen 
+     * @access  private
+     * @return  array 
+     */
+    function _itemsguia($id,$examen) 
+    {
+        if($examen)
+            $lista_items = $this->examenes_model->get_items($id);
+        else
+            $lista_items = $this->guias_model->get_items($id);
+        
+        $lista = array();
+        $k = 0;
+        for ($i=0; $i < count($lista_items); $i++)
+        { 
+            $item_completo = $lista_items[$i];
+            if($item_completo['nom_sec'])  // si el item está dentro de una sección
+            {
+                //inserto seccion
+                $nro_seccion = $item_completo['nro_sec'];
+                $lista[$k] = array('tipo' => 'seccion',
+                                    'nro' => $nro_seccion,
+                                    'nom' => $item_completo['nom_sec']);
+                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
+                //lista de items dentro de la seccion. 
+                $j = 0; $items = array(); 
+                $avanzo = true;
+                while ($avanzo)
+                {
+                    if ($item_completo['nom_grupoitem']) //si el item esta dentro de un grupoitem dentro de una seccion
+                    {
+                        //inserto grupoitem dentro de la seccion
+                        $nro_grupo = $item_completo['nro_grupoitem'];
+                        $items[$j] = array('tipo' => 'grupoitem',
+                                    'nro' => $nro_seccion.'.'.$nro_grupo,
+                                    'nom' => $item_completo['nom_grupoitem']);
+                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
+
+                        //lista de items dentro del grupo dentro de la seccion. 
+                        $j2 = 0; $items2 = array(); 
+                        $avanzo2 = true;
+                        while ($avanzo2)
+                        {
+                            $items2[$j2] = array('tipo' => 'item',
+                                            'nro' => $nro_seccion.'.'.$nro_grupo.'.'.$item_completo['nro_item'],
+                                            'nom' => $item_completo['nom_item'],
+                                            'id' => $item_completo['id_item'],
+                                            'solo_texto' => $item_completo['solo_texto']);
+                            if($examen) 
+                            {    
+                                $items2[$j2]['estado'] = $item_completo['estado_item'];
+                                $items2[$j2]['obs'] = $item_completo['obs_item'];
+                            }
+                            $avanzo2 = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_grupoitem'] == $nro_grupo && $lista_items[$i+1]['nro_sec'] == $nro_seccion;
+                            if($avanzo2)
+                            {
+                                $i++;
+                                $item_completo = $lista_items[$i];
+                                $j2++;
+                            }                        
+                        }
+                        $items[$j]['items'] = $items2;
+                        $j++;
+                    }
+                    else //item suelto dentro de la seccion (sin grupo item)
+                    {
+                        $items[$j] = array('tipo' => 'item',
+                                    'nro' => $nro_seccion.'.'.$item_completo['nro_item'],
+                                    'nom' => $item_completo['nom_item'],
+                                    'id' => $item_completo['id_item'],
+                                    'solo_texto' => $item_completo['solo_texto']);  
+                        if($examen) 
+                        {    
+                            $items[$j]['estado'] = $item_completo['estado_item'];
+                            $items[$j]['obs'] = $item_completo['obs_item'];
+                        }       
+                    }
+                    $avanzo = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_sec'] == $nro_seccion;
+                    if($avanzo)
+                    {
+                        $i++;
+                        $item_completo = $lista_items[$i];
+                        $j++;
+                    }     
+
+                            
+                }
+                                
+                $lista[$k]['items'] = $items;
+                $k++;
+            }
+            elseif ($item_completo['nom_grupoitem']) //si el item esta dentro de un grupoitem
+            {
+                //inserto grupoitem
+                $nro_grupo = $item_completo['nro_grupoitem'];
+                $lista[$k] = array('tipo' => 'grupoitem',
+                                    'nro' => $nro_grupo,
+                                    'nom' => $item_completo['nom_grupoitem']);
+                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
+                //lista de items dentro del grupo. 
+                $j = 0; $items = array(); 
+                $avanzo = true;
+                while ($avanzo)
+                {
+                    $items[$j] = array('tipo' => 'item',
+                                    'nro' => $nro_grupo.'.'.$item_completo['nro_item'],
+                                    'nom' => $item_completo['nom_item'],
+                                    'id' => $item_completo['id_item'],
+                                    'solo_texto' => $item_completo['solo_texto']);
+                    if($examen) 
+                    {    
+                        $items[$j]['estado'] = $item_completo['estado_item'];
+                        $items[$j]['obs'] = $item_completo['obs_item'];
+                    }
+                    $avanzo = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_grupoitem'] == $nro_grupo;
+                    if($avanzo)
+                    {
+                        $i++;
+                        $item_completo = $lista_items[$i];
+                        $j++;
+                    }                        
+                }
+                                
+                $lista[$k]['items'] = $items;
+                $k++;
+            }
+            else //si el ítem está suelto (sin sección ni grupo)
+            {
+                //inserto item directamente
+                $lista[$k] = array('tipo' => 'item',
+                                    'nro' => $item_completo['nro_item'],
+                                    'nom' => $item_completo['nom_item'],
+                                    'id' => $item_completo['id_item'],
+                                    'solo_texto' => $item_completo['solo_texto']);
+                if($examen) 
+                {    
+                    $lista[$k]['estado'] = $item_completo['estado_item'];
+                    $lista[$k]['obs'] = $item_completo['obs_item'];
+                }
+                $k++;
+            }
+        }
+
+        return $lista;
+
+    }
+
+    /**
      * Controlador de la pagina de muestra de la guia para evaluar
      *  
      * En POST se reciben las opciones seleccionadas:
@@ -458,134 +620,8 @@ class Examen extends CI_Controller {
         }
 
        
-
-        /* ITEMS DE LA GUIA (ARREGLO, AGRUPADOS POR SECCION Y GROUP_ITEM). 
-         * Pide al modelo, en base al id.
-         * Arma arreglo para pasar a la en la vista en $guia['items'], agrupados en subarreglos así:
-         * $guia( [[datos]], [items] => 
-         *                  ([pos] =>([tipo]=> seccion-grupoitem-item, [nro], [nom],
-         *                              (si tipo es item):[id],[solo_texto],
-         *                              (si tipo es seccion o grupo):[items] => 
-         *                    ([pos] => ([tipo]=>grupoitem-item, [nro], [nom],
-         *                                  (si tipo es item):[id],[solo_texto],
-         *                                  (si tipo es grupo):[items] => 
-         *                      ([pos] => ([tipo]=>item,[nro],[nom],[id],[solo_texto])) )) )) )
-         */
-        $lista_items = $this->guias_model->get_items($id_guia);
-        //$this->view_data['lista_items'] = $lista_items;
-
-        $lista = array();
-        $k = 0;
-        for ($i=0; $i < count($lista_items); $i++)
-        { 
-            $item_completo = $lista_items[$i];
-            if($item_completo['nom_sec'])  // si el item está dentro de una sección
-            {
-                //inserto seccion
-                $nro_seccion = $item_completo['nro_sec'];
-                $lista[$k] = array('tipo' => 'seccion',
-                                    'nro' => $nro_seccion,
-                                    'nom' => $item_completo['nom_sec']);
-                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
-                //lista de items dentro de la seccion. 
-                $j = 0; $items = array(); 
-                $avanzo = true;
-                while ($avanzo)
-                {
-                    if ($item_completo['nom_grupoitem']) //si el item esta dentro de un grupoitem dentro de una seccion
-                    {
-                        //inserto grupoitem dentro de la seccion
-                        $nro_grupo = $item_completo['nro_grupoitem'];
-                        $items[$j] = array('tipo' => 'grupoitem',
-                                    'nro' => $nro_seccion.'.'.$nro_grupo,
-                                    'nom' => $item_completo['nom_grupoitem']);
-                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
-
-                        //lista de items dentro del grupo dentro de la seccion. 
-                        $j2 = 0; $items2 = array(); 
-                        $avanzo2 = true;
-                        while ($avanzo2)
-                        {
-                            $items2[$j2] = array('tipo' => 'item',
-                                            'nro' => $nro_seccion.'.'.$nro_grupo.'.'.$item_completo['nro_item'],
-                                            'nom' => $item_completo['nom_item'],
-                                            'id' => $item_completo['id_item'],
-                                            'solo_texto' => $item_completo['solo_texto']);
-                            $avanzo2 = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_grupoitem'] == $nro_grupo && $lista_items[$i+1]['nro_sec'] == $nro_seccion;
-                            if($avanzo2)
-                            {
-                                $i++;
-                                $item_completo = $lista_items[$i];
-                                $j2++;
-                            }                        
-                        }
-                        $items[$j]['items'] = $items2;
-                        $j++;
-                    }
-                    else //item suelto dentro de la seccion (sin grupo item)
-                    {
-                        $items[$j] = array('tipo' => 'item',
-                                    'nro' => $nro_seccion.'.'.$item_completo['nro_item'],
-                                    'nom' => $item_completo['nom_item'],
-                                    'id' => $item_completo['id_item'],
-                                    'solo_texto' => $item_completo['solo_texto']);         
-                    }
-                    $avanzo = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_sec'] == $nro_seccion;
-                    if($avanzo)
-                    {
-                        $i++;
-                        $item_completo = $lista_items[$i];
-                        $j++;
-                    }     
-
-                            
-                }
-                                
-                $lista[$k]['items'] = $items;
-                $k++;
-            }
-            elseif ($item_completo['nom_grupoitem']) //si el item esta dentro de un grupoitem
-            {
-                //inserto grupoitem
-                $nro_grupo = $item_completo['nro_grupoitem'];
-                $lista[$k] = array('tipo' => 'grupoitem',
-                                    'nro' => $nro_grupo,
-                                    'nom' => $item_completo['nom_grupoitem']);
-                                    //'items' => array(...) se agrega desp de recorrer los items del grupo
-                //lista de items dentro del grupo. 
-                $j = 0; $items = array(); 
-                $avanzo = true;
-                while ($avanzo)
-                {
-                    $items[$j] = array('tipo' => 'item',
-                                    'nro' => $nro_grupo.'.'.$item_completo['nro_item'],
-                                    'nom' => $item_completo['nom_item'],
-                                    'id' => $item_completo['id_item'],
-                                    'solo_texto' => $item_completo['solo_texto']);
-                    $avanzo = $i+1 < count($lista_items) && $lista_items[$i+1]['nro_grupoitem'] == $nro_grupo;
-                    if($avanzo)
-                    {
-                        $i++;
-                        $item_completo = $lista_items[$i];
-                        $j++;
-                    }                        
-                }
-                                
-                $lista[$k]['items'] = $items;
-                $k++;
-            }
-            else //si el ítem está suelto (sin sección ni grupo)
-            {
-                //inserto item directamente
-                $lista[$k] = array('tipo' => 'item',
-                                    'nro' => $item_completo['nro_item'],
-                                    'nom' => $item_completo['nom_item'],
-                                    'id' => $item_completo['id_item'],
-                                    'solo_texto' => $item_completo['solo_texto']);
-                $k++;
-            }
-        }
-        $this->view_data['guia']['items'] = $lista;
+        //ITEMS_GUIA
+        $this->view_data['guia']['items'] = $this->_itemsguia($id_guia,FALSE); //boolean: no busca examen
 
         //DESCRIPCION DE LA GUIA (pide al modelo en base al id)
         //Pasa a la vista en $guia['desc']
@@ -893,8 +929,16 @@ class Examen extends CI_Controller {
         //        redirect('examen/generar');
         //    }
 
+        //ITEMS DE LA GUIA CON EL ESTADO Y OBS DEL EXAMEN
+        $this->view_data['guia']['items'] = $this->_itemsguia($examen['id_exam'],TRUE); //boolean: examen
 
+        //DESCRIPCION DE LA GUIA (pide al modelo en base al id)
+        $descripcion = $this->guias_model->get_descripciones($guia['id_guia']);
+        $this->view_data['guia']['desc'] = $descripcion;
 
+        //ITEMS DEL ESTUDIANTE DE LA GUIA (pide al modelo en base al id)
+        $itemsestudiante = $this->guias_model->get_itemsestudiante($guia['id_guia']);
+        $this->view_data['guia']['itemsestudiante'] = $itemsestudiante;
 
 
 
