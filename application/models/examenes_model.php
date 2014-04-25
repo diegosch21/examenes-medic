@@ -119,6 +119,38 @@ class Examenes_model extends CI_Model {
 	}
 
 
+	/**
+	 *	Obtiene el examen de id especificada
+	 *
+	 * @access	public
+	 * @param 	$id_exam int id del examen
+	 * @return	array - datos del examen id_exam,id_guia,lu_alu....
+	 *
+	 */
+	public function get_examen_id($id_exam)
+	{
+		$query_string = "SELECT id_exam,cod_carr,nom_carr,cod_cat,nom_cat,leg_doc,apellido_doc,nom_doc,
+							lu_alu,apellido_alu,nom_alu,id_guia,nro_guia,tit_guia,subtit_guia,
+							fecha,calificacion,porcentaje_exam,obs_exam 
+							FROM examenes NATURAL LEFT JOIN guias NATURAL LEFT JOIN catedras 
+							NATURAL LEFT JOIN carreras NATURAL LEFT JOIN docentes NATURAL LEFT JOIN alumnos 
+							WHERE id_exam = ?";
+		$query = $this->db->query($query_string,array($id_exam));
+		$exam = $query->row_array();
+		if(count($exam) > 0) 
+		{
+			$query_string = "SELECT id_item,nom_item,solo_texto,estado_item,obs_item FROM items_examenes NATURAL JOIN items	WHERE id_exam = ?";
+			$query = $this->db->query($query_string,array($id_exam));
+			//COMO EN LAS GUIAS
+			//$exam['items'] = 
+			
+		}
+
+		return $exam;
+
+	}
+
+
 
 
 

@@ -184,6 +184,6 @@
 
 	<?php 
 		if(isset($error))
-			echo 'Mensaje error: '.$error;
+			echo '<label id="error-server" class="label-error">'.$error .'</label> ';
 	?>
 </div>

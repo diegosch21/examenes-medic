@@ -6,4 +6,4 @@
 
 <?php 
 
-	echo $id;
+	print_r($examen);

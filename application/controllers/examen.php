@@ -409,6 +409,14 @@ class Examen extends CI_Controller {
         {
             $this->view_data['catedra'] = $catedra;
         }
+        if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
+        { 
+            if(!$this->catedras_model->check_catedra_docente_permiso($cod_cat,$this->legajo,PERMISO_BASICO))
+            {
+                $this->session->set_flashdata('error', 'Usuario sin permiso para tomar examen en esta cátedra');
+                redirect('examen/generar');
+            }
+        }
 
         //ALUMNO (pide los datos al modelo a partir del lu pasado por POST, verificando que sea de la catedra)
         //Redirecciona si no es valida
@@ -611,7 +619,7 @@ class Examen extends CI_Controller {
      */
     public function archivar()
     {
-        if(!$this->redirected)
+        if(!$this->redirected)  //si no se envio respoesta AJAX para redireccionar
         {
             $this->load->model('examenes_model');
             
@@ -677,11 +685,11 @@ class Examen extends CI_Controller {
                     }
                     if(!$this->privilegio>=PRIVILEGIO_ADMIN) 
                     { 
-                        if(!$this->catedras_model->check_catedra_docente($cod_cat,$this->legajo))
+                        if(!$this->catedras_model->check_catedra_docente_permiso($cod_cat,$this->legajo,PERMISO_BASICO))
                         //catedra no perteneciente al docente (o no existe)
                         {
                             $valid = false;
-                            $input_errors['catedra']='Catedra no asociada al usuario';
+                            $input_errors['catedra']='Usuario sin permiso para tomar examen en la cátedra';
                         }
                     }
 
@@ -832,11 +840,11 @@ class Examen extends CI_Controller {
             $this->session->set_flashdata('error', 'Acceso inválido a Ver Examen');
             redirect('home');
         }
+        $this->load->model('examenes_model');
 
+        $examen = $this->examenes_model->get_examen_id($id);
         
-        $this->view_data['id'] = $id;
-
-
+        $this->view_data['examen'] = $examen;
 
 
         $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          

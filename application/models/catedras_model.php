@@ -112,6 +112,26 @@ class Catedras_model extends CI_Model {
 	
 		return $query->num_rows()>0;
 	}
+
+	/**
+	 *	Verifica que una catedra esté asociada al docente con permiso mayor o igual al requerido
+	 *
+	 * @access	public
+	 * @param 	$cod_cat int codigo de la catedra
+	 * @param 	$legajo int legajo del docente
+	 * @param   $permiso int permiso requerido
+	 * @return	TRUE: docente asociado a catedra | FALSE: caso contrario.
+	 *
+	 */
+
+	public function check_catedra_docente_permiso($cod_cat,$legajo,$permiso)
+	{
+		$query_string = "SELECT * FROM docentes_catedras
+				WHERE leg_doc = ? AND cod_cat = ? AND permiso_doc >= ?";
+		$query = $this->db->query($query_string,array($legajo,$cod_cat,$permiso));
+	
+		return $query->num_rows()>0;
+	}
 	
 }
 

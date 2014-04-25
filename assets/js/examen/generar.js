@@ -294,7 +294,8 @@ function event_handlers_formulario() {
 
 	$('#form-generar').submit(function(event) {	
 
-		ocultar_errores();	
+		ocultar_errores();
+		$('#error-server').hide();	
 
 		if(!validar()) { 
 			event.preventDefault();

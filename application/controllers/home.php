@@ -54,7 +54,7 @@ class Home extends CI_Controller {
         $msj_error = $this->session->flashdata('error');
         if($msj_error) 
         {
-            $this->view_data['info'].= $msj_error;
+            $this->view_data['info']= $msj_error;
         }
 
         $this->load->view('template/header', $this->view_data); 
