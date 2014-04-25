@@ -851,7 +851,8 @@ class Examen extends CI_Controller {
         $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
 
-        $this->load->view('content/examen/ver', $this->view_data);
+        $this->view_data['evaluar'] = FALSE;
+        $this->load->view('content/examen/examen', $this->view_data);
 
         $this->load->view('template/footer');
     }
