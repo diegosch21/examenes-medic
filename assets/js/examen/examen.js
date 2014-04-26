@@ -445,7 +445,7 @@ function validar() {
 		!$('#calificacion1').is(':checked') &&
 		!$('#calificacion2').is(':checked'))
 	{
-		$('#error-radio').text('Debe seleccionar una opción');
+		$('#error-radio').text('Debe seleccionar una calificación');
 		$('#error-radio').show();
 		return false;
 	}

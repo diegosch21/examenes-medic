@@ -292,20 +292,13 @@
 			</div>
 		</div>
 		<div id="guia-estudiante" class="tab-pane fade" >
-			<div class='table fila-spacing'>
-			<?php foreach ($guia['itemsestudiante'] as $itemest): ?>
-									
-				<div class='fila'>	
-					<div class='columna div-num'>
-						<?php // echo $itemest['nro_item']; ?>&gt;
-					</div> 
-					<div class='columna'>
-						<?php echo $itemest['nom_itemest']; ?>
-					</div>
-				</div>
-				
-			<?php endforeach; ?>
-			</div>	
+			<ul class='ul-item-estudiante'>
+				<?php foreach ($guia['itemsestudiante'] as $itemest): ?>
+				<li>
+					<?php echo $itemest['nom_itemest']; ?>
+				</li>				
+				<?php endforeach; ?>
+			</ul>	
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
 			<?php if($evaluar): ?>
@@ -485,7 +478,7 @@
 				</div>
 
 				<div id="alert-warning-save" class="alert alert-warning modal-body-content">
-					<strong>ATENCIÓN!</strong> ¿Está realmente seguro de que desea guardar este examen? <br/> Este examen, una vez archivado, no podrá ser modificado.
+					<strong>ATENCIÓN!</strong> ¿Está realmente seguro de que desea guardar este examen? <br/> El mismo, una vez archivado, no podrá ser modificado.
 				</div>
 
 				<div id="alert-success" class="alert alert-success modal-body-content">					

@@ -224,3 +224,11 @@ input[type="radio"] {
 .medianamente-adquirida {
 	color: #CCCC00 ;
 }
+
+.ul-item-estudiante {
+	list-style-type: square;
+}
+
+.ul-item-estudiante > li {
+	margin-bottom: 10px;
+}
