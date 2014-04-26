@@ -80,14 +80,21 @@ CREATE TABLE IF NOT EXISTS docentes_catedras (
 
 CREATE TABLE IF NOT EXISTS guias (
 	id_guia INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	cod_cat INT UNSIGNED NOT NULL,  
-	nro_guia INT UNSIGNED NOT NULL,
 	tit_guia VARCHAR(100) NOT NULL,
 	subtit_guia VARCHAR(160),
 
-	PRIMARY KEY(id_guia),
-	FOREIGN KEY (cod_cat) REFERENCES catedras (cod_cat) 
+	PRIMARY KEY(id_guia)
 ) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS guias_catedras (
+	id_guia INT UNSIGNED NOT NULL,
+	cod_cat INT UNSIGNED NOT NULL,  
+	nro_guia INT UNSIGNED NOT NULL,
+
+	PRIMARY KEY (id_guia,cod_cat),
+	FOREIGN KEY (id_guia) REFERENCES guias(id_guia),
+	FOREIGN KEY (cod_cat) REFERENCES catedras(cod_cat)
+) ENGINE=InnoDB; 
 
 CREATE TABLE IF NOT EXISTS descripciones (
 	id_desc INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -165,6 +172,7 @@ CREATE TABLE IF NOT EXISTS itemsestudiante_guias (
 CREATE TABLE IF NOT EXISTS examenes (
 	id_exam INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	id_guia INT UNSIGNED NOT NULL,
+	cod_cat INT UNSIGNED NOT NULL, 
 	lu_alu INT UNSIGNED NOT NULL, 
 	leg_doc INT UNSIGNED NOT NULL,
 	fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -174,6 +182,7 @@ CREATE TABLE IF NOT EXISTS examenes (
 
 	PRIMARY KEY(id_exam),
 	FOREIGN KEY (id_guia) REFERENCES guias (id_guia),
+	FOREIGN KEY (cod_cat) REFERENCES catedras(cod_cat),
 	FOREIGN KEY (lu_alu) REFERENCES alumnos (lu_alu),
 	FOREIGN KEY (leg_doc) REFERENCES docentes (leg_doc)
 ) ENGINE=InnoDB;

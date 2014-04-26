@@ -815,7 +815,7 @@ class Examen extends CI_Controller {
                         
                         //Guardo el examen y sus items mediante el modelo (operacion atomica, si falla, lanza excepcion)
                         try {
-                            $examen = $this->examenes_model->guardar_examen($id_guia,$lu_alu,$this->legajo,$timestamp,$calif_exam,$obs_exam,$items,$porc_exam);
+                            $examen = $this->examenes_model->guardar_examen($id_guia,$cod_cat,$lu_alu,$this->legajo,$timestamp,$calif_exam,$obs_exam,$items,$porc_exam);
                             //$examen['id_exam'] = $id_exam;
                             $this->util->json_response(TRUE,STATUS_OK,$examen); //no mandar el JSON tal cual la BD por seguridad??
 

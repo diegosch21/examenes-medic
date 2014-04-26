@@ -26,6 +26,7 @@ class Examenes_model extends CI_Model {
 	 *
 	 * @access	public
 	 * @param 	$id_guia int id de la guia correspondiente
+	 * @param 	$cod_cat int cod de la catedra correspondiente
 	 * @param 	$lu_alu int lu del alumno que rindió
 	 * @param 	$leg_doc int legajo del docente que evaluó
 	 * @param 	$fecha timestamp fecha y hora del examen
@@ -36,7 +37,7 @@ class Examenes_model extends CI_Model {
 	 * @return	array - datos del examen id_exam,id_guia,lu_alu....
 	 *
 	 */
-	public function guardar_examen($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$items,$porcentaje_exam) 
+	public function guardar_examen($id_guia,$cod_cat,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$items,$porcentaje_exam) 
 	{
 		//Verifico que no exista un examen con misma guia, alumno, legajo y diferencia de fecha menor a 3 minutos
 		$query_string = "SELECT id_exam,fecha FROM examenes
@@ -67,18 +68,10 @@ class Examenes_model extends CI_Model {
 
 
 		//Inserto info en la tabla examenes
-		if($obs_exam)
-		{
-			$query_string = "INSERT INTO examenes (id_guia,lu_alu,leg_doc,fecha,calificacion,obs_exam,porcentaje_exam) 
-				 VALUES (?,?,?,?,?,?,?)";
-			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$porcentaje_exam));
-		}
-		else 
-		{
-			$query_string = "INSERT INTO examenes (id_guia,lu_alu,leg_doc,fecha,calificacion,porcentaje_exam) 
-				 VALUES (?,?,?,?,?,?)";
-			$this->db->query($query_string,array($id_guia,$lu_alu,$leg_doc,$fecha,$calificacion,$porcentaje_exam));
-		}
+		$query_string = "INSERT INTO examenes (id_guia,cod_cat,lu_alu,leg_doc,fecha,calificacion,obs_exam,porcentaje_exam) 
+			 VALUES (?,?,?,?,?,?,?,?)";
+		$this->db->query($query_string,array($id_guia,$cod_cat,$lu_alu,$leg_doc,$fecha,$calificacion,$obs_exam,$porcentaje_exam));
+		
 		
 		if($this->db->affected_rows() == 0)
 		{
@@ -132,7 +125,7 @@ class Examenes_model extends CI_Model {
 		$query_string = "SELECT id_exam,cod_carr,nom_carr,cod_cat,nom_cat,leg_doc,apellido_doc,nom_doc,
 							lu_alu,apellido_alu,nom_alu,id_guia,nro_guia,tit_guia,subtit_guia,
 							fecha,calificacion,porcentaje_exam,obs_exam 
-							FROM examenes NATURAL LEFT JOIN guias NATURAL LEFT JOIN catedras 
+							FROM examenes NATURAL LEFT JOIN guias NATURAL LEFT JOIN guias_catedras NATURAL LEFT JOIN catedras 
 							NATURAL LEFT JOIN carreras NATURAL LEFT JOIN docentes NATURAL LEFT JOIN alumnos 
 							WHERE id_exam = ?";
 		$query = $this->db->query($query_string,array($id_exam));

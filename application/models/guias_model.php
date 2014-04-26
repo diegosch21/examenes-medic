@@ -29,7 +29,7 @@ class Guias_model extends CI_Model {
 
 	public function get_guias_catedra($cod_catedra)
 	{
-		$query_string = "SELECT DISTINCT id_guia,nro_guia,tit_guia,subtit_guia FROM guias
+		$query_string = "SELECT DISTINCT id_guia,nro_guia,tit_guia,subtit_guia FROM guias NATURAL JOIN guias_catedras
 				WHERE cod_cat = ? ORDER BY nro_guia ASC";
 		$query = $this->db->query($query_string,array($cod_catedra));
 	
@@ -48,7 +48,7 @@ class Guias_model extends CI_Model {
 
 	public function get_guia_catedra($id_guia,$cod_cat)
 	{
-		$query_string = "SELECT DISTINCT id_guia,nro_guia,tit_guia,subtit_guia FROM guias
+		$query_string = "SELECT DISTINCT id_guia,nro_guia,tit_guia,subtit_guia FROM guias NATURAL JOIN guias_catedras
 				WHERE cod_cat = ? AND id_guia = ?";
 		$query = $this->db->query($query_string,array($cod_cat,$id_guia));
 	
@@ -67,7 +67,7 @@ class Guias_model extends CI_Model {
 
 	public function check_guia_catedra($id_guia,$cod_cat)
 	{
-		$query_string = "SELECT * FROM guias
+		$query_string = "SELECT * FROM guias_catedras
 				WHERE cod_cat = ? AND id_guia = ?";
 		$query = $this->db->query($query_string,array($cod_cat,$id_guia));
 	
@@ -125,7 +125,7 @@ class Guias_model extends CI_Model {
 	{
 		$query_string = "SELECT nro_item,nom_itemest
 			FROM itemsestudiante NATURAL JOIN itemsestudiante_guias NATURAL JOIN guias 
-			WHERE id_guia = ?";
+			WHERE id_guia = ? ORDER BY nro_item ASC";
 		$query = $this->db->query($query_string,array($id_guia));
 	
 		return $query->result_array();

@@ -30,7 +30,7 @@ class Alumnos_model extends CI_Model {
 	public function get_alumnos_catedra($cod_catedra)
 	{
 		$query_string = "SELECT DISTINCT lu_alu,apellido_alu,nom_alu,dni_alu
-				FROM alumnos NATURAL JOIN alumnos_catedras NATURAL JOIN catedras
+				FROM alumnos NATURAL JOIN alumnos_catedras 
 				WHERE cod_cat = ? ORDER BY lu_alu ASC";
 		$query = $this->db->query($query_string,array($cod_catedra));
 	
@@ -50,7 +50,7 @@ class Alumnos_model extends CI_Model {
 	public function get_alumno_catedra($lu_alu,$cod_catedra)
 	{
 		$query_string = "SELECT DISTINCT lu_alu,apellido_alu,nom_alu,dni_alu
-				FROM alumnos NATURAL JOIN alumnos_catedras NATURAL JOIN catedras
+				FROM alumnos NATURAL JOIN alumnos_catedras 
 				WHERE lu_alu = ? AND cod_cat = ?";
 		$query = $this->db->query($query_string,array($lu_alu,$cod_catedra));
 	

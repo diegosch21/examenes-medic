@@ -4,7 +4,10 @@ USE dcs_examenes;
 INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES
 	(100233,'Gómez','Fulano',37896524),
 	(110568,'González','Natalia',39852147),
+	(105698,'Enriquez','Heracio',39852136),
+	(100598,'Johansen','Paloma',37333636),
 	(102137,'Prince','Martin',36893521),
+	(106601,'Gorgory','Rafael',38652459),
 	(87546,'Jones','Jimbo',33843567),
 	(93256,'Muntz','Nelson',35987654);
 
@@ -17,6 +20,8 @@ INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc,tel_doc
 		VALUES(10325,MD5('123456'),'Skinner','Seymour',9125654,'skinner@springfield.com','(011)156-589632',2,TRUE); #2º nivel de admin
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,activo) 
 		VALUES(7865,MD5('7865'),'Pérez','Marcela',20568987,TRUE); 	
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,activo) 
+		VALUES(5555,MD5('5555'),'Natalia','Natalia',5585585,TRUE);		
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc) 
 		VALUES(1010	,MD5('1010'),'Castaña','Cacho',5654456); 
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,privilegio) 
@@ -31,26 +36,48 @@ INSERT INTO carreras(cod_carr,nom_carr) VALUES
 INSERT INTO catedras(cod_cat,cod_carr,nom_cat) VALUES
 	(20018,166,'Enfermería, Fundamentos, Prácticas y Tendencias II'),
 	(20020,166,'Enfermería Familiar I'),
+	(20022,166,'Enfermería Familiar II'),
+	(20024,166,'Enfermería Familiar III'),
+	(20063,155,'Obstetricia y ginecología'),
 	(20059,155,'Examen general final de carrera');
 
 #Alumnos asociados a las catedras
 INSERT INTO alumnos_catedras(lu_alu,cod_cat,estado_alu_cat) VALUES
 	(100233,20018,1),
+	(93256,20018,1),
 	(110568,20018,2),
+	(100598,20018,2),
 	(110568,20020,1),
-	(102137,20059,1);
-INSERT INTO alumnos_catedras(lu_alu,cod_cat) VALUES(93256,20020);
+	(87546,20020,1),
+	(102137,20059,1),
+	(105698,20059,0),
+	(105698,20022,2),
+	(100233,20022,1),
+	(102137,20024,1),
+	(106601,20063,1),
+	(102137,20063,1);
+INSERT INTO alumnos_catedras(lu_alu,cod_cat) VALUES
+	(93256,20020);
+
 
 #Docentes asociados a las catedras
 INSERT INTO docentes_catedras(leg_doc,cod_cat,permiso_doc) VALUES
 	(5201,20018,1),
+	(5201,20020,1),
+	(5201,20022,0),
+	(5201,20024,0),
+	(7865,20020,1),
 	(7865,20018,0),
-	(7865,20020,2),
-	(10325,20059,2);
+	(7865,20022,2),
+	(7865,20024,0),
+	(10325,20059,2),
+	(5555,20063,1);
 
-#Guia
-INSERT INTO guias (cod_cat,nro_guia,tit_guia) 
-		VALUES(20018,8,'Control de constantes vitales');
+#Guia id: 1
+INSERT INTO guias (tit_guia) 
+		VALUES('Control de constantes vitales');
+INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)		
+		VALUES(LAST_INSERT_ID(),20018,8);
 
 	INSERT INTO descripciones(id_guia,nom_desc,contenido_desc) VALUES
 		(1,'Objetivo del taller','El estudiante será capaz  de controlar  constantes vitales.'),
@@ -58,7 +85,7 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia)
 		(1,'Escenario','Laboratorio de competencias profesionales.'),
 		(1,'Requerimientos','Usuario simulado, estetoscopio, esfigmomanómetro, reloj, termómetro digital, torundas de algodón, alcohol en gel, alcohol al 70%, bandeja, hojas de registro, bolígrafo, bolsa  roja, toallas descartables.');		
 
-	INSERT INTO items(nom_item)	VALUES('Se lava las manos al inicio del procedimiento.');
+	INSERT INTO items(nom_item)	VALUES('Se lava las manos al inicio del procedimiento.');  #id_item = 1
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,1,1);
 	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Prepara material:',2);
 		INSERT INTO items(nom_item)	VALUES('Bandeja.');
@@ -129,7 +156,7 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia)
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,34,24);	
 	INSERT INTO items(nom_item)	VALUES('Informa al usuario los valores obtenidos.');
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,35,25);	
-	INSERT INTO items(nom_item)	VALUES('Se lava las manos');
+	INSERT INTO items(nom_item)	VALUES('Se lava las manos al finalizar el procedimiento.');
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,36,26);	
 	INSERT INTO items(nom_item)	VALUES('Registra el procedimiento.');
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,37,27);								
@@ -144,8 +171,8 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia)
 	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),1,4);			
 
 #Examen	
-INSERT INTO examenes (id_guia,lu_alu,leg_doc,calificacion,obs_exam) 
-		VALUES(1,100233,5201,1,'Esta es una observación general del examen');
+INSERT INTO examenes (id_guia,cod_cat,lu_alu,leg_doc,calificacion,obs_exam) 
+		VALUES(1,20018,100233,5201,1,'Esta es una observación general del examen');
 
 	INSERT INTO items_examenes(id_item,id_exam,estado_item,obs_item) VALUES (1,1,0,'Esto es una observación');
 	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES 
@@ -188,8 +215,10 @@ INSERT INTO examenes (id_guia,lu_alu,leg_doc,calificacion,obs_exam)
 		(37,1,1);
 
 #Guia medicina
-INSERT INTO guias (cod_cat,nro_guia,tit_guia,subtit_guia) 
-		VALUES(20059,3,'Examen final de carrera','Estación nº 3'); #id: 2
+INSERT INTO guias (tit_guia) 
+		VALUES('Examen final de carrera - Estación nº 3'); #id: 2
+INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)		
+		VALUES(LAST_INSERT_ID(),20059,3);		
 
 	#No hay descripciones
 
@@ -252,8 +281,8 @@ INSERT INTO guias (cod_cat,nro_guia,tit_guia,subtit_guia)
 	#No hay itemsestudiante
 
 #Examen	
-INSERT INTO examenes (id_guia,lu_alu,leg_doc,calificacion,obs_exam) 
-		VALUES(2,102137,10325,0,'Esta es una observación general del examen');
+INSERT INTO examenes (id_guia,cod_cat,lu_alu,leg_doc,calificacion,obs_exam) 
+		VALUES(2,20059,102137,10325,0,'Esta es una observación general del examen');
 
 	INSERT INTO items_examenes(id_item,id_exam,estado_item,obs_item) VALUES (38,2,0,'Esto es una observación');
 	INSERT INTO items_examenes(id_item,id_exam,estado_item) VALUES
@@ -283,4 +312,122 @@ INSERT INTO examenes (id_guia,lu_alu,leg_doc,calificacion,obs_exam)
 
 
 #Consulta de los examanes
-SELECT * FROM guias NATURAL LEFT JOIN items_guias NATURAL LEFT JOIN items NATURAL LEFT JOIN examenes NATURAL LEFT JOIN items_examenes;
+#SELECT * FROM guias NATURAL LEFT JOIN items_guias NATURAL LEFT JOIN items NATURAL LEFT JOIN examenes NATURAL LEFT JOIN items_examenes;
+
+
+#Guia enfermeria id 3
+INSERT INTO guias (tit_guia) 
+		VALUES('Medición de altura uterina');
+INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)		
+		VALUES(LAST_INSERT_ID(),20020,1);
+
+	INSERT INTO descripciones(id_guia,nom_desc,contenido_desc) VALUES
+		(3,'Objetivo del taller','El estudiante será capaz de medir la altura uterina.'),
+		(3,'Caso clínico','Susana de 23 años, cursa un embarazo de 30 semanas. Concurre al CAP para realizarse el control prenatal. Usted debe medir su altura uterina.'),
+		(3,'Escenario','Laboratorio de competencias profesionales.'),
+		(3,'Requerimientos','Simulador de embarazada, alcohol en gel, camilla, salea, cinta métrica, hoja de registro y bolígrafo.');		
+
+	#Se lava las manos al inicio del procedimiento. id_item = 1
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (1,3,1,1);
+	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Prepara material:',2); #id_grupoitem = 3
+		#Alcohol en gel. id_item = 7
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (7,3,2,1,3);
+		INSERT INTO items(nom_item)	VALUES('Cinta métrica');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),3,3,2,3);
+		#Hojas de registro. id_item = 9
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (9,3,4,3,3);
+		#Bolígrafo. id_item = 10
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (10,3,5,4,3);
+	INSERT INTO items(nom_item)	VALUES('Se presenta al usuario');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,6,3);
+	INSERT INTO items(nom_item)	VALUES('Identifica al usuario');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,7,4);
+	#Explica el procedimiento a realizar. id_item = 14
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (14,3,8,5);
+	INSERT INTO items(nom_item)	VALUES('Coloca a la embarazada decúbito dorsal.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,9,6);
+	INSERT INTO items(nom_item)	VALUES('Le pide que se afloje y descienda el pantalón (en caso que lo tenga).');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,10,7);
+	INSERT INTO items(nom_item)	VALUES('Cubre la pelvis con la salea.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,11,8);
+	INSERT INTO items(nom_item)	VALUES('Palpa la sínfisis pubiana.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,12,9);
+	INSERT INTO items(nom_item)	VALUES('Coloca el extremo de la cinta métrica y la sujeta con la mano no hábil.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,13,10);
+	INSERT INTO items(nom_item)	VALUES('Con la mano diestra desplaza la cinta hasta la palpación del fondo uterino.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,14,11);
+	INSERT INTO items(nom_item)	VALUES('Lee la medición.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,15,12);
+	INSERT INTO items(nom_item)	VALUES('Acondiciona a la mujer.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,16,13);
+	#Se lava las manos al finalizar el procedimiento.. id_item = 36
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (36,3,17,14);	
+	#Registra el procedimiento. id=37
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (37,3,18,15);								
+
+	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Realizar la técnica completa.');
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),3,1);
+	#Tiempo para leer el caso: 2 minutos. id= 2
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (2,3,2);
+	#Tiempo para preparar los materiales: 3 minutos. id= 3
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (3,3,3);
+	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Tiempo para realizar y registrar la técnica: 5 minutos.');
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),3,4);			
+
+
+#Guia enfermeria id 4
+INSERT INTO guias (cod_cat,nro_guia,tit_guia) 
+		VALUES(20020,2,'Medición de altura uterina');
+
+	INSERT INTO descripciones(id_guia,nom_desc,contenido_desc) VALUES
+		(3,'Objetivo del taller','El estudiante será capaz de medir la altura uterina.'),
+		(3,'Caso clínico','Susana de 23 años, cursa un embarazo de 30 semanas. Concurre al CAP para realizarse el control prenatal. Usted debe medir su altura uterina.'),
+		(3,'Escenario','Laboratorio de competencias profesionales.'),
+		(3,'Requerimientos','Simulador de embarazada, alcohol en gel, camilla, salea, cinta métrica, hoja de registro y bolígrafo.');		
+
+	#Se lava las manos al inicio del procedimiento. id_item = 1
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (1,3,1,1);
+	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Prepara material:',2); #id_grupoitem = 3
+		#Alcohol en gel. id_item = 7
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (7,3,2,1,3);
+		INSERT INTO items(nom_item)	VALUES('Cinta métrica');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),3,3,2,3);
+		#Hojas de registro. id_item = 9
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (9,3,4,3,3);
+		#Bolígrafo. id_item = 10
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (10,3,5,4,3);
+	INSERT INTO items(nom_item)	VALUES('Se presenta al usuario');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,6,3);
+	INSERT INTO items(nom_item)	VALUES('Identifica al usuario');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,7,4);
+	#Explica el procedimiento a realizar. id_item = 14
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (14,3,8,5);
+	INSERT INTO items(nom_item)	VALUES('Coloca a la embarazada decúbito dorsal.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,9,6);
+	INSERT INTO items(nom_item)	VALUES('Le pide que se afloje y descienda el pantalón (en caso que lo tenga).');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,10,7);
+	INSERT INTO items(nom_item)	VALUES('Cubre la pelvis con la salea.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,11,8);
+	INSERT INTO items(nom_item)	VALUES('Palpa la sínfisis pubiana.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,12,9);
+	INSERT INTO items(nom_item)	VALUES('Coloca el extremo de la cinta métrica y la sujeta con la mano no hábil.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,13,10);
+	INSERT INTO items(nom_item)	VALUES('Con la mano diestra desplaza la cinta hasta la palpación del fondo uterino.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,14,11);
+	INSERT INTO items(nom_item)	VALUES('Lee la medición.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,15,12);
+	INSERT INTO items(nom_item)	VALUES('Acondiciona a la mujer.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,16,13);
+	#Se lava las manos al finalizar el procedimiento.. id_item = 36
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (36,3,17,14);	
+	#Registra el procedimiento. id=37
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (37,3,18,15);								
+
+	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Realizar la técnica completa.');
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),3,1);
+	#Tiempo para leer el caso: 2 minutos. id= 2
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (2,3,2);
+	#Tiempo para preparar los materiales: 3 minutos. id= 3
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (3,3,3);
+	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Tiempo para realizar y registrar la técnica: 5 minutos.');
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),3,4);	
