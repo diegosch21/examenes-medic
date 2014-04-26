@@ -278,37 +278,33 @@
 	<div class="tab-content">
 		<div id="descripcion" class="tab-pane fade" > 
 			<div class="tabla fila-spacing">
-				<?php 
-					foreach ($guia['desc'] as $desc) 
-					{
-						echo "
-						<div class='fila'>		
-							<div class='columna div-descripcion-titulo'>
-								{$desc['nom_desc']}:
-							</div>
-							<div class='columna'>
-								{$desc['contenido_desc']}	
-							</div>									
-						</div>";
-					}
-				?>				
+			<?php foreach ($guia['desc'] as $desc): ?> 
+				<div class='fila'>		
+					<div class='columna div-descripcion-titulo'>
+						<?php echo $desc['nom_desc']; ?>:
+					</div>
+					<div class='columna'>
+						<?php echo $desc['contenido_desc']; ?>	
+					</div>									
+				</div>
+			
+			<?php endforeach; ?>				
 			</div>
 		</div>
 		<div id="guia-estudiante" class="tab-pane fade" >
 			<div class='table fila-spacing'>
-			<?php 				
-				foreach ($guia['itemsestudiante'] as $itemest)
-				{echo "						
-					<div class='fila'>	
-						<div class='columna div-num'>
-							{$itemest['nro_item']})
-						</div>
-						<div class='columna'>
-							{$itemest['nom_itemest']}
-						</div>
-					</div>";
-				}							
-			?>
+			<?php foreach ($guia['itemsestudiante'] as $itemest): ?>
+									
+				<div class='fila'>	
+					<div class='columna div-num'>
+						<?php // echo $itemest['nro_item']; ?>&gt;
+					</div> 
+					<div class='columna'>
+						<?php echo $itemest['nom_itemest']; ?>
+					</div>
+				</div>
+				
+			<?php endforeach; ?>
 			</div>	
 		</div>
 		<div id="evaluacion" class="tab-pane fade in active">
@@ -454,12 +450,17 @@
 					 	
 					</div>
 
-					<?php if($evaluar): ?>
+					
 					<div class="form-group-buttons  botonera">
-						<a id="btn-atras" href="#" class="btn btn-default btn-lg">Atrás</a>
+						<?php if($evaluar): ?>
+						<a id="btn-atras" href="#" class="btn btn-default btn-lg">Modificar respuestas</a>
 						<a id="btn-confirmar" name="boton" class="btn btn-primary btn-lg">Confirmar</a>
-					</div>				
-					<?php endif; ?>
+						<?php else: ?>
+						<a id="btn-inicio" href="<?php echo site_url('home');?>" class="btn btn-primary btn-lg">Inicio</a>
+						<?php endif; ?>
+					</div>	
+
+					
 
 				</div>
 
