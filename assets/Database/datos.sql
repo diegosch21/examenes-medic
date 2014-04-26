@@ -80,7 +80,7 @@ INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)
 		VALUES(LAST_INSERT_ID(),20018,8);
 
 	INSERT INTO descripciones(id_guia,nom_desc,contenido_desc) VALUES
-		(1,'Objetivo del taller','El estudiante será capaz  de controlar  constantes vitales.'),
+		(1,'Objetivo del taller','El estudiante será capaz de controlar constantes vitales.'),
 		(1,'Caso clínico','La señorita Mayra, de 20 años, ingresa al consultorio para control de presión arterial, pulso, frecuencia  respiratoria,  temperatura y dolor.'),
 		(1,'Escenario','Laboratorio de competencias profesionales.'),
 		(1,'Requerimientos','Usuario simulado, estetoscopio, esfigmomanómetro, reloj, termómetro digital, torundas de algodón, alcohol en gel, alcohol al 70%, bandeja, hojas de registro, bolígrafo, bolsa  roja, toallas descartables.');		
@@ -110,7 +110,7 @@ INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)
 		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,11,10,1);
 		INSERT INTO items(nom_item)	VALUES('Toallas descartables.');
 		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),1,12,11,1);
-	INSERT INTO items(nom_item)	VALUES('Identifica al usuario y se presenta.');
+	INSERT INTO items(nom_item)	VALUES('Se presenta al paciente y lo identifica.'); #id: 13
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,13,3);
 	INSERT INTO items(nom_item)	VALUES('Explica el procedimiento a realizar.');
 	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),1,14,4);
@@ -376,58 +376,78 @@ INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)
 
 
 #Guia enfermeria id 4
-INSERT INTO guias (cod_cat,nro_guia,tit_guia) 
-		VALUES(20020,2,'Medición de altura uterina');
+INSERT INTO guias (tit_guia) 
+		VALUES('Electrocardiograma de 12 derivaciones');
+INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)		
+		VALUES(LAST_INSERT_ID(),20022,5);
+INSERT INTO guias_catedras(id_guia,cod_cat,nro_guia)		
+		VALUES(4,20024,1);
 
 	INSERT INTO descripciones(id_guia,nom_desc,contenido_desc) VALUES
-		(3,'Objetivo del taller','El estudiante será capaz de medir la altura uterina.'),
-		(3,'Caso clínico','Susana de 23 años, cursa un embarazo de 30 semanas. Concurre al CAP para realizarse el control prenatal. Usted debe medir su altura uterina.'),
-		(3,'Escenario','Laboratorio de competencias profesionales.'),
-		(3,'Requerimientos','Simulador de embarazada, alcohol en gel, camilla, salea, cinta métrica, hoja de registro y bolígrafo.');		
+		(4,'Objetivo del taller','Realizar un Electrocardiograma de 12 derivaciones a un paciente internado con dolor precordial.'),
+		(4,'Caso clínico','El Sr. Matías de 47 años, se encuentra internado en el servicio de Clínica Médica y refiere dolor precordial agudo, punzante, valorado en 8/10 según escala de dolor de 1-10. 
 
-	#Se lava las manos al inicio del procedimiento. id_item = 1
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (1,3,1,1);
-	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Prepara material:',2); #id_grupoitem = 3
-		#Alcohol en gel. id_item = 7
-		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (7,3,2,1,3);
-		INSERT INTO items(nom_item)	VALUES('Cinta métrica');
-		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),3,3,2,3);
-		#Hojas de registro. id_item = 9
-		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (9,3,4,3,3);
-		#Bolígrafo. id_item = 10
-		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (10,3,5,4,3);
-	INSERT INTO items(nom_item)	VALUES('Se presenta al usuario');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,6,3);
-	INSERT INTO items(nom_item)	VALUES('Identifica al usuario');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,7,4);
+Ud. deberá realizarle un Electrocardiograma de 12 derivaciones de inmediato.
+'),
+		(4,'Escenario','Persona (simulador) en cama, en ámbito hospitalario, en posición supina.'),
+		(4,'Requerimientos','Simulador (muñeco completo o tronco) de adulto, electrocardiógrafo, alcohol en gel, gel conductor, hojas de registro de enfermería, lapicera.');		
+
+	#Se presenta al paciente y lo identifica.. id_item = 13
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (13,4,1,1);
 	#Explica el procedimiento a realizar. id_item = 14
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (14,3,8,5);
-	INSERT INTO items(nom_item)	VALUES('Coloca a la embarazada decúbito dorsal.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,9,6);
-	INSERT INTO items(nom_item)	VALUES('Le pide que se afloje y descienda el pantalón (en caso que lo tenga).');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,10,7);
-	INSERT INTO items(nom_item)	VALUES('Cubre la pelvis con la salea.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,11,8);
-	INSERT INTO items(nom_item)	VALUES('Palpa la sínfisis pubiana.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,12,9);
-	INSERT INTO items(nom_item)	VALUES('Coloca el extremo de la cinta métrica y la sujeta con la mano no hábil.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,13,10);
-	INSERT INTO items(nom_item)	VALUES('Con la mano diestra desplaza la cinta hasta la palpación del fondo uterino.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,14,11);
-	INSERT INTO items(nom_item)	VALUES('Lee la medición.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,15,12);
-	INSERT INTO items(nom_item)	VALUES('Acondiciona a la mujer.');
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),3,16,13);
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (14,4,2,2);
+	#Se lava las manos al inicio del procedimiento. id_item = 1
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (1,4,3,3);	
+	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Prepara material:',4); #id_grupoitem = 4
+		INSERT INTO items(nom_item)	VALUES('Electrocardiógrafo');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,4,1,4);
+		#Alcohol en gel. id_item = 7
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (7,4,5,2,4);
+		INSERT INTO items(nom_item)	VALUES('Gel conductor');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,6,3,4);
+		#Hojas de registro. id_item = 9
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (9,4,7,4,4);
+		#Bolígrafo. id_item = 10
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (10,4,8,5,4);
+	INSERT INTO items(nom_item)	VALUES('Conecta el electrocardiógrafo a la fuente de energía.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,9,5);
+	INSERT INTO items(nom_item)	VALUES('Conecta el cable a tierra adecuadamente.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,10,6);
+	INSERT INTO items(nom_item)	VALUES('Conecta electrodos de los miembros adecuadamente, en regiones que no tengan prominencias óseas ni movimientos significativos: MSD (rojo), MSI (amarillo), MII (verde) y MID (negro), con gel conductor.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,11,7);
+	INSERT INTO grupositems(nom_grupoitem,nro_grupoitem) VALUES ('Conecta electrodos precordiales en orden y posición  adecuadas, con gel conductor:',8); #id_grupoitem = 5
+		INSERT INTO items(nom_item)	VALUES('V1 en borde esternal derecho, 4° espacio intercostal (EIC) ');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,12,1,5);
+		INSERT INTO items(nom_item)	VALUES('V2 en borde esternal izquierdo, 4° espacio intercostal (EIC) ');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,13,2,5);
+		INSERT INTO items(nom_item)	VALUES('V4 en línea medio-clavicular izquierda, 5° espacio intercostal (EIC) ');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,14,3,5);
+		INSERT INTO items(nom_item)	VALUES('V3 entre V2 y V4 ');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,15,4,5);
+		INSERT INTO items(nom_item)	VALUES('V5 en línea axilar anterior izquierda, 5° espacio intercostal (EIC)');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,16,5,5);
+		INSERT INTO items(nom_item)	VALUES('V6 en línea media axilar, 5° espacio intercostal (EIC) ');
+		INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item,id_grupoitem) VALUES (LAST_INSERT_ID(),4,17,6,5);
+	INSERT INTO items(nom_item)	VALUES('Comienza a desplazarse el papel a una velocidad de 25 mm por segundo.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,18,9);
+	INSERT INTO items(nom_item)	VALUES('Marca standard al inicio del electrocardiograma (manualmente).');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,19,10);
+	INSERT INTO items(nom_item)	VALUES('Registra las derivaciones en el siguiente orden: DI, DII, DIII, AVR, AVL, AVF, V1, V2, V3, V4, V5 y V6.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,20,11);
+	INSERT INTO items(nom_item)	VALUES('Acondiciona al paciente.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,21,12);
+	INSERT INTO items(nom_item)	VALUES('Rotula el ECG con nombre del paciente, habitación, cama, fecha, hora, edad.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,22,13);
 	#Se lava las manos al finalizar el procedimiento.. id_item = 36
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (36,3,17,14);	
-	#Registra el procedimiento. id=37
-	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (37,3,18,15);								
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (36,4,23,14);	
+	INSERT INTO items(nom_item)	VALUES('Registra adecuadamente el procedimiento y el resultado de la medición.');
+	INSERT INTO items_guias(id_item,id_guia,pos_item,nro_item) VALUES (LAST_INSERT_ID(),4,24,15);							
 
-	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Realizar la técnica completa.');
-	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),3,1);
-	#Tiempo para leer el caso: 2 minutos. id= 2
-	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (2,3,2);
+	#Realizar la técnica completa. id= 5
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (5,4,1);
+	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Tiempo para leer el caso: 1 minuto.');
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),4,2);
 	#Tiempo para preparar los materiales: 3 minutos. id= 3
-	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (3,3,3);
-	INSERT INTO itemsestudiante(nom_itemest)	VALUES('Tiempo para realizar y registrar la técnica: 5 minutos.');
-	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (LAST_INSERT_ID(),3,4);	
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (3,4,3);
+	#Tiempo para realizar y registrar la técnica: 10 minutos. id= 4
+	INSERT INTO itemsestudiante_guias(id_itemest,id_guia,nro_item) VALUES (4,4,4);	
