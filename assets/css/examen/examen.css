@@ -199,3 +199,28 @@ input[type="radio"] {
 	display: none;
 	color: #285E8E;
 }
+
+.span-calif-obsGral {
+	font-size: 18px;
+	font-weight: 500;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.span-calificacion {
+	color: #E60000;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.adquirida {
+	color: #339933 ;
+}
+
+.no-adquirida {
+	color: #E60000 ;
+}
+
+.medianamente-adquirida {
+	color: #CCCC00 ;
+}

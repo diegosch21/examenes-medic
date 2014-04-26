@@ -12,45 +12,91 @@
 	 * @param 	$item_suelto boolean: indica si es item individual o subitem
 	 *
 	 */
-	function _print_item($item, $item_suelto) 
+	function _print_item($evaluar, $item, $item_suelto) 
 	{	
 		
 		$botonera = "<div class='item-botonera pull-right'>";
 
 		$solo_texto = "solotexto";
-		$inputs = 	"<input type='hidden' name='item-id[]' id='input-item-{$item['id']}' value='{$item['id']}'/>
-					 <input type='hidden' name='item-estado[]' class='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>";
+		$inputs = "";
+		$value = "";
+
+		if($evaluar) 
+		{
+			$inputs = 	"<input type='hidden' name='item-id[]' id='input-item-{$item['id']}' value='{$item['id']}'/>
+						 <input type='hidden' name='item-estado[]' class='item-estado' id='estado-item-{$item['id']}' data-item='{$item['id']}' value='-1'/>";
+		}
+		else
+		{
+			$value = "data-estado='{$item['estado']}'";
+		}
 
 		if(!$item['solo_texto'])
 		{
-			$solo_texto = "";
-			$botonera =	$botonera.
-						"<div class='btn-group evaluacion' data-toggle='buttons'>
-					 	  	<label class='boton-si btn btn-default'>
-								<input type='checkbox'> Sí
-						    	<span class='glyphicon glyphicon-ok'></span>
-						  	</label>
-							<label class='boton-no btn btn-default'>
-								<input type='checkbox'> No
-								<span class='glyphicon glyphicon-remove'></span>
-							</label>
-						</div>
-						<span class='item-value-titulo calificacion'>Respuesta: </span><span class='item-value calificacion'>-</span>";
+			$solo_texto = "";			
+
+			if($evaluar) 
+			{
+				$botonera =	$botonera.
+							"<div class='btn-group evaluacion' data-toggle='buttons'>
+						 	  	<label class='boton-si btn btn-default'>
+									<input type='checkbox'> Sí
+							    	<span class='glyphicon glyphicon-ok'></span>
+							  	</label>
+								<label class='boton-no btn btn-default'>
+									<input type='checkbox'> No
+									<span class='glyphicon glyphicon-remove'></span>
+								</label>
+							</div>";
+			}
+
+			$botonera =	$botonera."<span class='item-value-titulo calificacion'>Respuesta: </span><span class='item-value calificacion' {$value}>-</span>";
+		}
+		else 
+		{
+			if(!$evaluar)
+			{
+				$botonera =	$botonera."<span class='item-value calificacion' {$value}></span>";
+			}
 		}
 
-		$botonera =	$botonera."<a class='btn btn-default boton-obs pull-right evaluacion'>Obs <span class='glyphicon glyphicon-pencil'></span></a>				   		
-				    </div>";
+		if($evaluar) 
+		{
+			$botonera =	$botonera."<a class='btn btn-default boton-obs pull-right evaluacion'>Obs <span class='glyphicon glyphicon-pencil'></span></a>";
+		}
+
+			$botonera =	$botonera."</div>";
 
 		$texto =	"<div class='item-texto'>						
 						<span class='numero'>{$item['nro']}.</span> {$item['nom']}
 					</div>";
-		$fin = 	"	<div class='clearboth'></div>
-					<div class='item-obs-container {$solo_texto}'>
+
+		$fin = 	"	<div class='clearboth'></div>";
+
+		$value = "";
+		$observacion = "";
+
+		if($evaluar) 
+		{
+			$fin = $fin."<div class='item-obs-container {$solo_texto}'>
 						<textarea name='item-obs[]' class='form-control item-obs observaciones input-deshabilitado' rows='2' placeholder='Ingrese una observación aquí'></textarea>
 						<div class='label-obs span-item-obs-container'>
 							<span class='span-item-obs'></span>
 						</div>
 					</div>";
+		}
+		else
+		{
+			$observacion = $item['obs'];
+
+			if($item['obs'] != "") {
+				$fin = $fin."<div class='item-obs-container {$solo_texto}'>
+							<div class='label-obs span-item-obs-container'>
+							<span class='span-item-obs'>{$observacion}</span>
+						</div>
+					</div>";
+			}
+		}		
 
 		if($item_suelto) 
 		{
@@ -60,8 +106,6 @@
 		{
 			echo "<div class='item borde-item'>".$inputs.$botonera.$texto.$fin."</div>";
 		}		
-
-		//via Javascript cambiar los input de los checkbox por hidden, al hacer clic en Calificar
 	}
 
 	/**
@@ -70,10 +114,10 @@
 	 * @param 	$grupoitem array: nro, nom, items
 	 *
 	 */
-	function print_item($item) {
+	function print_item($evaluar, $item) {
 
 		echo "<div class='grupo-item borde-grupoitem'>";
-				_print_item($item, true); //imprime inputs y contenido del item
+				_print_item($evaluar, $item, true); //imprime inputs y contenido del item
 		echo "</div>";
 
 	}
@@ -84,7 +128,7 @@
 	 * @param 	$grupoitem array: nro, nom, items
 	 *
 	 */
-	function print_grupo_item($grupoitem) {
+	function print_grupo_item($evaluar, $grupoitem) {
 		echo 	"<div class='grupo-item borde-grupoitem'>
 					<div class='item-texto'>
 						<span class='numero'>{$grupoitem['nro']}</span>. {$grupoitem['nom']}<br/>"; //nombre del grupoitem
@@ -93,7 +137,7 @@
 			  	<div class='sangria'>";	
 					foreach ($grupoitem['items'] as $item)  //recorro la lista de items del grupo
 					{
-						_print_item($item, false); //imprime inputs y contenido del item
+						_print_item($evaluar, $item, false); //imprime inputs y contenido del item
 					}
 		echo "  </div>";
 	}
@@ -170,7 +214,17 @@
 				Fecha del Examen:
 			</div>
 			<div class="columna">
-				<?php echo $fecha; ?>
+			<?php
+				if($evaluar)
+				{
+					echo $fecha;
+				}
+				else
+				{
+					$fecha_hora = explode(" ", $fecha);
+					echo $this->util->YMDtoDMY($fecha_hora[0])." - ".$fecha_hora[1];
+				}
+			?>
 			</div>
 		</div>
 
@@ -261,7 +315,7 @@
 			<?php if($evaluar): ?>
 			<div class="col-titulo-guia titulo-revision calificacion clearboth">[REVISIÓN DE LAS RESPUESTAS]</div>
 			
-		<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
+			<!--Action default del FORM: vuelve a generar (envia de vuelta los parametros). El guardar examen lo hace por AJAX -->
 			<form id="form-evaluar" class="form-evaluar" role="form" method="post" action="<?php echo site_url('examen/generar');?>">
 
 				<input type="hidden" name="fecha" id="input-fecha" value="<?php echo $fecha; ?>"/>
@@ -288,11 +342,11 @@
 							{
 								if($item2['tipo']=='grupoitem') //si el item es un grupoitem
 								{ 
-									print_grupo_item($item2);
+									print_grupo_item($evaluar, $item2);
 								}
 								else //item suelto en la seccion
 								{
-									print_item($item2);
+									print_item($evaluar, $item2);
 								}		
 							}
 							echo "<div class='borde-grupoitem borde-final'></div>"; //último borde de la seccion
@@ -301,11 +355,11 @@
 						{
 							if ($item['tipo']=='grupoitem') //si el item es un grupoitem
 							{ 
-								print_grupo_item($item);	
+								print_grupo_item($evaluar, $item);	
 							}
 							else // item suelto en la guia
 							{
-								print_item($item);
+								print_item($evaluar, $item);
 							}
 						}
 					}
@@ -315,11 +369,24 @@
 					}
 			 	?>	
 
-			 	<h4>Observación General del Examen</h4>			 	
+			 	<span class="span-calif-obsGral">Observación General del Examen</span>			 	
 			 	
 			 	<div class='label-obs label-obs-gral span-examen-obs-container'>
 					<span class='span-examen-obs'>
-						<?php if(!$evaluar){ echo $examen['obs_exam'];} ?>
+						<?php 
+							if(!$evaluar)
+							{ 
+								if($examen['obs_exam'] != "")
+								{
+									echo $examen['obs_exam'];
+								}
+								else
+								{
+									echo "&nbsp;";
+								}
+								
+							} 
+						?>
 					</span>
 				</div>
 
@@ -337,7 +404,7 @@
 				 	<input type="hidden" name="examen-porc" id="examen-porc" value="-1">
 
 				 	<div class="examen-calificacion">
-					 	<h4>CALIFICACION:</h4>
+					 	<span class="span-calif-obsGral">CALIFICACION: </span>
 					 	<?php
 
 				 			if(!$evaluar)
@@ -345,13 +412,13 @@
 				 				switch($examen['calificacion'])
 				 				{
 				 					case CALIF_COMPETENCIA_NO_ADQUIRIDA:
-				 															echo "Competencia no adquirida.";
+				 															echo "<span class='span-calificacion no-adquirida'>Competencia no adquirida.</span>";
 				 															break;
 
-				 					case CALIF_COMPETENCIA_MED_ADQUIRIDA:	echo "Competencia medianamente adquirida.";
+				 					case CALIF_COMPETENCIA_MED_ADQUIRIDA:	echo "<span class='span-calificacion medianamente-adquirida'>Competencia medianamente adquirida.</span>";
 				 															break;
 
-				 					case CALIF_COMPETENCIA_ADQUIRIDA:		echo "Competencia adquirida.";
+				 					case CALIF_COMPETENCIA_ADQUIRIDA:		echo "<span class='span-calificacion adquirida'>Competencia adquirida.</span>";
 				 															break;
 				 					default:
 				 															echo "Sin calificar.";
@@ -417,7 +484,7 @@
 				</div>
 
 				<div id="alert-warning-save" class="alert alert-warning modal-body-content">
-					<strong>ATENCIÓN!</strong> ¿Está realmente seguro de que desea guardar este examen?
+					<strong>ATENCIÓN!</strong> ¿Está realmente seguro de que desea guardar este examen? <br/> Este examen, una vez archivado, no podrá ser modificado.
 				</div>
 
 				<div id="alert-success" class="alert alert-success modal-body-content">					

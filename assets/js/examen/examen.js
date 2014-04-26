@@ -18,26 +18,28 @@ var submit_on_cancel = true;
 
 $('document').ready(function() {
 
-	
-	event_handlers_window();
-//	event_handlers_tabs();	//poniendo los data-toggle en los tabs no es necesario llamar a esto!
+	event_handlers_nav_tabs();
 
 	if($('#div-evaluar').data('evaluando')) {
 
 		inicializar_modal();
 		event_handlers_buttons();
 		event_handlers_keyboard();
-		event_handlers_radio_buttons();
-		event_handlers_nav_tabs();
+		event_handlers_radio_buttons();		
 		handler_formulario();
 		ocultar_errores();	
 	}
 	else {
 
 		revisar_items(false);
+		set_estilos_revision(true);
+
 		$('.calificacion').show();
 		$('.label-obs').show();
+		$('.item-obs-container').show();
 	}
+
+	event_handlers_window();
 
 	$(window).resize(); // Disparo el evento para que el contenido quede centado
 });
@@ -116,9 +118,7 @@ function event_handlers_buttons() {
 
 		if($('.calificacion').is(':visible')) {
 
-			$('.item-texto').addClass('item-texto-padding');
-			$('.borde-item').addClass('borde-grupoitem');
-			$('.item-botonera').addClass('item-value-botonera-calificar');
+			set_estilos_revision(true);
 			 
 			revisar_items(true);
 
@@ -130,9 +130,8 @@ function event_handlers_buttons() {
 
 		}
 		else {
-			$('.item-texto').removeClass('item-texto-padding');
-			$('.borde-item').removeClass('borde-grupoitem');
-			$('.item-botonera').removeClass('item-value-botonera-calificar');
+
+			set_estilos_revision(false);
 
 			$('.item-estado').each(function() {
 
@@ -152,14 +151,12 @@ function event_handlers_buttons() {
 
 		event.preventDefault();
 
-//		console.log('paso por aca');
-
 		if(($(this).attr('id') == 'navbar-mis-examenes') 
 			|| ($(this).attr('id') == 'navbar-mis-datos') 
 			|| ($(this).attr('id') == 'navbar-cerrar-sesion')
 			|| ($(this).attr('id') == 'navbar-brand'))
 		{
-//			console.log("entre aca");
+
 			$('#btn-modal-abortar').attr('href', $(this).attr('href'));
 			submit_on_cancel = false;
 		}
@@ -175,143 +172,13 @@ function event_handlers_buttons() {
 		if(validar()) {
 			mostrar_modal('warning-save');
 		}
-
 	});
 }	
-
-function revisar_items(evaluando) {
-
-	var rta_correctas = 0;
-	var rta_respondidas = 0;			
-
-	if(evaluando) {			
-
-		$('.item-estado').each(function() {
-
-			if($(this).val() == ITEM_SI) {
-				rta_correctas ++;
-				rta_respondidas ++;
-				$(this).parent().addClass('bg-success');
-				
-				manage_observacion(true, $(this).nextAll('.item-obs-container'));
-			}
-			else {
-				if($(this).val() == ITEM_NO) {
-
-					rta_respondidas ++;
-					$(this).parent().addClass('bg-danger');	
-
-					manage_observacion(true, $(this).nextAll('.item-obs-container'));
-				}
-				else {
-
-					$(this).parent().addClass('bg-no-resp');
-
-					manage_observacion(true, $(this).nextAll('.item-obs-container'));
-				}
-			}					
-		});
-	}
-	else {
-
-	}
-
-	var porcentaje_correcto = 0;
-
-	if(rta_respondidas > 0) {
-		porcentaje_correcto = (rta_correctas * 100) / rta_respondidas;
-		porcentaje_correcto = porcentaje_correcto.toFixed(2);
-	}
-
-	$('#porcentaje-realizado').html(porcentaje_correcto + "%  - ("+rta_correctas+" / "+rta_respondidas+")");
-
-}
-
-function manage_observacion_gral_examen(calificando) {
-
-	if(calificando) {
-		
-		$('.examen-obs').hide();
-
-		if($('.examen-obs').val() != '') {
-			
-			$('.span-examen-obs-container > span').text($('.examen-obs').val());
-		}
-		else {
-
-			$('.span-examen-obs-container > span').html("&nbsp;");			
-		}
-
-		$('.span-examen-obs-container').show();
-	}
-	else {	
-
-		$('.span-examen-obs-container').hide();
-		$('.examen-obs').show();
-	}	
-}
-
-function manage_observacion(calificando, container) {
-
-	var observacion = container.find('.observaciones');
-	var container_label_observacion = container.find('.span-item-obs-container');
-
-	if(calificando) {
-		
-		if(observacion.val() != '') {
-			
-			container_label_observacion.find('.span-item-obs').text(observacion.val());
-			container_label_observacion.show();
-			observacion.hide();
-			container.show();
-		}
-		else {
-			
-			container.siblings('.item-botonera').find('.boton-obs').removeClass('active'); //quito el estado activo para los botones de obs que no poseen comentarios
-			container.hide();
-		}
-	}
-	else {	
-		container_label_observacion.hide();
-		observacion.show();	
-	}	
-}
 
 function event_handlers_radio_buttons() {
 	$('.radio-texto').click(function() {
 		$(this).prev().click();
 	});
-}
-
-function validar() {
-
-	ocultar_errores();
-
-	if( !$('#calificacion0').is(':checked') && 
-		!$('#calificacion1').is(':checked') &&
-		!$('#calificacion2').is(':checked'))
-	{
-		$('#error-radio').text('Debe seleccionar una opción');
-		$('#error-radio').show();
-		return false;
-	}
-	else {
-		
-		if( ($('#calificacion0').is(':checked') && ($('#calificacion0').val() != CALIF_COMPETENCIA_NO_ADQUIRIDA)) ||
-		    ($('#calificacion1').is(':checked') && ($('#calificacion1').val() != CALIF_COMPETENCIA_MED_ADQUIRIDA)) ||
-		    ($('#calificacion2').is(':checked') && ($('#calificacion2').val() != CALIF_COMPETENCIA_ADQUIRIDA)))
-		{
-			$('#error-radio').text('El valor de la opción seleccionada es inválido');
-			$('#error-radio').show();
-			return false;
-		}
-	}
-
-	return true;
-}
-
-function ocultar_errores() {
-	$('.errores').hide();
 }
 
 function handler_formulario() {
@@ -417,6 +284,190 @@ function handler_formulario() {
 	});	
 }
 
+function set_estilos_revision(agregar) {
+
+	if(agregar) {
+
+		$('.item-texto').addClass('item-texto-padding');
+		$('.borde-item').addClass('borde-grupoitem');
+		$('.item-botonera').addClass('item-value-botonera-calificar');
+	}
+	else {
+
+		$('.item-texto').removeClass('item-texto-padding');
+		$('.borde-item').removeClass('borde-grupoitem');
+		$('.item-botonera').removeClass('item-value-botonera-calificar');
+	}
+}
+
+/*
+ *	Calcula el porcentaje de respuestas correctas y establece
+ *	los estilos correspondientes para cada item cuando se está
+ *	calificando el examen o bien cuando se accede a ver el examen
+ */
+function revisar_items(evaluando) {
+
+	var rta_correctas = 0;
+	var rta_respondidas = 0;			
+
+	if(evaluando) {			
+
+		$('.item-estado').each(function() {
+
+			if($(this).val() == ITEM_SI) {
+				rta_correctas ++;
+				rta_respondidas ++;
+				$(this).parent().addClass('bg-success');
+				
+				manage_observacion(true, $(this).nextAll('.item-obs-container'));
+			}
+			else {
+				if($(this).val() == ITEM_NO) {
+
+					rta_respondidas ++;
+					$(this).parent().addClass('bg-danger');	
+
+					manage_observacion(true, $(this).nextAll('.item-obs-container'));
+				}
+				else {
+
+					$(this).parent().addClass('bg-no-resp');
+
+					manage_observacion(true, $(this).nextAll('.item-obs-container'));
+				}
+			}					
+		});
+	}
+	else {
+		$('.item-value').each(function() {
+
+			if($(this).data('estado') == ITEM_SI) {
+				rta_correctas ++;
+				rta_respondidas ++;
+				$(this).parent().parent().addClass('bg-success');
+				$(this).html('sí').addClass('item-value-si');
+			}
+			else {
+				if($(this).data('estado') == ITEM_NO) {
+
+					rta_respondidas ++;
+					$(this).parent().parent().addClass('bg-danger');	
+					$(this).html('no').addClass('item-value-no');
+				}
+				else {
+
+					$(this).parent().parent().addClass('bg-no-resp');
+				}
+			}					
+		});
+	}
+
+	var porcentaje_correcto = 0;
+
+	if(rta_respondidas > 0) {
+		porcentaje_correcto = (rta_correctas * 100) / rta_respondidas;
+		porcentaje_correcto = porcentaje_correcto.toFixed(2);
+	}
+
+	$('#porcentaje-realizado').html(porcentaje_correcto + "%  - ("+rta_correctas+" / "+rta_respondidas+")");
+}
+
+/*
+ *	Se encarga de mostrar el textarea correspondiente
+ *	a la observación general del examen o de mostrar el contenido
+ *	del mismo en el label si se está calificando el examen
+ *
+ *	calificando: indica si se esta calificando el examen
+ */
+function manage_observacion_gral_examen(calificando) {
+
+	if(calificando) {
+		
+		$('.examen-obs').hide();
+
+		if($('.examen-obs').val() != '') {
+			
+			$('.span-examen-obs-container > span').text($('.examen-obs').val());
+		}
+		else {
+
+			$('.span-examen-obs-container > span').html("&nbsp;");			
+		}
+
+		$('.span-examen-obs-container').show();
+	}
+	else {	
+
+		$('.span-examen-obs-container').hide();
+		$('.examen-obs').show();
+	}	
+}
+
+/*
+ *	Se encarga de mostrar el textarea correspondiente
+ *	a la observación de un item o de mostrar el contenido
+ *	del mismo en el label si se está calificando el examen
+ *
+ *	calificando: indica si se esta calificando el examen
+ *	container: div contenedor del textarea
+ */
+function manage_observacion(calificando, container) {
+
+	var observacion = container.find('.observaciones');
+	var container_label_observacion = container.find('.span-item-obs-container');
+
+	if(calificando) {
+		
+		if(observacion.val() != '') {
+			
+			container_label_observacion.find('.span-item-obs').text(observacion.val());
+			container_label_observacion.show();
+			observacion.hide();
+			container.show();
+		}
+		else {
+			
+			container.siblings('.item-botonera').find('.boton-obs').removeClass('active'); //quito el estado activo para los botones de obs que no poseen comentarios
+			container.hide();
+		}
+	}
+	else {	
+		container_label_observacion.hide();
+		observacion.show();	
+	}	
+}
+
+function validar() {
+
+	ocultar_errores();
+
+	if( !$('#calificacion0').is(':checked') && 
+		!$('#calificacion1').is(':checked') &&
+		!$('#calificacion2').is(':checked'))
+	{
+		$('#error-radio').text('Debe seleccionar una opción');
+		$('#error-radio').show();
+		return false;
+	}
+	else {
+		
+		if( ($('#calificacion0').is(':checked') && ($('#calificacion0').val() != CALIF_COMPETENCIA_NO_ADQUIRIDA)) ||
+		    ($('#calificacion1').is(':checked') && ($('#calificacion1').val() != CALIF_COMPETENCIA_MED_ADQUIRIDA)) ||
+		    ($('#calificacion2').is(':checked') && ($('#calificacion2').val() != CALIF_COMPETENCIA_ADQUIRIDA)))
+		{
+			$('#error-radio').text('El valor de la opción seleccionada es inválido');
+			$('#error-radio').show();
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function ocultar_errores() {
+	$('.errores').hide();
+}
+
 function inicializar_modal() {
 
 	$('#modal').modal({
@@ -460,7 +511,7 @@ function activar_boton(boton, valor) {
 		boton.siblings('.boton-no').removeClass('btn-danger active').addClass('btn-default');
 		var parent = boton.parent();
 		parent.parent().siblings('.item-estado').val(ITEM_SI);	
-		parent.siblings('span.item-value').html('sí').removeClass('item-value-no').addClass('item-value-si');;	
+		parent.siblings('span.item-value').html('sí').removeClass('item-value-no').addClass('item-value-si');	
 	}
 	else {
 
