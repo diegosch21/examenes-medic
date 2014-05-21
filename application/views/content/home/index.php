@@ -11,15 +11,18 @@
 <div id="div-botonera" class="div-container">	
 	<div class="row row-botonera row-botonera-fila1">
 		<div class="col-xs-12 col-boton">
-			<a href="<?php echo site_url('examen/generar');?>" class="btn btn-primary btn-lg btn-block">Tomar Examen</a>
+			<a href="<?php echo site_url('examen/generar');?>" class="btn btn-primary btn-lg btn-block">Tomar nuevo examen</a>
 		</div>
 	</div>
 	<div class="row row-botonera">
-		<div class="col-xs-12 col-sm-5 col-boton col-primer-boton">
+		<div class="col-xs-12 col-sm-5 col-boton col-primer-boton" style="display:none;">
 			<a href="#" class="btn btn-default btn-lg btn-block">Cátedras</a>
 		</div>
-		<div class="col-xs-12 col-sm-6 col-sm-offset-1 col-boton">
+		<div class="col-xs-12 col-sm-6 col-sm-offset-1 col-boton" style="display:none;">
 			<a href="#" class="btn btn-default btn-lg btn-block">Vincular Alumnos</a>	
+		</div>
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-boton">
+			<a href="examen/lista" class="btn btn-default btn-lg btn-block">Exámenes evaluados</a>	
 		</div>
 	</div>
 	<?php 

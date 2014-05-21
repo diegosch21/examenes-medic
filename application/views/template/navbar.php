@@ -27,10 +27,10 @@
 						{
 							echo ' 
 							<li class="active">
-								<a id="navbar-mis-examenes" href="#"><span class="glyphicon glyphicon-file"></span> Mis Exámenes</a>
+								<a id="navbar-mis-examenes" href="examen/lista"><span class="glyphicon glyphicon-file"></span>Exámenes evaluados</a>
 							</li>
 							<li>
-								<a id="navbar-mis-datos" href="#"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
+								<a id="navbar-mis-datos" href="#" style="display:none;"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
 							</li>';
 						}
 					?>
