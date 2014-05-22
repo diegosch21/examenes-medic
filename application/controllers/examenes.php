@@ -76,12 +76,26 @@ class Examenes extends CI_Controller {
         $this->load->model('examenes_model');
 
         $examenes = $this->examenes_model->get_examenes_docente($this->legajo);
+        //usar date helper
+
+        $this->load->library('table');
+
+		$this->table->set_heading('Fecha', 'Cátedra', 'Guía', 'Alumno');
+		foreach ($examenes as $exam) {
+			$this->table->add_row($exam['fecha'], $exam['nom_cat']." (".$exam['cod_cat'].")",
+									$exam['nro_guia'].") ".$exam['tit_guia'],
+									$exam['apellido_alu'].", ".$exam['nom_alu']." (LU ".$exam['lu_alu'].")");
+		}
+		$template= array ('table_open'  => '<table id="lista_examenes">');
+		$this->table->set_template($template);
+		$tabla= $this->table->generate();
 
         $this->view_data['title'] = "Lista de Examen Evaluados por ".$this->nom_doc." ".$this->apellido_doc." - Departamento de Ciencias de la Salud";          
         $this->load->view('template/header', $this->view_data);
 
         //$this->view_data['crud'] = $output;
-        $this->view_data['lista'] = $examenes;
+        $this->view_data['arreglo'] = $examenes;
+        $this->view_data['tabla'] = $tabla;
         $this->view_data['docente'] = $this->nom_doc." ".$this->apellido_doc;
         $this->load->view('content/examenes/lista_docente', $this->view_data);
 

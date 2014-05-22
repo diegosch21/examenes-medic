@@ -6,6 +6,7 @@
 
 $('document').ready(function() {
 
+	$('#lista_examenes').dataTable();
 	event_handlers_window();
 	$(window).resize(); // Disparo el evento para que el contenido quede centrado.
 });
