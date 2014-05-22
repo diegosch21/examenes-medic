@@ -154,7 +154,27 @@ class Examenes_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	/**
+	 *	Obtiene lista de examenes del docente especificado. Devuelve datos completos de docente, alumno, catedra, guia.
+	 *
+	 * @access	public
+	 * @param 	$leg_doc int leg del docente
+	 * @return	array de array - datos del examen id_exam,id_guia,lu_alu....
+	 *
+	 */
 
+	public function get_examenes_docente($leg_doc)
+	{
+		$query_string = "SELECT id_exam,cod_carr,nom_carr,cod_cat,nom_cat,leg_doc,apellido_doc,nom_doc,
+							lu_alu,apellido_alu,nom_alu,id_guia,nro_guia,tit_guia,subtit_guia,
+							fecha,calificacion,porcentaje_exam,obs_exam 
+							FROM examenes NATURAL LEFT JOIN guias NATURAL LEFT JOIN guias_catedras NATURAL LEFT JOIN catedras 
+							NATURAL LEFT JOIN carreras NATURAL LEFT JOIN docentes NATURAL LEFT JOIN alumnos 
+							WHERE leg_doc = ?";
+		$query = $this->db->query($query_string,array($leg_doc));
+
+		return $query->result_array();
+	}
 
 
 

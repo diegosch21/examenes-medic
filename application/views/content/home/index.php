@@ -22,7 +22,7 @@
 			<a href="#" class="btn btn-default btn-lg btn-block">Vincular Alumnos</a>	
 		</div>
 		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-boton">
-			<a href="examen/lista" class="btn btn-default btn-lg btn-block">Exámenes evaluados</a>	
+			<a href="<?php echo site_url('examenes/lista_docente'); ?>" class="btn btn-default btn-lg btn-block">Exámenes evaluados</a>	
 		</div>
 	</div>
 	<?php 

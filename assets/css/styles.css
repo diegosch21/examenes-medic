@@ -134,7 +134,7 @@ footer {
 }
 
 .div-titulo > label{
-	font-size: 30px;
+	font-size: 24px;
 	font-weight: 500;
 }
 
@@ -170,6 +170,12 @@ footer {
 	border-bottom: 0px;
 	padding: 20px;
 }
+
+.div-container {
+	max-width: 290px;
+	margin: 0px auto;
+}
+
 
 /* MEDIA QUERIES */
 

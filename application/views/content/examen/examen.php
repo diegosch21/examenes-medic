@@ -157,11 +157,20 @@
 <link type="text/css" href="<?php echo base_url('assets/css/examen/examen.css'); ?>" rel="stylesheet" media="screen"/>
 <script type="text/javascript"  src="<?php echo base_url('assets/js/examen/examen.js'); ?>"></script>
 
-<div id="div-evaluar" data-evaluando="<?php echo $evaluar; ?>">
+<div class="div-titulo">
+<?php if($evaluar): ?>
+	<label>Evaluar examen</label>
+<?php else: ?>
+	<label>Vista de examen archivado</label>
+<?php endif; ?>
+</div>
 
+
+<div id="div-evaluar" data-evaluando="<?php echo $evaluar; ?>">
+	
 	<div class="tabla">
 		<div class="fila">	
-			<div class="columna div-titulo">
+			<div class="columna field-name">
 				Carrera:
 			</div>
 			<div class="columna">
@@ -170,7 +179,7 @@
 		</div>
 
 		<div class="fila">	
-			<div class="columna div-titulo">
+			<div class="columna field-name">
 				Cátedra:
 			</div>
 			<div class="columna">
@@ -180,7 +189,7 @@
 
 		<?php if(!$evaluar): ?>
 		<div class="fila">	
-			<div class="columna div-titulo">
+			<div class="columna field-name">
 				Docente:
 			</div>
 			<div class="columna">
@@ -190,7 +199,7 @@
 		<?php endif; ?>
 
 		<div class="fila">	
-			<div class="columna div-titulo">
+			<div class="columna field-name">
 				Alumno:
 			</div>
 			<div class="columna">
@@ -200,7 +209,7 @@
 
 		<?php if(!$evaluar): ?>
 		<div class="fila">	
-			<div class="columna div-titulo">
+			<div class="columna field-name">
 				ID Examen:
 			</div>
 			<div class="columna">
@@ -210,7 +219,7 @@
 		<?php endif; ?>
 
 		<div class="fila">	
-			<div class="columna div-titulo">
+			<div class="columna field-name">
 				Fecha del Examen:
 			</div>
 			<div class="columna">

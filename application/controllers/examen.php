@@ -859,40 +859,6 @@ class Examen extends CI_Controller {
 
     }
 
-    /**
-     * Controlador para listar todos los exámenes evaluados por el usuario
-     *  
-     * En POST recibe los filtros para la lista
-     *
-     * Carga vista de la lista de examenes
-     * 
-     * @access  public
-     * @param   $id int id del examen deseado
-     */
-    public function lista()
-    {
-        /*
-        GROCERY CRUD
-        $this->load->library('grocery_CRUD');
-        $crud = new grocery_CRUD();
-
-        $crud->set_table('examenes');
-        //$crud->set_theme('twitter-bootstrap');
-        $crud->set_theme('datatables');
-        $output = $crud->render();
-        */
-
-        
-
-        $this->view_data['title'] = "Lista de Examen Evaluados por ".$this->usuario->get_info_sesion_usuario('nom_doc')." ".$this->usuario->get_info_sesion_usuario('apellido_doc')." - Departamento de Ciencias de la Salud";          
-        $this->load->view('template/header', $this->view_data);
-
-        //$this->view_data['crud'] = $output;
-        $this->load->view('content/examen/lista', $this->view_data);
-
-        $this->load->view('template/footer');
-    }   
-
 
     /**
      * Controlador de la accion ver un examen guardado

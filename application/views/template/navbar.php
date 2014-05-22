@@ -22,18 +22,14 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div id="navbar-collapse-1" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
-					<?php
-						if($activo)
-						{
-							echo ' 
-							<li class="active">
-								<a id="navbar-mis-examenes" href="examen/lista"><span class="glyphicon glyphicon-file"></span>Exámenes evaluados</a>
-							</li>
-							<li>
-								<a id="navbar-mis-datos" href="#" style="display:none;"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
-							</li>';
-						}
-					?>
+					<?php if($activo): ?>
+						<li class="active">
+							<a id="navbar-mis-examenes" href="<?php echo site_url('examenes/lista_docente'); ?>"><span class="glyphicon glyphicon-file"></span> Mis exámenes evaluados</a>
+						</li>
+						<li>
+							<a id="navbar-mis-datos" href="#" style="display:none;"><span class="glyphicon glyphicon-edit"></span> Mis Datos</a>
+						</li>
+					<?php endif; ?>
 						<li>
 							<a id="navbar-cerrar-sesion" href="<?php echo site_url('login/desloguear_usuario'); ?>"><span class="glyphicon glyphicon-off"></span> Cerrar Sesión</a>
 						</li>						

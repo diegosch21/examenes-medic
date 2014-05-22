@@ -44,7 +44,7 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 */
 
 define('PRIVILEGIO_NULO',-1);
-define('PRIVILEGIO_DOCENTE',0); //Docente: solo puede tomar examenes. Y crear guías si tiene permiso en catedra
+define('PRIVILEGIO_DOCENTE',0); //Docente: solo puede ver y tomar examenes. Y crear guías si tiene permiso en catedra
 define('PRIVILEGIO_ADMIN', 2);  //Es admin (acceso a todos los ABM), pero no puede nombrar nuevos admin, ni borrar/modificar examenes
 define('PRIVILEGIO_SUPERADMIN',3); //Admin, que puede nombrar nuevos admin, y borrar/modificar examenes
 
