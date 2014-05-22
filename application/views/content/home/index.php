@@ -21,8 +21,8 @@
 		<div class="col-xs-12 col-sm-6 col-sm-offset-1 col-boton" style="display:none;">
 			<a href="#" class="btn btn-default btn-lg btn-block">Vincular Alumnos</a>	
 		</div>
-		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-boton">
-			<a href="<?php echo site_url('examenes/lista_docente'); ?>" class="btn btn-default btn-lg btn-block">Exámenes evaluados</a>	
+		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-boton">
+			<a href="<?php echo site_url('examenes/lista_docente'); ?>" class="btn btn-default btn-lg btn-block">Ver exámenes evaluados</a>	
 		</div>
 	</div>
 	<?php 

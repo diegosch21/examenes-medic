@@ -80,11 +80,10 @@ class Examenes extends CI_Controller {
 
         $this->load->library('table');
 
-		$this->table->set_heading('Fecha', 'Cátedra', 'Guía', 'Alumno');
+		$this->table->set_heading('Fecha', 'Alumno', 'Guía', 'Cátedra');
 		foreach ($examenes as $exam) {
-			$this->table->add_row($exam['fecha'], $exam['nom_cat']." (".$exam['cod_cat'].")",
-									$exam['nro_guia'].") ".$exam['tit_guia'],
-									$exam['apellido_alu'].", ".$exam['nom_alu']." (LU ".$exam['lu_alu'].")");
+			$this->table->add_row($exam['fecha'],$exam['apellido_alu'].", ".$exam['nom_alu']." (LU: ".$exam['lu_alu'].")",
+									$exam['nro_guia'].") ".$exam['tit_guia'],$exam['nom_cat']." (".$exam['cod_cat'].")");
 		}
 		$template= array ('table_open'  => '<table id="lista_examenes">');
 		$this->table->set_template($template);
