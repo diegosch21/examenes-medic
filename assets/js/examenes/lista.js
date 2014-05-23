@@ -14,15 +14,22 @@ $(document).ready(function() {
 
 
 function crearDataTable() {
+	ordenamientoFecha();
+
 	$('#lista_examenes').dataTable({
-		columnDefs: [
+		"columnDefs": [
             {
                 "targets": [ 4 ],
                 "visible": false,
                 "searchable": false
+            },
+            {
+            	"targets": [0],
+            	"type": 'date-euro'
             }
         ],
-		language: {
+        "order": [ 0, 'desc' ],
+		"language": {
 		    "sProcessing":     "Procesando...",
 		    "sLengthMenu":     "Mostrar _MENU_ exámenes",
 		    "sZeroRecords":    "No se encontraron exámenes",
@@ -68,6 +75,35 @@ function crearDataTable() {
     		$( this ).removeClass( "info" );
   		}
 	);	
+}
+
+function ordenamientoFecha() {
+	jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+	    "date-euro-pre": function ( a ) {
+	        var x;
+	 
+	        if ( $.trim(a) !== '' ) {
+	            var frDatea = $.trim(a).split(' ');
+	            var frTimea = frDatea[1].split(':');
+	            var frDatea2 = frDatea[0].split('/');
+	            x = (frDatea2[2] + frDatea2[1] + frDatea2[0] + frTimea[0] + frTimea[1] + frTimea[2]) * 1;
+	        }
+	        else {
+	            x = Infinity;
+	        }
+	 
+	        return x;
+	    },
+	 
+	    "date-euro-asc": function ( a, b ) {
+	        return a - b;
+	    },
+	 
+	    "date-euro-desc": function ( a, b ) {
+	        return b - a;
+	    }
+	} );
+
 }
 
 /*	EVENT HANDLERS */
