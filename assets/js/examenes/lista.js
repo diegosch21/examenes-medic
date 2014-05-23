@@ -19,7 +19,7 @@ function crearDataTable() {
 	$('#lista_examenes').dataTable({
 		"columnDefs": [
             {
-                "targets": [ 5 ],
+                "targets": [ 5,6 ],
                 "visible": false,
                 "searchable": false
             },
@@ -30,21 +30,21 @@ function crearDataTable() {
             {
             	"targets": [4],
             	"createdCell": function (td, cellData, rowData, row, col) {
-      				var newData;
+      				var newData = '';
       				switch(parseInt(cellData)) {
       					case CALIF_COMPETENCIA_NO_ADQUIRIDA:
-      						newData = '<span class="glyphicon glyphicon-remove-sign rojo grande"></span>'
+      						newData += '<div class="icon-calif"><span class="glyphicon glyphicon-remove-sign rojo grande"></span></div>'
       						break;
       					case CALIF_COMPETENCIA_MED_ADQUIRIDA:
-      						newData = '<span class="glyphicon glyphicon-minus-sign amarillo grande"></span>'
+      						newData += '<div class="icon-calif"><span class="glyphicon glyphicon-minus-sign amarillo grande"></span></div>'
       						break;
       					case CALIF_COMPETENCIA_ADQUIRIDA: 
-      						newData = '<span class="glyphicon glyphicon-ok-sign verde grande"></span>'
+      						newData += '<div class="icon-calif"><span class="glyphicon glyphicon-ok-sign verde grande"></span></div>'
       						break;
       					default:
-      						newData = '<span class="glyphicon glyphicon-question-sign grande"></span>'
+      						newData += '<div class="icon-calif"><span class="glyphicon glyphicon-question-sign grande"></span></div>'
   					}
-  					//cell(td).data(newData);	
+  					newData+= '<div class="boton-pdf"><a href="'+rowData[6]+'" class="btn btn-default btn-sm" role="button"><span class="glyphicon glyphicon-file"></span> PDF</a></div>'	
   					$(td).html(newData);
   					$(td).css("text-align","center");	
     			}

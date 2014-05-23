@@ -8,7 +8,18 @@ body {
 }
 
 span.glyphicon.grande {
-    font-size: 1.25em;
+    font-size: 1.3em;
+
+}
+
+div.icon-calif{
+	width:25%;
+	margin-top: 3px;
+	float:left;	
+}
+div.boton-pdf{
+	width:75%;
+	float:right;	
 }
 
 .verde {
