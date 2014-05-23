@@ -80,13 +80,13 @@ class Examenes extends CI_Controller {
 
         $this->load->library('table');
         
-		$this->table->set_heading('Fecha', 'Alumno', 'Guía', 'Cátedra','Link');
+		$this->table->set_heading('Fecha', 'Alumno', 'Guía', 'Cátedra','Calif','Link');
 		foreach ($examenes as $exam) {
 			$fecha_hora = explode(" ", $exam['fecha']);
 			$fecha = $this->util->YMDtoDMY($fecha_hora[0])." ".$fecha_hora[1];
 			$this->table->add_row($fecha,$exam['apellido_alu'].", ".$exam['nom_alu']." (LU: ".$exam['lu_alu'].")",
 								sprintf('%02u',$exam['nro_guia']).") ".$exam['tit_guia'],$exam['nom_cat']." (".$exam['cod_cat'].")",
-								site_url('examen/ver/'.$exam['id_exam']));
+								$exam['calificacion'],site_url('examen/ver/'.$exam['id_exam']));
 		}
 		$template= array ('table_open'  => '<table id="lista_examenes" class="display" cellspacing="0" width="100%">');
 		$this->table->set_template($template);

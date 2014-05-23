@@ -16,6 +16,11 @@ var STATUS_UNKNOWN_ERROR = 106;
 var STATUS_REDIRECT = 108;
 var STATUS_SESSION_EXPIRED = 107;
 
+var CALIF_COMPETENCIA_NO_ADQUIRIDA = 0;
+var CALIF_COMPETENCIA_MED_ADQUIRIDA =  1;
+var CALIF_COMPETENCIA_ADQUIRIDA = 2;
+var CALIF_VACIA = -1;
+
 var expresiones_regulares = new Array();
 
 $(document).ready(function(){	 				

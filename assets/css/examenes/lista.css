@@ -6,3 +6,19 @@ div.lista {
 body {
 	min-width: 600px !Important;
 }
+
+span.glyphicon.grande {
+    font-size: 1.25em;
+}
+
+.verde {
+	color: #339933 ;
+}
+
+.rojo {
+	color: #E60000 ;
+}
+
+.amarillo {
+	color: #CCCC00 ;
+}

@@ -237,6 +237,30 @@
 			</div>
 		</div>
 
+		<?php if(!$evaluar): ?>
+		<div class="fila">	
+			<div class="columna field-name">
+				Calificación:
+			</div>
+			<div class="columna">
+				<?php switch($examen['calificacion'])
+	 				{
+	 					case CALIF_COMPETENCIA_NO_ADQUIRIDA:
+	 						echo "Competencia no adquirida"; break;
+
+	 					case CALIF_COMPETENCIA_MED_ADQUIRIDA:
+	 						echo "Competencia medianamente adquirida";break;
+
+	 					case CALIF_COMPETENCIA_ADQUIRIDA:
+	 						echo "Competencia adquirida"; break;
+	 					default:
+	 						echo "Sin calificar.";
+					}				
+				?>
+			</div>
+		</div>
+		<?php endif; ?>
+
 	</div>
 
 	<div class="barra-division"></div>

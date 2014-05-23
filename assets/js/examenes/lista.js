@@ -19,13 +19,35 @@ function crearDataTable() {
 	$('#lista_examenes').dataTable({
 		"columnDefs": [
             {
-                "targets": [ 4 ],
+                "targets": [ 5 ],
                 "visible": false,
                 "searchable": false
             },
             {
             	"targets": [0],
             	"type": 'date-euro'
+            },
+            {
+            	"targets": [4],
+            	"createdCell": function (td, cellData, rowData, row, col) {
+      				var newData;
+      				switch(parseInt(cellData)) {
+      					case CALIF_COMPETENCIA_NO_ADQUIRIDA:
+      						newData = '<span class="glyphicon glyphicon-remove-sign rojo grande"></span>'
+      						break;
+      					case CALIF_COMPETENCIA_MED_ADQUIRIDA:
+      						newData = '<span class="glyphicon glyphicon-minus-sign amarillo grande"></span>'
+      						break;
+      					case CALIF_COMPETENCIA_ADQUIRIDA: 
+      						newData = '<span class="glyphicon glyphicon-ok-sign verde grande"></span>'
+      						break;
+      					default:
+      						newData = '<span class="glyphicon glyphicon-question-sign grande"></span>'
+  					}
+  					//cell(td).data(newData);	
+  					$(td).html(newData);
+  					$(td).css("text-align","center");	
+    			}
             }
         ],
         "order": [ 0, 'desc' ],
@@ -63,7 +85,7 @@ function crearDataTable() {
 	$('#lista_examenes tbody tr').click(
 		function () {
     		$( this ).addClass( "active" );	
-    		document.location = table.row(this).data()[4];
+    		document.location = table.row(this).data()[5];
 		} 
 	)
 	.css( 'cursor', 'pointer' )

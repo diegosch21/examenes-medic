@@ -9,7 +9,11 @@ INSERT INTO alumnos(lu_alu,apellido_alu,nom_alu,dni_alu) VALUES
 	(102137,'Prince','Martin',36893521),
 	(106601,'Gorgory','Rafael',38652459),
 	(87546,'Jones','Jimbo',33843567),
-	(93256,'Muntz','Nelson',35987654);
+	(93256,'Muntz','Nelson',35987654),
+	(87942,'Pérez','Roque',3040502),
+	(90909,'Schwerdt','Juana',3858855),
+	(100100,'Gutiérrez','María',3221165),
+	(99887,'Smith','Ricardo',3685226);
 
 #docentes
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,email_doc, privilegio,activo) 
@@ -57,7 +61,15 @@ INSERT INTO alumnos_catedras(lu_alu,cod_cat,estado_alu_cat) VALUES
 	(106601,20063,1),
 	(102137,20063,1);
 INSERT INTO alumnos_catedras(lu_alu,cod_cat) VALUES
-	(93256,20020);
+	(93256,20020),
+	(87942,20018),
+	(87942,20022),
+	(90909,20020),
+	(90909,20063),
+	(100100,20022),
+	(100100,20024),
+	(99887,20059),
+	(99887,20063);
 
 
 #Docentes asociados a las catedras
