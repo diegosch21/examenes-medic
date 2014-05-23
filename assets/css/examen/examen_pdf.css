@@ -21,19 +21,19 @@ body {
   position: fixed;
   left: 0;
     right: 0;
-    color: #CCCCCC;
+    color: #B3B3B3;
     font-size: 0.9em;
 }
 
 #header {
   top: 0;
-    border-bottom: 0.1pt solid #CCCCCC;
+    border-bottom: 0.1pt solid #B3B3B3;
     margin-bottom: 10mm;
 }
 
 #footer {
   bottom: 0;
-  border-top: 0.1pt solid #CCCCCC;
+  border-top: 0.1pt solid #B3B3B3;
 }
 
 #header table,
@@ -98,15 +98,6 @@ hr {
 	margin-left: 50px;
 }
 
-.label-obs-gral {
-	margin-bottom: 10px;
-}
-
-.titulo-revision {
-
-	color: #285E8E;
-}
-
 .observacion-general {
 	font-size: 18px;
 	font-weight: 500;
@@ -140,15 +131,6 @@ hr {
 	color: #CCCC00 ;
 }
 
-.ul-item-estudiante {
-	list-style-type: square;
-}
-
-.ul-item-estudiante > li {
-	margin-bottom: 10px;
-}
-
-
 .bg-danger {
 	background-color: #f2dede;
 }
@@ -163,14 +145,6 @@ hr {
 
 .calificacion {
 	display: inline-block;
-}
-
-.pull-right {
-	float: right;
-}
-
-.pull-left {
-	float: left;
 }
 
 .tabla-titulo {
@@ -240,4 +214,12 @@ hr {
 
 .numero {
 	color: #999999;
+}
+
+.p-left {
+	padding-left: 2.5mm;
+}
+
+.p-right {
+	padding-right: 2.5mm;
 }

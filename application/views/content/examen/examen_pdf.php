@@ -4,13 +4,12 @@
 	$rta_correctas = 0;
 
 	/**
-	 *	Imprime en HTML los valores del item, incluyendo los input hidden y las opciones de seleccion
+	 *	Imprime en HTML los valores del item
 	 *
 	 * @param 	$item array: id, nro, nom, solo_texto
-	 * @param 	$item_suelto boolean: indica si es item individual o subitem
 	 *
 	 */
-	function _print_item($item, $item_suelto) 
+	function _print_item($item) 
 	{	
 		
 		$html = "";
@@ -50,13 +49,13 @@
 
 			$html = $html.
 			"<tr class='{$background_color}'>
-				<td class='borde item-texto'>
+				<td class='borde item-texto p-left'>
 					<span class='numero'>{$item['nro']}.</span> {$item['nom']}
 				</td>
 				<td class='borde item-texto item-value-titulo'>
 					Respuesta:
 				</td>
-				<td class='borde item-texto item-value {$value_color}'>
+				<td class='borde item-texto item-value {$value_color} p-right'>
 					{$value}
 				</td>
 			</tr>";
@@ -68,7 +67,7 @@
 			$html = $html.
 			
 			"<tr class='{$background_color}'>
-				<td class='borde item-texto'>
+				<td class='borde item-texto p-left p-right'>
 					<span class='numero'>{$item['nro']}.</span> {$item['nom']}
 				</td>
 			</tr>";
@@ -76,30 +75,17 @@
 			$colspan = '';
 		}
 
-	//	$observacion = $item['obs'];
-
 		if($item['obs'] != "") {
 
 			$html = $html.
 			"<tr class='{$background_color}' >
-				<td class='item-obs-container' {$colspan}>					
+				<td class='item-obs-container p-left p-right' {$colspan}>					
 					<div class='item-obs'>{$item['obs']}</div>
 				</td>
 			</tr>";
 		}
 
-	//	$html = $html."</table>";
-
-		echo $html;
-			
-		if($item_suelto) 
-		{
-		//	echo $inputs.$botonera.$texto.$fin;
-		}
-		else
-		{
-		//	echo "<div class='item borde-item borde-grupoitem {$color}'>".$inputs.$botonera.$texto.$fin."</div>";
-		}		
+		echo $html;		
 	}
 
 	/**
@@ -108,10 +94,10 @@
 	 * @param 	$grupoitem array: nro, nom, items
 	 *
 	 */
-	function print_item($evaluar, $item) {
+	function print_item($item) {
 
 		echo "<table class='tabla-item'>";
-		_print_item($item, true);
+		_print_item($item);
 		echo "</table>";
 	}
 
@@ -121,12 +107,12 @@
 	 * @param 	$grupoitem array: nro, nom, items
 	 *
 	 */
-	function print_grupo_item($evaluar, $grupoitem) {
+	function print_grupo_item($grupoitem) {
 		echo "
 				<table class='tabla-grupoitem borde'>
 					<tr>
-						<td class='item-texto'>
-							<span class='numero'>{$grupoitem['nro']}</span>. {$grupoitem['nom']}
+						<td class='item-texto p-left'>
+							<span class='numero'>{$grupoitem['nro']}.</span> {$grupoitem['nom']}
 						<td>
 					</tr>
 				</table>";
@@ -134,7 +120,7 @@
 		echo "<table class='tabla-item' style='margin-left: 10mm; margin-right: -6.5mm;'>";
 				foreach ($grupoitem['items'] as $item)  //recorro la lista de items del grupo
 				{
-					_print_item($item, false); //imprime inputs y contenido del item
+					_print_item($item); //imprime inputs y contenido del item
 				}
 
 		echo "</table>";
@@ -144,6 +130,7 @@
 	 *	Imprime en HTML los datos de una seccion
 	 *
 	 * @param 	$seccion array: nro, nom
+	 * @param 	$primera_seccion boolean: indica si se trata de la primera seccion
 	 *
 	 */
 	function print_seccion($seccion, $primera_seccion) {
@@ -300,11 +287,11 @@
 				{
 					if($item2['tipo']=='grupoitem') //si el item es un grupoitem
 					{ 
-						print_grupo_item(false, $item2);
+						print_grupo_item($item2);
 					}
 					else //item suelto en la seccion
 					{
-						print_item(false, $item2);
+						print_item($item2);
 					}		
 				}
 				echo "<div class='borde borde-final'></div>"; //último borde de la seccion
@@ -315,11 +302,11 @@
 			{
 				if ($item['tipo']=='grupoitem') //si el item es un grupoitem
 				{ 
-					print_grupo_item(false, $item);	
+					print_grupo_item($item);	
 				}
 				else // item suelto en la guia
 				{
-					print_item(false, $item);
+					print_item($item);
 				}
 			}
 		}
