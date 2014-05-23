@@ -84,7 +84,7 @@ function crearDataTable() {
  
 	$('#lista_examenes tbody tr').click(
 		function () {
-    		$( this ).addClass( "active" );	
+    		//$( this ).addClass( "active" );	
     		document.location = table.row(this).data()[5];
 		} 
 	)
