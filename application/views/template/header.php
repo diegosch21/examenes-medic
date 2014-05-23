@@ -35,6 +35,7 @@
 		<div class="wrapper">	
 
 			<header id="header-principal" class="container-fluid">
+				<a href="<?php echo site_url('home'); ?>">
 				<div class="row header-footer-color">
 					<div id="header-image" class="col-xs-12 col-sm-10 col-sm-offset-1 header header-image">					
 						<div class="header-logo logo-uns"></div>
@@ -57,7 +58,8 @@
 							echo '<div id="header-sombra" class="header-sombra"></div>';
 						}
 					?>				
-				</div>		
+				</div>	
+				</a>	
 			</header>			
 			
 			<?php 

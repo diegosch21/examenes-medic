@@ -79,13 +79,15 @@ class Examenes extends CI_Controller {
         //usar date helper
 
         $this->load->library('table');
+        //$this->load->helper('url');
 
-		$this->table->set_heading('Fecha', 'Alumno', 'Guía', 'Cátedra');
+		$this->table->set_heading('Fecha', 'Alumno', 'Guía', 'Cátedra','Link');
 		foreach ($examenes as $exam) {
 			$this->table->add_row($exam['fecha'],$exam['apellido_alu'].", ".$exam['nom_alu']." (LU: ".$exam['lu_alu'].")",
-									$exam['nro_guia'].") ".$exam['tit_guia'],$exam['nom_cat']." (".$exam['cod_cat'].")");
+									$exam['nro_guia'].") ".$exam['tit_guia'],$exam['nom_cat']." (".$exam['cod_cat'].")",
+									site_url('examen/ver/'.$exam['id_exam']));
 		}
-		$template= array ('table_open'  => '<table id="lista_examenes">');
+		$template= array ('table_open'  => '<table id="lista_examenes" class="display" cellspacing="0" width="100%">');
 		$this->table->set_template($template);
 		$tabla= $this->table->generate();
 

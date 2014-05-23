@@ -29,4 +29,8 @@
 	<?php endif; ?>	
 </div>
 
-<?php echo $tabla; ?>
+<div class="row">
+	<div class="lista col-xs-12">
+	<?php echo $tabla; ?>
+	</div>
+</div>

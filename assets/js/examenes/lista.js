@@ -5,8 +5,23 @@
 */
 
 $(document).ready(function() {
+	crearDataTable();
+	
+	event_handlers_window();
+	$('#navbar-mis-examenes').parent().addClass('active');
+	$(window).resize(); // Disparo el evento para que el contenido quede centrado.
+});
 
+
+function crearDataTable() {
 	$('#lista_examenes').dataTable({
+		columnDefs: [
+            {
+                "targets": [ 4 ],
+                "visible": false,
+                "searchable": false
+            }
+        ],
 		language: {
 		    "sProcessing":     "Procesando...",
 		    "sLengthMenu":     "Mostrar _MENU_ exámenes",
@@ -35,10 +50,25 @@ $(document).ready(function() {
 
 	$('#lista_examenes').removeClass('display')
 		.addClass('table table-striped table-bordered');
-	
-	event_handlers_window();
-	$(window).resize(); // Disparo el evento para que el contenido quede centrado.
-});
+
+	var table = $('#lista_examenes').DataTable();
+ 
+	$('#lista_examenes tbody tr').click(
+		function () {
+    		$( this ).addClass( "active" );	
+    		document.location = table.row(this).data()[4];
+		} 
+	)
+	.css( 'cursor', 'pointer' )
+	.hover(
+  		function() {
+    		$( this ).addClass( "info" );
+  		},
+  		function() {
+    		$( this ).removeClass( "info" );
+  		}
+	);	
+}
 
 /*	EVENT HANDLERS */
 

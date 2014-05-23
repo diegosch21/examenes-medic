@@ -7,7 +7,8 @@
 $('document').ready(function() {
 
 	event_handlers_window();
-	$(window).resize(); // Disparo el evento para que el contenido quede centado.
+	$(window).resize(); // Disparo el evento para que el contenido quede centrado.
+	$('#navbar-home').parent().addClass('active');
 });
 
 /*	EVENT HANDLERS */
@@ -18,4 +19,5 @@ function event_handlers_window() {
 		calculos_visualizacion();
 		centrar_contenido('div-botonera');
 	});
+
 }

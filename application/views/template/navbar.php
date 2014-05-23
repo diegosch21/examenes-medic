@@ -16,14 +16,17 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a id="navbar-brand" class="navbar-brand" href="<?php echo site_url('home'); ?>"><?php echo $nombre." ".$apellido ?></a>
+					<a id="navbar-brand" class="navbar-brand" ><?php echo $nombre." ".$apellido ?></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div id="navbar-collapse-1" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a id="navbar-home" href="<?php echo site_url('home'); ?>"><span class="glyphicon glyphicon-home"></span> Inicio</a>
+						</li>
 					<?php if($activo): ?>
-						<li class="active">
+						<li>
 							<a id="navbar-mis-examenes" href="<?php echo site_url('examenes/lista_docente'); ?>"><span class="glyphicon glyphicon-file"></span> Mis exámenes evaluados</a>
 						</li>
 						<li>
