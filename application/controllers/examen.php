@@ -956,6 +956,190 @@ class Examen extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+ public function pdf3($id)
+    {
+         $this->load->helper(array('dompdf', 'file'));
+
+ if(!isset($id) || !$id || !ctype_digit($id))   //chequea que $id esté y sea sólo numeros
+        {
+            $this->session->set_flashdata('error', 'Acceso inválido a Ver Examen');
+            redirect('home');
+        }
+        $this->load->model('examenes_model');
+
+        $examen = $this->examenes_model->get_examen_id($id);
+        if(!$examen)   //chequea que $id esté y sea sólo numeros
+        {
+            $this->session->set_flashdata('error', 'ID de examen inexistente');
+            redirect('home');
+        }
+        
+        //CARRERA
+        $carrera['cod_carr'] = $examen['cod_carr'];
+        $carrera['nom_carr'] = $examen['nom_carr'];
+        $this->view_data['carrera'] = $carrera;
+
+        //CATEDRA 
+        $catedra['cod_cat'] = $examen['cod_cat'];
+        $catedra['nom_cat'] = $examen['nom_cat'];
+        $this->view_data['catedra'] = $catedra;
+
+        //check permiso para ver catedra
+        if(!$this->privilegio>=PRIVILEGIO_ADMIN)  
+        {
+            if(!$this->catedras_model->check_catedra_docente_permiso($catedra['cod_cat'],$this->legajo,PERMISO_VER))
+            {
+                $this->session->set_flashdata('error', 'Usuario sin permiso para ver exámenes en la cátedra '.$catedra['nom_cat']);
+                redirect('home');
+            }
+        }
+
+        //DOCENTE 
+        $docente['leg_doc'] = $examen['leg_doc'];
+        $docente['apellido_doc'] = $examen['apellido_doc'];
+        $docente['nom_doc'] = $examen['nom_doc'];
+        $this->view_data['docente'] = $docente;
+        
+        //ALUMNO 
+        $alumno['lu_alu'] = $examen['lu_alu'];
+        $alumno['apellido_alu'] = $examen['apellido_alu'];
+        $alumno['nom_alu'] = $examen['nom_alu'];
+        $this->view_data['alumno'] = $alumno;
+
+        //GUIA 
+        $guia['id_guia'] = $examen['id_guia'];
+        $guia['nro_guia'] = $examen['nro_guia'];
+        $guia['tit_guia'] = $examen['tit_guia'];
+        $guia['subtit_guia'] = $examen['subtit_guia'];
+        $this->view_data['guia'] = $guia;
+
+        //FECHA
+        $this->view_data['fecha'] = $examen['fecha'];
+
+        //EXAMEN
+        $exam['id_exam'] = $examen['id_exam'];
+        $exam['calificacion'] = $examen['calificacion'];
+        $exam['porcentaje_exam'] = $examen['porcentaje_exam'];
+        $exam['obs_exam'] = $examen['obs_exam'];
+        $this->view_data['examen'] = $exam;
+        
+        //ITEMS DE LA GUIA CON EL ESTADO Y OBS DEL EXAMEN
+        $this->view_data['guia']['items'] = $this->_itemsguia($examen['id_exam'],TRUE); //boolean: examen
+
+        //DESCRIPCION DE LA GUIA (pide al modelo en base al id)
+        $descripcion = $this->guias_model->get_descripciones($guia['id_guia']);
+        $this->view_data['guia']['desc'] = $descripcion;
+
+        //ITEMS DEL ESTUDIANTE DE LA GUIA (pide al modelo en base al id)
+        $itemsestudiante = $this->guias_model->get_itemsestudiante($guia['id_guia']);
+        $this->view_data['guia']['itemsestudiante'] = $itemsestudiante;
+
+
+        $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          
+       $this->view_data['evaluar'] = FALSE;
+
+ 
+
+     // page info here, db calls, etc. 
+    
+      $html = $this->load->view('content/examen/examen_pdf', $this->view_data);
+
+  
+
+    }
+
+    public function pdf($id)
+    {
+         $this->load->helper(array('dompdf', 'file'));
+
+ if(!isset($id) || !$id || !ctype_digit($id))   //chequea que $id esté y sea sólo numeros
+        {
+            $this->session->set_flashdata('error', 'Acceso inválido a Ver Examen');
+            redirect('home');
+        }
+        $this->load->model('examenes_model');
+
+        $examen = $this->examenes_model->get_examen_id($id);
+        if(!$examen)   //chequea que $id esté y sea sólo numeros
+        {
+            $this->session->set_flashdata('error', 'ID de examen inexistente');
+            redirect('home');
+        }
+        
+        //CARRERA
+        $carrera['cod_carr'] = $examen['cod_carr'];
+        $carrera['nom_carr'] = $examen['nom_carr'];
+        $this->view_data['carrera'] = $carrera;
+
+        //CATEDRA 
+        $catedra['cod_cat'] = $examen['cod_cat'];
+        $catedra['nom_cat'] = $examen['nom_cat'];
+        $this->view_data['catedra'] = $catedra;
+
+        //check permiso para ver catedra
+        if(!$this->privilegio>=PRIVILEGIO_ADMIN)  
+        {
+            if(!$this->catedras_model->check_catedra_docente_permiso($catedra['cod_cat'],$this->legajo,PERMISO_VER))
+            {
+                $this->session->set_flashdata('error', 'Usuario sin permiso para ver exámenes en la cátedra '.$catedra['nom_cat']);
+                redirect('home');
+            }
+        }
+
+        //DOCENTE 
+        $docente['leg_doc'] = $examen['leg_doc'];
+        $docente['apellido_doc'] = $examen['apellido_doc'];
+        $docente['nom_doc'] = $examen['nom_doc'];
+        $this->view_data['docente'] = $docente;
+        
+        //ALUMNO 
+        $alumno['lu_alu'] = $examen['lu_alu'];
+        $alumno['apellido_alu'] = $examen['apellido_alu'];
+        $alumno['nom_alu'] = $examen['nom_alu'];
+        $this->view_data['alumno'] = $alumno;
+
+        //GUIA 
+        $guia['id_guia'] = $examen['id_guia'];
+        $guia['nro_guia'] = $examen['nro_guia'];
+        $guia['tit_guia'] = $examen['tit_guia'];
+        $guia['subtit_guia'] = $examen['subtit_guia'];
+        $this->view_data['guia'] = $guia;
+
+        //FECHA
+        $this->view_data['fecha'] = $examen['fecha'];
+
+        //EXAMEN
+        $exam['id_exam'] = $examen['id_exam'];
+        $exam['calificacion'] = $examen['calificacion'];
+        $exam['porcentaje_exam'] = $examen['porcentaje_exam'];
+        $exam['obs_exam'] = $examen['obs_exam'];
+        $this->view_data['examen'] = $exam;
+        
+        //ITEMS DE LA GUIA CON EL ESTADO Y OBS DEL EXAMEN
+        $this->view_data['guia']['items'] = $this->_itemsguia($examen['id_exam'],TRUE); //boolean: examen
+
+        //DESCRIPCION DE LA GUIA (pide al modelo en base al id)
+        $descripcion = $this->guias_model->get_descripciones($guia['id_guia']);
+        $this->view_data['guia']['desc'] = $descripcion;
+
+        //ITEMS DEL ESTUDIANTE DE LA GUIA (pide al modelo en base al id)
+        $itemsestudiante = $this->guias_model->get_itemsestudiante($guia['id_guia']);
+        $this->view_data['guia']['itemsestudiante'] = $itemsestudiante;
+
+
+        $this->view_data['title'] = "Ver Examen Archivado - Departamento de Ciencias de la Salud";          
+       $this->view_data['evaluar'] = FALSE;
+
+ 
+
+     // page info here, db calls, etc. 
+    
+      $html = $this->load->view('content/examen/examen_pdf', $this->view_data, true);
+
+      pdf_create($html, 'filename');
+
+    }
+
 }    
 
 /* Fin del archivo examen.php */
