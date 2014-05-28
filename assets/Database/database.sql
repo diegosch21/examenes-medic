@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS docentes (  # Usuarios del sistema
 	pass VARCHAR(60) NOT NULL,
 	apellido_doc VARCHAR(50) NOT NULL,
 	nom_doc VARCHAR(50) NOT NULL,
-	dni_doc INT NOT NULL UNIQUE,
+	dni_doc INT UNIQUE,
 	email_doc VARCHAR(60),
 	tel_doc VARCHAR(20),
 	activo BOOLEAN NOT NULL DEFAULT FALSE,

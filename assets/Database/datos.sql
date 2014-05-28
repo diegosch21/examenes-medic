@@ -30,6 +30,12 @@ INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc)
 		VALUES(1010	,MD5('1010'),'Castaña','Cacho',5654456); 
 INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,dni_doc,privilegio) 
 		VALUES(2020	,MD5('2020'),'Mensaje','Manda',12356845,-1); 
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,privilegio,activo) 
+		VALUES(12198,MD5('stepanosky'),'Stepanosky','Silvia',2,TRUE); #2º nivel de admin	
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,activo) 
+		VALUES(12821,MD5('coronel'),'Coronel','Fernando',TRUE); 			
+INSERT INTO docentes(leg_doc,pass,apellido_doc,nom_doc,activo) 
+		VALUES(12179,MD5('steel'),'Steel','Idina',TRUE); 			
 
 #carreras
 INSERT INTO carreras(cod_carr,nom_carr) VALUES
@@ -83,7 +89,13 @@ INSERT INTO docentes_catedras(leg_doc,cod_cat,permiso_doc) VALUES
 	(7865,20022,2),
 	(7865,20024,0),
 	(10325,20059,2),
-	(5555,20063,1);
+	(5555,20063,1),
+	(12198,20018,2),
+	(12821,20020,2),
+	(12179,20024,2),
+	(12179,20022,0),
+	(12179,20020,0);
+
 
 #Guia id: 1
 INSERT INTO guias (tit_guia) 
