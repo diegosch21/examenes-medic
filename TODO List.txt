@@ -1,12 +1,16 @@
 ***********SUGERENCIAS REUNION******************************
 
-* ITEMS: SI/NO o CALIFICACION NUMERICA. PONDERACION DE PUNTAJE (modif a la BD: 2 campos nuevos)
+* ITEMS: Poder elegir entre calificar con SI/NO o CALIFICACION NUMERICA. PONDERACION DE PUNTAJE (modif a la BD: 2 campos nuevos)
 
-* LOCAL STORAGE mientras se evalúa examen
+* LOCAL STORAGE mientras se evalúa examen - Si la conexión no funciona que se guarde, y más adelante poder guardarlo con el mismo dispositivo.
+		- En cada request verificar si hay algo guardado en localStorage y avisar para guardar en server?
+			o
+		- Botón en menú principal que se habilite si hay examanes guardados sólo localmente?
 
-* ESTADISTICAS: cuántas veces rindió un alumno una guía.
+* ESTADISTICAS 
+		- cuántas veces rindió un alumno una guía.
 
-* ALUMNOS por SIU GUARANÍ
+* ALUMNOS por SIU GUARANÍ??
 
 ********To Do's *******************************
 
