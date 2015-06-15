@@ -215,6 +215,6 @@ CREATE TABLE IF NOT EXISTS  `ci_sessions` (
 #---------------------------------------------------------
 # Creacion usuario dcs_lab. Password:
 # 
-#CREATE USER dcs_lab IDENTIFIED BY 'dcic2014..';
+CREATE USER dcs_lab IDENTIFIED BY 'dcic2014..';
 
-#GRANT ALL PRIVILEGES ON dcs_examenes.* TO dcs_lab IDENTIFIED BY 'dcic2014..';
+GRANT ALL PRIVILEGES ON dcs_examenes.* TO dcs_lab IDENTIFIED BY 'dcic2014..';
